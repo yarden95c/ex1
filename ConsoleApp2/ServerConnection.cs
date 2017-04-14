@@ -7,14 +7,14 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp2
+namespace Server
 {
-    class Server
+    class ServerConnection
     {
         private int port;
         private TcpListener listener;
         private IClientHandler ch;
-        public Server(int port, IClientHandler ch)
+        public ServerConnection(int port, IClientHandler ch)
         {
             this.port = port;
             this.ch = ch;

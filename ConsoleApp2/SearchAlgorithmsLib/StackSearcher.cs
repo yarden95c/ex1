@@ -2,22 +2,42 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SearchAlgorithmsLib
+
+namespace Server
 {
-    public abstract class StackSearcher<T> : ISearcher<T>
+    /// <summary>
+    /// Abstract class.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <seealso cref="Ass1.ISearcher{T}" />
+    public abstract class StackSearcher<T> : AbstractSearchers<T>
     {
         private Stack<State<T>> openList;
-        private int evaluatedNodes;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StackSearcher{T}"/> class.
+        /// </summary>
         public StackSearcher()
         {
             openList = new Stack<State<T>>();
             evaluatedNodes = 0;
         }
-        public void addToOpenList(State<T> state)
+
+        /// <summary>
+        /// Adds to open list.
+        /// </summary>
+        /// <param name="state">The state.</param>
+        public void AddToOpenList(State<T> state)
         {
             openList.Push(state);
         }
-        public bool isEmpty()
+
+        /// <summary>
+        /// Determines whether this instance is empty.
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if this instance is empty; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsEmpty()
         {
             if (this.openList.Count > 0)
             {
@@ -25,15 +45,15 @@ namespace SearchAlgorithmsLib
             }
             return true;
         }
-        protected State<T> popOpenList()
+
+        /// <summary>
+        /// Pops the open list.
+        /// </summary>
+        /// <returns></returns>
+        protected State<T> PopOpenList()
         {
             evaluatedNodes++;
             return openList.Pop();
         }
-        public virtual int getNumberOfNodesEvaluated()
-        {
-            return evaluatedNodes;
-        }
-        public abstract Solution<T> search(ISearchable<T> searchable);
     }
 }

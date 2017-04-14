@@ -1,51 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using MazeLib;
 
-namespace SearchAlgorithmsLib
+
+namespace Server
 {
-    /*
-     * the class represent us the object we work with.
-     * */
+
+    /// <summary>
+    /// State class.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class State<T>
     {
         private T state;  // the state represented by a T
-        private Position initialPos;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="State{T}"/> class.
+        /// </summary>
+        /// <param name="state">The state.</param>
         private State(T state) // CTOR
         {
             this.state = state;
+            Cost = (float)System.Double.MaxValue;
+            Parent = null;
         }
 
-        public State(Position initialPos)
-        {
-            this.initialPos = initialPos;
-        }
-
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return String.Intern(state.ToString()).GetHashCode();
         }
 
+
+        /// <summary>
+        /// Equalses the specified s.
+        /// </summary>
+        /// <param name="s">The s.</param>
+        /// <returns></returns>
         public bool Equals(State<T> s) // we overload Object's Equals method
         {
             return state.Equals(s.state);
         }
+
+
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" />, is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             return Equals(obj as State<T>);
         }
+
+
+        /// <summary>
+        /// Gets or sets the cost.
+        /// </summary>
+        /// <value>
+        /// The cost.
+        /// </value>
         public float Cost
         {
             get;
             set;
         }
+
+
+        /// <summary>
+        /// Gets or sets the parent.
+        /// </summary>
+        /// <value>
+        /// The parent.
+        /// </value>
         public State<T> Parent
         {
             get;
             set;
         }
+
+
         /// <summary>
         /// Implements the operator ==.
         /// </summary>
@@ -58,6 +99,7 @@ namespace SearchAlgorithmsLib
         {
             return Equals(left, right);
         }
+
 
         /// <summary>
         /// Implements the operator !=.
@@ -72,13 +114,12 @@ namespace SearchAlgorithmsLib
             return !Equals(left, right);
         }
 
+
         /// <summary>
-        /// Compares the current instance with another object of the same type and returns an integer that indicates whether the current instance precedes, follows, or occurs in the same position in the sort order as the other object.
+        /// Compares to.
         /// </summary>
-        /// <param name="obj">An object to compare with this instance.</param>
-        /// <returns>
-        /// A value that indicates the relative order of the objects being compared. The return value has these meanings: Value Meaning Less than zero This instance precedes <paramref name="obj" /> in the sort order. Zero This instance occurs in the same position in the sort order as <paramref name="obj" />. Greater than zero This instance follows <paramref name="obj" /> in the sort order.
-        /// </returns>
+        /// <param name="obj">The object.</param>
+        /// <returns></returns>
         /// <exception cref="System.ArgumentException"></exception>
         public int CompareTo(object obj)
         {
@@ -90,19 +131,41 @@ namespace SearchAlgorithmsLib
             else
                 throw new ArgumentException();
         }
-        //TODO change this position
 
-        public T getPosition()
+
+        /// <summary>
+        /// Gets the position.
+        /// </summary>
+        /// <returns></returns>
+        public T GetPosition()
         {
             return this.state;
         }
+
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return state.ToString();
         }
+
+
+        /// <summary>
+        /// inner class-state pool
+        /// </summary>
         public static class StatePool
         {
             private static Dictionary<T, State<T>> pool = new Dictionary<T, State<T>>();
+
+            /// <summary>
+            /// Gets the state.
+            /// </summary>
+            /// <param name="item">The item.</param>
+            /// <returns></returns>
             public static State<T> GetState(T item)
             {
                 if (!pool.ContainsKey(item))
@@ -111,20 +174,48 @@ namespace SearchAlgorithmsLib
                 }
                 return pool[item];
             }
+
+            /// <summary>
+            /// Clears the state pool.
+            /// </summary>
+            public static void ClearStatePool()
+            {
+                pool = new Dictionary<T, State<T>>();
+            }
         }
+
+        /// <summary>
+        /// Gets the default cost comparer.
+        /// </summary>
+        /// <returns></returns>
         public static IComparer<State<T>> GetDefaultCostComparer()
         {
             return new DefaultCostComparer();
         }
+
+
+        /// <summary>
+        /// default comperator.
+        /// </summary>
         private class DefaultCostComparer : IComparer<State<T>>
         {
+
+            /// <summary>
+            /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+            /// </summary>
+            /// <param name="x">The first object to compare.</param>
+            /// <param name="y">The second object to compare.</param>
+            /// <returns>
+            /// A signed integer that indicates the relative values of <paramref name="x" /> and <paramref name="y" />, as shown in the following table.Value Meaning Less than zero<paramref name="x" /> is less than <paramref name="y" />.Zero<paramref name="x" /> equals <paramref name="y" />.Greater than zero<paramref name="x" /> is greater than <paramref name="y" />.
+            /// </returns>
             public int Compare(State<T> x, State<T> y)
             {
-                if (x.Cost > y.Cost)
+                float hefresh = x.Cost - y.Cost;
+                if (hefresh > 0)
                 {
                     return 1;
                 }
-                if (x.Cost < y.Cost)
+                if (hefresh < 0)
                 {
                     return -1;
                 }

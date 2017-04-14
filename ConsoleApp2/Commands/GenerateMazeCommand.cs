@@ -6,8 +6,9 @@ using MazeGeneratorLib;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
-namespace ConsoleApp2
+namespace Server
 {
     class GenerateMazeCommand : ICommand
     {
@@ -22,7 +23,13 @@ namespace ConsoleApp2
             int rows = int.Parse(args[1]);
             int cols = int.Parse(args[2]);
             Maze maze = model.GenerateMaze(name, rows, cols);
-            return maze.ToJSON();
+            NetworkStream stream = client.GetStream();
+            StreamReader reader = new StreamReader(stream);
+            StreamWriter writer = new StreamWriter(stream);
+
+            writer.WriteLine(maze.ToJSON());
+            writer.Flush();
+            return "close connection";
         }
     }
 }

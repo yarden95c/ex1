@@ -2,7 +2,7 @@
 using System;
 using System.Net.Sockets;
 
-namespace ConsoleApp2
+namespace Server
 {
     internal class StartMazeCommand : ICommand
     {

@@ -4,45 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SearchAlgorithmsLib
+namespace Server
 {
+    /// <summary>
+    /// search by dfs.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <seealso cref="Ass1.StackSearcher{T}" />
     public class DFS<T> : StackSearcher<T>
     {
-        private Solution<T> backTrace(State<T> state)
-        {
-            Stack<State<T>> openStack = new Stack<State<T>>();
-            List<State<T>> openList = new List<State<T>>();
-            openStack.Push(state);
-            while ((state = state.Parent) != null)
-            {
-                openStack.Push(state);
-            }
-            while (openStack.Count > 0)
-            {
-                openList.Add(openStack.Pop());
-            }
-            return new Solution<T>(openList, this.getNumberOfNodesEvaluated());
-        }
-        public override Solution<T> search(ISearchable<T> searchable)
+        /// <summary>
+        /// Searches the specified searchable.
+        /// </summary>
+        /// <param name="searchable">The searchable.</param>
+        /// <returns></returns>
+        public override Solution<T> Search(ISearchable<T> searchable)
         {
             State<T> state = null;
             HashSet<State<T>> hashSet = new HashSet<State<T>>();
-            addToOpenList(searchable.getInitialState());
-            while (!isEmpty())
+            AddToOpenList(searchable.GetInitialState());
+            while (!IsEmpty())
             {
-                state = popOpenList();
-                if (state.Equals(searchable.getGoalState()))
+                state = PopOpenList();
+                if (state.Equals(searchable.GetGoalState()))
                 {
-                    return backTrace(state);
+                    return BackTrace(state, this.GetNumberOfNodesEvaluated(), searchable.GetName());
                 }
                 hashSet.Add(state);
-                List<State<T>> succerssors = searchable.getAllPossibleStates(state);
+                List<State<T>> succerssors = searchable.GetAllPossibleStates(state);
                 foreach (State<T> i in succerssors)
                 {
                     if (!hashSet.Contains(i))
                     {
-                        addToOpenList(i);
-                        i.Parent = state;
+                        searchable.UpdateCameFrom(i, state);
+                        AddToOpenList(i);
                     }
                 }
             }

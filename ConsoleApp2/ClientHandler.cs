@@ -4,9 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace ConsoleApp2
+namespace Server
 {
     class ClientHandler : IClientHandler
     {
@@ -24,14 +25,32 @@ namespace ConsoleApp2
                 using (StreamReader reader = new StreamReader(stream))
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
+                    while (true)
+                    {
+                        Console.WriteLine("waiting for message...");
                         string commandLine = reader.ReadLine();
-                        Console.WriteLine("Got command: {0}", commandLine);
-                        string result = controller.ExecuteCommand(commandLine, client);
-                        writer.Flush();
-                        writer.Write(result);
-                    
+
+                        if (commandLine != null)
+                        {
+                            Console.WriteLine("Got command: {0}", commandLine);
+                            string result = controller.ExecuteCommand(commandLine, client);
+                            Thread.Sleep(100);
+                            if (result == "close connection")
+                            {
+                                writer.Write(result);
+                                writer.Flush();
+                                break;
+                            }
+                            if (result == "keep open")
+                            {
+                                writer.Write(result);
+                                writer.Flush();
+                                continue;
+                            }
+                        }
+                    }
                 }
-//                client.Close();
+                client.Close();
             }).Start();
         }
     }
