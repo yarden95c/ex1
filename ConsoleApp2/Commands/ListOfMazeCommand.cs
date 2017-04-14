@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net.Sockets;
+
 
 namespace ConsoleApp2
 {
@@ -14,7 +16,8 @@ namespace ConsoleApp2
 
         public string Execute(string[] args, TcpClient client = null)
         {
-            return model.GetList().ToString();
+            return JsonConvert.SerializeObject(model.GetList());
+                
         }
     }
 }

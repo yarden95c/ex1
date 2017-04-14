@@ -11,6 +11,5 @@ namespace ConsoleApp2
         Solution<Position> GetDFSSolution(string name);
         void AddWaitingGame(string name, int rows, int cols);
         List<string> GetList();
-
     }
 }
