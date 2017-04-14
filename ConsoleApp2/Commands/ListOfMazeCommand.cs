@@ -14,7 +14,7 @@ namespace ConsoleApp2
 
         public string Execute(string[] args, TcpClient client = null)
         {
-            throw new NotImplementedException();
+            return model.GetList().ToString();
         }
     }
 }

@@ -21,9 +21,9 @@ namespace ConsoleApp2
             int algorithm = int.Parse(args[2]);
             if(algorithm == 0)
             {
-                return model.getBFSSolution(name).ToJSon();
+                return model.GetBFSSolution(name).ToJSon();
             }
-            return model.getDFSSolution(name).ToJSon();
+            return model.GetDFSSolution(name).ToJSon();
         }
     }
 }

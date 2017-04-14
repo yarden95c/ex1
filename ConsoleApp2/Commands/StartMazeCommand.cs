@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MazeLib;
+using System;
 using System.Net.Sockets;
 
 namespace ConsoleApp2
@@ -14,7 +15,11 @@ namespace ConsoleApp2
 
         public string Execute(string[] args, TcpClient client = null)
         {
-            throw new NotImplementedException();
+            string name = args[0];
+            int rows = int.Parse(args[1]);
+            int cols = int.Parse(args[2]);
+            Maze maze = model.GenerateMaze(name, rows, cols);
+            return maze.ToJSON();
         }
     }
 }
