@@ -1,6 +1,6 @@
-﻿using MazeLib;
-using System;
+﻿using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace Server
 {
@@ -13,13 +13,26 @@ namespace Server
             this.model = model;
         }
 
-        public string Execute(string[] args, TcpClient client = null)
+        public string Execute(string[] args, TcpClient client , string closeConnection, string keepOpen)
         {
             string name = args[0];
             int rows = int.Parse(args[1]);
             int cols = int.Parse(args[2]);
-            Maze maze = model.GenerateMaze(name, rows, cols);
-            return maze.ToJSON();
+            MazeLib.Maze maze = this.model.GetMaze(name, rows, cols);
+            Game game = new Game(client, maze);
+            bool exist = this.model.AddStartGame(game, name);
+            if (!exist)
+            {
+                new Controller.NestedError("This game is already exist", client);
+                Thread.Sleep(200);
+                return keepOpen;
+            }
+            Thread.Sleep(200);
+            return keepOpen;
+        }
+        public bool IsValid(string[] args)
+        {
+            return (args.Length >= 3);
         }
     }
 }

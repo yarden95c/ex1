@@ -17,7 +17,7 @@ namespace Server
         {
             this.model = model;
         }
-        public string Execute(string[] args, TcpClient client)
+        public string Execute(string[] args, TcpClient client, string closeConnection, string keepOpen)
         {
             string name = args[0];
             int rows = int.Parse(args[1]);
@@ -29,7 +29,12 @@ namespace Server
 
             writer.WriteLine(maze.ToJSON());
             writer.Flush();
-            return "close connection";
+            return closeConnection;
+        }
+
+        public bool IsValid(string[] args)
+        {
+            return (args.Length >= 3);
         }
     }
 }

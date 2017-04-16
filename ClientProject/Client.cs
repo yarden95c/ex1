@@ -14,64 +14,28 @@ namespace ConsoleApp2
     {
         private int port;
         private bool isOnline;
+        private IPEndPoint ep;
+        private TcpClient client = null;
+        private NetworkStream stream = null;
+        private StreamReader reader = null;
+        private StreamWriter writer = null;
+        private string closeConnection = "close connection";
+        private string keepOpen = "keep open";
+        private string exitGame = "exit";
+
+        bool startMultyPlayerGame;
+
+        
         public Client(int port)
         {
             this.port = port;
             isOnline = false;
+            this.ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
+            this.startMultyPlayerGame = false;
         }
 
         public void Connect()
         {
-            //try
-            //{
-            //    IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
-            //    TcpClient client = new TcpClient();
-            //    client.Connect(ep);
-            //    Console.WriteLine("You are connected");
-            //    using (NetworkStream stream = client.GetStream())
-            //    using (StreamReader reader = new StreamReader(stream))
-            //    using (StreamWriter writer = new StreamWriter(stream))
-            //    using (StreamWriter buffer = new StreamWriter(stream))
-            //    {
-            //        Task t = new Task(() =>
-            //        {
-            //            Console.Write("Please enter a command: \n");
-
-            //            while (true)
-            //            {
-
-            //                string input = reader.ReadLine();
-            //                if (input != null)
-            //                {
-            //                    Console.WriteLine(input);
-            //                }
-            //            }
-
-            //        });
-            //        t.Start();
-            //        // Send data to server
-
-            //        while (true)
-            //        {
-            //            buffer.Flush();
-            //            buffer.Write(Console.ReadLine() + "\n");
-            //        }
-            //        client.Close();
-
-            //    }
-            //}
-            //catch (SocketException)
-            //{
-            //    Console.WriteLine("EXCEPTION!");
-            //}
-
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
-            TcpClient client = null;
-            NetworkStream stream = null;
-            StreamReader reader = null;
-            StreamWriter writer = null;
-            Thread sendThread = null;
-            Task recieveTask = null;
             Action action = new Action(() =>
             {
                 while (true)
@@ -79,21 +43,37 @@ namespace ConsoleApp2
                     try
                     {
                         string result = reader.ReadLine();
-                        if(result.Contains("close connection"))
+                        if (result.Contains(this.closeConnection))
                         {
-                            isOnline = false;
-                            client.Close();
+                            this.ChecResult(result, this.closeConnection);
+                            if(startMultyPlayerGame == false || result.Contains(this.exitGame))
+                            {
+                                isOnline = false;
+                                client.Close();
+                            }
                             break;
                         }
-                        if(result.Contains("keep open"))
+                        if (result.Contains(this.keepOpen))
                         {
+                            startMultyPlayerGame = true;
+                            this.ChecResult(result, this.keepOpen);
                             continue;
                         }
-                        if(result != "")
+                        if (result.Contains(this.exitGame))
+                        {
+                            this.ChecResult(result, this.exitGame);
+                           
+                            isOnline = false;
+                            //client.Close();
+                            startMultyPlayerGame = false;
+                            break;
+                         }
+                        if (result != "")
                         {
                             Console.WriteLine(result);
                         }
                     }
+
                     catch (Exception)
                     {
                         isOnline = false;
@@ -101,7 +81,7 @@ namespace ConsoleApp2
                     }
                 }
             });
-            sendThread = new Thread(() =>
+            new Thread(() =>
             {
                 while (true)
                 {
@@ -111,20 +91,17 @@ namespace ConsoleApp2
                         string input = Console.ReadLine();
                         if (!isOnline)
                         {
-
-                          //  Console.WriteLine("You are connected");
                             client = new TcpClient();
                             client.Connect(ep);
                             stream = client.GetStream();
                             reader = new StreamReader(stream);
                             writer = new StreamWriter(stream);
                             isOnline = true;
-                            recieveTask = new Task(action);
-                            recieveTask.Start();
+                            new Task(action).Start();
                         }
                         writer.WriteLine(input);
                         writer.Flush();
-                        Thread.Sleep(200);
+                        Thread.Sleep(300);
                     }
                     catch (Exception)
                     {
@@ -132,9 +109,27 @@ namespace ConsoleApp2
                         client.Close();
                     }
                 }
-            });
-            sendThread.Start();
+            }).Start(); 
+            
         }
+        public void ChecResult(string result, string substring)
+        {
+            while (result.Contains(substring) && result != substring)
+            {
+                int index = result.IndexOf(substring);
+              
+                    if (index >= 0)
+                    {
+                    result = result.Remove(index, substring.Length);
+                    }
+            }
+            if(!(result.Contains(closeConnection) || result.Contains(exitGame)))
+            {
+                Console.WriteLine(result);
+            }
+
+        }
+
         static void Main(string[] args)
         {
             Client c = new Client(8000);

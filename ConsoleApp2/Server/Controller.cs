@@ -5,7 +5,8 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using Server;
-
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Server
 {
@@ -26,15 +27,38 @@ namespace Server
             commands.Add("close", new CloseCommand(model));
             // more commands...
         }
-        public string ExecuteCommand(string commandLine, TcpClient client)
+        public string ExecuteCommand(string commandLine, TcpClient client, string closeConnection, string keepOpen)
         {
             string[] arr = commandLine.Split(' ');
             string commandKey = arr[0];
             if (!commands.ContainsKey(commandKey))
-                return "Command not found";
+            {
+                new NestedError("Command not found", client);
+                return "close connection";
+             }
+
             string[] args = arr.Skip(1).ToArray();
             ICommand command = commands[commandKey];
-            return command.Execute(args, client);
+            if (!command.IsValid(args))  
+                {
+                new NestedError("Missing argument", client);
+                return "close connection";
+
+             }
+            return command.Execute(args, client, closeConnection, keepOpen);
+        }
+        public class NestedError
+        {
+            public string Error;
+            public NestedError(string error, TcpClient client)
+            {
+                this.Error = error;
+                NetworkStream stream = client.GetStream();
+                StreamReader reader = new StreamReader(stream);
+                StreamWriter writer = new StreamWriter(stream);
+                writer.WriteLine(JsonConvert.SerializeObject(this));
+                writer.Flush();   
+            }
         }
     }
 }

@@ -9,6 +9,6 @@ namespace Server
 {
     interface IController
     {
-        string ExecuteCommand(string commandLine, TcpClient client);
+        string ExecuteCommand(string commandLine, TcpClient client, string closeConnection, string keepOpen);
     }
 }

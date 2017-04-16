@@ -10,6 +10,6 @@ namespace Server
 {
     public interface IClientHandler
     {
-        void HandleClient(TcpClient client);
+        void HandleClient(TcpClient client, string closeConnection, string keepOpen);
     }
 }

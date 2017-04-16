@@ -14,10 +14,14 @@ namespace Server
         private int port;
         private TcpListener listener;
         private IClientHandler ch;
+        private string closeConnection;
+        private string keepOpen;
         public ServerConnection(int port, IClientHandler ch)
         {
             this.port = port;
             this.ch = ch;
+            this.keepOpen = "keep open";
+            this.closeConnection = "close connection";
         }
         public void Start()
         {
@@ -33,7 +37,7 @@ namespace Server
                     { 
                         TcpClient client = listener.AcceptTcpClient();
                         Console.WriteLine("Got new connection");
-                        ch.HandleClient(client);
+                        ch.HandleClient(client, closeConnection, keepOpen);
                     }
                     catch (SocketException)
                     {

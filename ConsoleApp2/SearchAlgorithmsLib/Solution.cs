@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
-using Newtonsoft.Json;
+
 
 namespace Server
 {
@@ -38,7 +38,7 @@ namespace Server
         public Solution(List<State<T>> listSolution, int number, string name)
         {
             this.solutionList = listSolution;
-            this.numberOfStepst = this.solutionList.Count() - 1;
+            this.numberOfStepst = this.solutionList.Count();
             this.numberOfStepsCalculate = number;
             this.name = name;
         }
@@ -83,14 +83,13 @@ namespace Server
             //      Console.WriteLine(i.ToString());
             //  }
         }
-        public string ToJSON(string solution)
+        /* public string ToJSON()
+         {
+             return "TOJSON SOLUTION";
+         }*/
+        public int GetNumberEvaluated()
         {
-            SolutionInfo s = new SolutionInfo();
-            s.Name = this.name;
-            s.Solution = solution;
-            s.NodesEvaluated = this.numberOfStepst.ToString();
-         //   Console.WriteLine(JsonConvert.SerializeObject(s));
-            return JsonConvert.SerializeObject(s);
+            return this.numberOfStepst;
         }
     }
 }

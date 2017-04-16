@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 using System.Net.Sockets;
-
+using System.IO;
 
 namespace Server
 {
@@ -14,10 +14,18 @@ namespace Server
             this.model = model;
         }
 
-        public string Execute(string[] args, TcpClient client = null)
+        public string Execute(string[] args, TcpClient client , string closeConnection, string keepOpen)
         {
-            return JsonConvert.SerializeObject(model.GetList());
-                
+            NetworkStream stream = client.GetStream();
+            StreamReader reader = new StreamReader(stream);
+            StreamWriter writer = new StreamWriter(stream);
+            writer.WriteLine(JsonConvert.SerializeObject(model.GetList()));
+            writer.Flush();
+            return closeConnection;
+        }
+        public bool IsValid(string[] args)
+        {
+            return (args.Length >= 0);
         }
     }
 }

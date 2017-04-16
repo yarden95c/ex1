@@ -16,7 +16,7 @@ namespace Server
         {
             controller = new Controller();
         }
-        public void HandleClient(TcpClient client)
+        public void HandleClient(TcpClient client, string closeConnection, string keepOpen)
         {
             new Task(() =>
             {
@@ -33,19 +33,25 @@ namespace Server
                         if (commandLine != null)
                         {
                             Console.WriteLine("Got command: {0}", commandLine);
-                            string result = controller.ExecuteCommand(commandLine, client);
-                            Thread.Sleep(100);
-                            if (result == "close connection")
-                            {
-                                writer.Write(result);
-                                writer.Flush();
-                                break;
-                            }
-                            if (result == "keep open")
+                            string result = controller.ExecuteCommand(commandLine, client, closeConnection, keepOpen);
+                            Thread.Sleep(300);
+                            //if (result == "close connection")
+                            //{
+                            //    writer.Write(result);
+                            //    writer.Flush();
+                            //    break;
+                            //}
+                            if (result == keepOpen)
                             {
                                 writer.Write(result);
                                 writer.Flush();
                                 continue;
+                            }
+                            else
+                            {
+                                writer.Write(result);
+                                    writer.Flush();
+                                    break;
                             }
                         }
                     }
