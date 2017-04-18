@@ -23,9 +23,13 @@ namespace Server
             writer.Flush();
             return closeConnection;
         }
-        public bool IsValid(string[] args)
-        {
-            return (args.Length >= 0);
+        public string IsValid(string[] args)
+        { 
+            if(args.Length < 0)
+            {
+                return "Missing argument";
+            }
+            return null;
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Server
                 {
                     while (true)
                     {
-                        Console.WriteLine("waiting for message...");
+                      //  Console.WriteLine("waiting for message...");
                         string commandLine = reader.ReadLine();
 
                         if (commandLine != null)
@@ -35,12 +35,7 @@ namespace Server
                             Console.WriteLine("Got command: {0}", commandLine);
                             string result = controller.ExecuteCommand(commandLine, client, closeConnection, keepOpen);
                             Thread.Sleep(300);
-                            //if (result == "close connection")
-                            //{
-                            //    writer.Write(result);
-                            //    writer.Flush();
-                            //    break;
-                            //}
+                           
                             if (result == keepOpen)
                             {
                                 writer.Write(result);
@@ -49,14 +44,18 @@ namespace Server
                             }
                             else
                             {
-                                writer.Write(result);
+                                if (!client.Connected)
+                                {
+                                    writer.Write(result);
                                     writer.Flush();
                                     break;
+                                }
                             }
                         }
                     }
+                    client.Close();
                 }
-                client.Close();
+
             }).Start();
         }
     }

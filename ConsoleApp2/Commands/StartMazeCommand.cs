@@ -15,24 +15,46 @@ namespace Server
 
         public string Execute(string[] args, TcpClient client , string closeConnection, string keepOpen)
         {
+            
             string name = args[0];
             int rows = int.Parse(args[1]);
             int cols = int.Parse(args[2]);
             MazeLib.Maze maze = this.model.GetMaze(name, rows, cols);
             Game game = new Game(client, maze);
-            bool exist = this.model.AddStartGame(game, name);
-            if (!exist)
-            {
-                new Controller.NestedError("This game is already exist", client);
-                Thread.Sleep(200);
-                return keepOpen;
-            }
+            model.AddStartGame(game, name);
             Thread.Sleep(200);
+            model.StartAndPlayingMutexRealese();
             return keepOpen;
         }
-        public bool IsValid(string[] args)
+
+        public string IsValid(string[] args)
         {
-            return (args.Length >= 3);
+            string name = args[0];
+            if (args.Length < 3)
+            {
+                return "Missing argument";
+            }
+            try
+            {
+                if (int.Parse(args[1]) <= 0 || int.Parse(args[2]) <= 0)
+                {
+                    return "invalid input";
+                }
+            }
+            catch (System.Exception)
+            {
+                return "invalid input";
+
+            }
+
+            model.StartAndPlayingMutexWaitOn();
+            if (model.IsGameAlreadyExist(name))
+            {
+                model.StartAndPlayingMutexRealese();
+                return "This game is already exist";
+            }
+            
+            return null;
         }
     }
 }

@@ -34,15 +34,17 @@ namespace Server
             if (!commands.ContainsKey(commandKey))
             {
                 new NestedError("Command not found", client);
-                return "close connection";
+                return closeConnection;
              }
 
             string[] args = arr.Skip(1).ToArray();
             ICommand command = commands[commandKey];
-            if (!command.IsValid(args))  
-                {
-                new NestedError("Missing argument", client);
-                return "close connection";
+            string error = command.IsValid(args);
+            if (error!= null)  
+             {
+                //new NestedError("Missing argument", client);
+                new NestedError(error, client);
+                return closeConnection;
 
              }
             return command.Execute(args, client, closeConnection, keepOpen);

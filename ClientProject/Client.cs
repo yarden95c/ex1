@@ -23,15 +23,17 @@ namespace ConsoleApp2
         private string keepOpen = "keep open";
         private string exitGame = "exit";
 
-        bool startMultyPlayerGame;
+        Mutex startPlay = new Mutex();
+        
+bool startMultyPlayerGame;
 
         
         public Client(int port)
         {
             this.port = port;
             isOnline = false;
-            this.ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
-            this.startMultyPlayerGame = false;
+            ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
+            startMultyPlayerGame = false;
         }
 
         public void Connect()
@@ -43,15 +45,24 @@ namespace ConsoleApp2
                     try
                     {
                         string result = reader.ReadLine();
+                        if (result.Contains(this.exitGame))
+                        {
+                            startMultyPlayerGame = false;
+                            this.ChecResult(result, this.exitGame);
+                            isOnline = false;
+                            client.Close();
+                            break;
+                        }
                         if (result.Contains(this.closeConnection))
                         {
                             this.ChecResult(result, this.closeConnection);
-                            if(startMultyPlayerGame == false || result.Contains(this.exitGame))
+                            if(!startMultyPlayerGame)
                             {
                                 isOnline = false;
                                 client.Close();
+                                break;
                             }
-                            break;
+                            continue;
                         }
                         if (result.Contains(this.keepOpen))
                         {
@@ -59,15 +70,7 @@ namespace ConsoleApp2
                             this.ChecResult(result, this.keepOpen);
                             continue;
                         }
-                        if (result.Contains(this.exitGame))
-                        {
-                            this.ChecResult(result, this.exitGame);
-                           
-                            isOnline = false;
-                            //client.Close();
-                            startMultyPlayerGame = false;
-                            break;
-                         }
+                        
                         if (result != "")
                         {
                             Console.WriteLine(result);
@@ -123,7 +126,7 @@ namespace ConsoleApp2
                     result = result.Remove(index, substring.Length);
                     }
             }
-            if(!(result.Contains(closeConnection) || result.Contains(exitGame)))
+            if(!(result.Contains(closeConnection) || result.Contains(exitGame) || result.Contains(keepOpen)))
             {
                 Console.WriteLine(result);
             }

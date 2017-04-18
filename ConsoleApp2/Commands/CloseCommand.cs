@@ -19,33 +19,34 @@ namespace Server
             NetworkStream stream = client.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
-            Game game = this.model.GetGame(name);
-            if (game == null)
+
+            Game game = model.FindGameByClient(client);
+            if (game == null || game.GetMaze().Name != name)
             {
-                writer.WriteLine("The Game Is Not Exist!");
-                writer.Flush();
-                Thread.Sleep(200);
+                new Controller.NestedError("The game is not in the playing list", client);
                 return keepOpen;
             }
             else
             {
                 model.DeleteGameFromPlayingGames(name);
-                writer.WriteLine("exit");
-                writer.Flush();
                 NetworkStream stream2 = game.GetOpponent(client).GetStream();
                 StreamReader reader2 = new StreamReader(stream2);
                 StreamWriter writer2 = new StreamWriter(stream2);
                 writer2.WriteLine("exit");
                 writer2.Flush();
-                Thread.Sleep(200);
-                return closeConnection;
+                return "exit";
             }
 
         }
 
-        public bool IsValid(string[] args)
+        public string IsValid(string[] args)
         {
-            return (args.Length >= 1);
+            if(args.Length < 1)
+            {
+                return "Missing argument";
+            }
+
+            return null;
         }
     }
 }

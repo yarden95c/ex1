@@ -27,7 +27,7 @@ namespace Server
         /// <param name="args">The arguments.</param>
         /// <param name="client">The client.</param>
         /// <returns></returns>
-        public string Execute(string[] args, TcpClient client , string closeConnection, string keepOpen)
+        public string Execute(string[] args, TcpClient client, string closeConnection, string keepOpen)
         {
             string name = args[0];
             int algorithm = int.Parse(args[1]);
@@ -36,17 +36,15 @@ namespace Server
             NetworkStream stream = client.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
-
+        
             if (algorithm == 0)
             {
                 solution = MazeAdapter.PrintSolution(model.GetBFSSolution(name));
-                //writer.WriteLine(solution);
                 getNumberEvaluated = model.GetBFSSolution(name).GetNumberEvaluated();
             }
             else
             {
                 solution = MazeAdapter.PrintSolution(model.GetDFSSolution(name));
-                //writer.WriteLine(solution);
                 getNumberEvaluated = model.GetDFSSolution(name).GetNumberEvaluated();
             }
             NestedSolve solve = new NestedSolve(name, solution, getNumberEvaluated);
@@ -66,9 +64,35 @@ namespace Server
                 this.NameOfMaze = nameOfMaze;
             }
         }
-        public bool IsValid(string[] args)
+
+        public string IsValid(string[] args)
         {
-            return (args.Length == 2);
+            if (args.Length < 2)
+            {
+                return "Missing argument";
+            }
+            
+            try
+            {
+                int algorithm = int.Parse(args[1]);
+
+                if (algorithm != 0 && algorithm != 1)
+                {
+                    return "Wrong number of algorithm, you can choose only 0 or 1";
+                }
+            }
+            catch (System.Exception)
+            {
+                return "invalid input";
+
+            }
+            string name = args[0];
+            if (!model.IsContainMazeForSolution(name))
+            {
+                return "The maze does not exists";
+            }
+
+            return null;
         }
     }
 

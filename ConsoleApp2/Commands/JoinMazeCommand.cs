@@ -22,32 +22,39 @@ namespace Server
         /// <param name="args">The arguments.</param>
         /// <param name="client">The client.</param>
         /// <returns></returns>
-        public string Execute(string[] args, TcpClient client , string closeConnection, string keepOpen)
+        public string Execute(string[] args, TcpClient client, string closeConnection, string keepOpen)
         {
             string name = args[0];
-            Game game = model.FindGame(name);
-            if (game != null)
+            Game game = model.GetGameFromWaitingList(name);
+
+            if (game.GetFirstClient() != client)
             {
-                if(game.GetFirstClient() != client)
-                {
-                    game.Join(client);
-                }
-                else
-                {
-                    new Controller.NestedError("you need another client", client);
-                    model.DeleteGameFromPlayingGames(name);
-                    model.AddStartGame(game, name);
-                }
+                game.Join(client);
+                model.JoinToGame(name);
             }
             else
-            { 
-                new Controller.NestedError("This game does not exist", client);
+            {
+                new Controller.NestedError("you need another client", client);
             }
+
+            //UNLOCK START AND PLAYING!
+            model.StartAndPlayingMutexRealese();
             return keepOpen;
         }
-        public bool IsValid(string[] args)
+        public string IsValid(string[] args)
         {
-            return (args.Length >= 1);
+            if (args.Length < 1)
+            {
+                return "Missing argument";
+            }
+            //LOCK START AND PLAYING!
+            model.StartAndPlayingMutexWaitOn();
+            if (!model.IsGameInWaitingList(args[0]))
+            {
+                model.StartAndPlayingMutexRealese();
+                return "This game is unavailable";
+            }
+            return null;
         }
     }
 }

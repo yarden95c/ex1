@@ -41,10 +41,10 @@ namespace Server
                     }
                     catch (SocketException)
                     {
-                        break;
+                        continue;
                     }
                 }
-                Console.WriteLine("Server stopped");
+              //  Console.WriteLine("Server stopped");
             });
             task.Start();
             

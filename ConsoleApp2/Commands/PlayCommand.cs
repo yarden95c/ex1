@@ -30,21 +30,10 @@ namespace Server
         public string Execute(string[] args, TcpClient client , string closeConnection, string keepOpen)
         {
             string direction = args[0];
-            if (!directions.Contains(direction))
-            {
-                new Controller.NestedError("Not a direction", client);
-                return keepOpen;
-            }
-            Game game = this.model.FindGameByClient(client);
+            Game game = model.FindGameByClient(client);
             if (game != null)
             {
-                NestedPlay play = new NestedPlay(game.GetMaze().Name, direction);
-                TcpClient clientOpponent = game.GetOpponent(client);
-                NetworkStream stream = clientOpponent.GetStream();
-                StreamWriter writer = new StreamWriter(stream);
-                writer.WriteLine(JsonConvert.SerializeObject(play));
-                writer.Flush();
-                Thread.Sleep(200);
+                NestedPlay play = new NestedPlay(game.GetMaze().Name, direction, game.GetOpponent(client));
             }
             else
             {
@@ -53,19 +42,34 @@ namespace Server
             return keepOpen;
         }
 
-        public bool IsValid(string[] args)
+        public string IsValid(string[] args)
         {
-            return (args.Length == 1);
+            if (args.Length < 1)
+            {
+                return "Missing argument";
+            }
+            if (!directions.Contains(args[0]))
+            {
+                return "Not a direction";
+            }
+            return null;
         }
 
         public class NestedPlay
         {
             public string Name;
             public string Direction;
-            public NestedPlay(string name, string direction)
+            public NestedPlay(string name, string direction, TcpClient client)
             {
                 this.Name = name;
                 this.Direction = direction;
+                NetworkStream stream = client.GetStream();
+                StreamWriter writer = new StreamWriter(stream);
+                StreamReader reader = new StreamReader(stream);
+                writer.WriteLine(JsonConvert.SerializeObject(this));
+                writer.Flush();
+                Thread.Sleep(200);
+
             }
         }
     }

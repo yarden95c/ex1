@@ -32,9 +32,30 @@ namespace Server
             return closeConnection;
         }
 
-        public bool IsValid(string[] args)
+        public string IsValid(string[] args)
         {
-            return (args.Length >= 3);
+            if (args.Length < 3)
+            {
+                return "Missing argument";
+            }
+            try
+            {
+                if (int.Parse(args[1]) <= 0 || int.Parse(args[2]) <= 0)
+                {
+                    return "invalid input";
+                }
+            }
+            catch (System.Exception)
+            {
+                return "invalid input";
+
+            }
+            if (model.IsContainMazeForSolution(args[0]))
+            {
+                return "This name of maze ia already exist";
+            }
+
+            return null;
         }
     }
 }
