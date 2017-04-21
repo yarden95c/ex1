@@ -7,11 +7,19 @@ using System.Collections.Generic;
 
 namespace Server
 {
+    /// <summary>
+    /// play command class
+    /// </summary>
+    /// <seealso cref="Server.ICommand" />
     internal class PlayCommand : ICommand
     {
         private IModel model;
-        private List<String> directions; 
+        private List<String> directions;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayCommand"/> class.
+        /// </summary>
+        /// <param name="model">The model.</param>
         public PlayCommand(IModel model)
         {
             this.model = model;
@@ -41,7 +49,11 @@ namespace Server
             }
             return keepOpen;
         }
-
+        /// <summary>
+        /// Returns true if the inputs is valid.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <returns></returns>
         public string IsValid(string[] args)
         {
             if (args.Length < 1)
@@ -55,6 +67,9 @@ namespace Server
             return null;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public class NestedPlay
         {
             public string Name;

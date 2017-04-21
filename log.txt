@@ -1,0 +1,44 @@
+commit 31f824255ca0cbf9d4e3ce91b33875a2daa122af
+Author: yarden cohen <yarden95c@gmail.com>
+Date:   Tue Apr 18 15:20:53 2017 +0300
+
+    close command - done
+    checking inputs - done
+    :-D
+
+commit 8b3b7f7733989e60d5697c82de20d5243e4f47e4
+Author: yarden cohen <yarden95c@gmail.com>
+Date:   Sun Apr 16 21:02:15 2017 +0300
+
+    done with the play bug
+
+commit daa8f8b4e3330dcb3177bad917d1dd0e8fd87212
+Author: yarden cohen <yarden95c@gmail.com>
+Date:   Fri Apr 14 20:47:41 2017 +0300
+
+    chenges in: client, clientHandler, solution, solveMazeCommand, generateMazeCommand
+    new: SolutionInfo
+
+commit b4d5d70e81f83432a35a200dd2eda557d4ade735
+Author: yarden cohen <yarden95c@gmail.com>
+Date:   Fri Apr 14 13:50:52 2017 +0300
+
+    list and new model
+
+commit 812de348f2b7992e2750c4e1d54580488fc9315d
+Author: yarden cohen <yarden95c@gmail.com>
+Date:   Fri Apr 14 13:46:40 2017 +0300
+
+    list and model
+
+commit 42758f912e8a1d3f405c1f9d1e0d983400111678
+Author: yarden cohen <yarden95c@gmail.com>
+Date:   Mon Apr 10 19:32:58 2017 +0300
+
+    Add project files.
+
+commit 031d6eea57895bdd32b6f2d32551c457157b5968
+Author: yarden cohen <yarden95c@gmail.com>
+Date:   Mon Apr 10 19:32:56 2017 +0300
+
+    Add .gitignore and .gitattributes.

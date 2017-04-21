@@ -47,7 +47,11 @@
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="SearchAlgorithmLib">
+      <HintPath>..\..\..\..\..\Desktop\SearchAlgorithmLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -57,34 +61,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="SearchAlgorithmsLib\AbstractSearchers.cs" />
-    <Compile Include="SearchAlgorithmsLib\BFS.cs" />
-    <Compile Include="ClientHandler.cs" />
+    <Compile Include="Connect\Program.cs" />
+    <Compile Include="Connect\ClientHandler.cs" />
     <Compile Include="Commands\CloseCommand.cs" />
     <Compile Include="Commands\GenerateMazeCommand.cs" />
     <Compile Include="Commands\JoinMazeCommand.cs" />
     <Compile Include="Commands\ListOfMazeCommand.cs" />
     <Compile Include="Commands\PlayCommand.cs" />
     <Compile Include="Commands\SolveMazeCommand.cs" />
-    <Compile Include="SearchAlgorithmsLib\DFS.cs" />
     <Compile Include="Commands\ICommand.cs" />
-    <Compile Include="SearchAlgorithmsLib\ISearchable.cs" />
-    <Compile Include="SearchAlgorithmsLib\ISearcher.cs" />
-    <Compile Include="SearchAlgorithmsLib\MazeAdapter.cs" />
-    <Compile Include="SearchAlgorithmsLib\PrioritySearcher.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerConnection.cs" />
+    <Compile Include="Connect\ServerConnection.cs" />
     <Compile Include="Commands\StartMazeCommand.cs" />
-    <Compile Include="Server\Controller.cs" />
-    <Compile Include="Server\IClientHandler.cs" />
-    <Compile Include="Server\IController.cs" />
-    <Compile Include="Server\IModel.cs" />
-    <Compile Include="Server\Model.cs" />
-    <Compile Include="Server\Game.cs" />
-    <Compile Include="SearchAlgorithmsLib\Solution.cs" />
-    <Compile Include="SearchAlgorithmsLib\StackSearcher.cs" />
-    <Compile Include="SearchAlgorithmsLib\State.cs" />
+    <Compile Include="Connect\Controller.cs" />
+    <Compile Include="Connect\IClientHandler.cs" />
+    <Compile Include="Connect\IController.cs" />
+    <Compile Include="Connect\IModel.cs" />
+    <Compile Include="Connect\Model.cs" />
+    <Compile Include="Connect\Game.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

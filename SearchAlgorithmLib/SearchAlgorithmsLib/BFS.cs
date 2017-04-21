@@ -26,7 +26,7 @@ namespace Server
         /// </summary>
         /// <param name="comparer">The comparer.</param>
         public BFS(IComparer<State<T>> comparer) : base(comparer) { }
-
+        
         /// <summary>
         /// Searches the specified searchable.
         /// </summary>

@@ -6,9 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
+using MazeLib;
 
 namespace Server
 {
+    /// <summary>
+    /// solve command class
+    /// </summary>
+    /// <seealso cref="Server.ICommand" />
     class SolveMazeCommand : ICommand
     {
         private IModel model;
@@ -36,22 +41,29 @@ namespace Server
             NetworkStream stream = client.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
+            Solution<Position> s = null;
+
         
             if (algorithm == 0)
             {
-                solution = MazeAdapter.PrintSolution(model.GetBFSSolution(name));
-                getNumberEvaluated = model.GetBFSSolution(name).GetNumberEvaluated();
+                s = model.GetBFSSolution(name);
+                solution = MazeAdapter.PrintSolution(s);
+                getNumberEvaluated = s.GetNumberEvaluated();
             }
             else
             {
-                solution = MazeAdapter.PrintSolution(model.GetDFSSolution(name));
-                getNumberEvaluated = model.GetDFSSolution(name).GetNumberEvaluated();
+                s = model.GetDFSSolution(name);
+                solution = MazeAdapter.PrintSolution(s);
+                getNumberEvaluated = s.GetNumberEvaluated();
             }
             NestedSolve solve = new NestedSolve(name, solution, getNumberEvaluated);
             writer.WriteLine(JsonConvert.SerializeObject(solve));
             writer.Flush();
             return closeConnection;
         }
+        /// <summary>
+        /// nasted solve inner class
+        /// </summary>
         public class NestedSolve
         {
             public string NameOfMaze;
@@ -65,13 +77,17 @@ namespace Server
             }
         }
 
+        /// <summary>
+        /// Returns true if the inputs is valid.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <returns></returns>
         public string IsValid(string[] args)
         {
             if (args.Length < 2)
             {
                 return "Missing argument";
             }
-            
             try
             {
                 int algorithm = int.Parse(args[1]);
@@ -84,14 +100,12 @@ namespace Server
             catch (System.Exception)
             {
                 return "invalid input";
-
             }
             string name = args[0];
             if (!model.IsContainMazeForSolution(name))
             {
                 return "The maze does not exists";
             }
-
             return null;
         }
     }

@@ -10,10 +10,18 @@ using System.IO;
 
 namespace Server
 {
+    /// <summary>
+    /// controller
+    /// </summary>
+    /// <seealso cref="Server.IController" />
     class Controller : IController
     {
         private Dictionary<string, ICommand> commands;
         private IModel model;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Controller"/> class.
+        /// </summary>
         public Controller()
         {
             model = new Model();
@@ -27,6 +35,14 @@ namespace Server
             commands.Add("close", new CloseCommand(model));
             // more commands...
         }
+        /// <summary>
+        /// Executes the command.
+        /// </summary>
+        /// <param name="commandLine">The command line.</param>
+        /// <param name="client">The client.</param>
+        /// <param name="closeConnection">The close connection.</param>
+        /// <param name="keepOpen">The keep open.</param>
+        /// <returns></returns>
         public string ExecuteCommand(string commandLine, TcpClient client, string closeConnection, string keepOpen)
         {
             string[] arr = commandLine.Split(' ');
@@ -42,16 +58,23 @@ namespace Server
             string error = command.IsValid(args);
             if (error!= null)  
              {
-                //new NestedError("Missing argument", client);
                 new NestedError(error, client);
                 return closeConnection;
 
              }
             return command.Execute(args, client, closeConnection, keepOpen);
         }
+        /// <summary>
+        /// nested error - for sending messeges in Json
+        /// </summary>
         public class NestedError
         {
             public string Error;
+            /// <summary>
+            /// Initializes a new instance of the <see cref="NestedError"/> class.
+            /// </summary>
+            /// <param name="error">The error.</param>
+            /// <param name="client">The client.</param>
             public NestedError(string error, TcpClient client)
             {
                 this.Error = error;

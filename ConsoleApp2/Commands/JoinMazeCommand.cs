@@ -4,6 +4,10 @@ using System.Threading;
 
 namespace Server
 {
+    /// <summary>
+    /// join command class
+    /// </summary>
+    /// <seealso cref="Server.ICommand" />
     internal class JoinMazeCommand : ICommand
     {
         private IModel model;
@@ -41,6 +45,11 @@ namespace Server
             model.StartAndPlayingMutexRealese();
             return keepOpen;
         }
+        /// <summary>
+        /// Returns true if the inputs is valid.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
+        /// <returns></returns>
         public string IsValid(string[] args)
         {
             if (args.Length < 1)

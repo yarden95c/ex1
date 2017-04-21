@@ -40,6 +40,7 @@ namespace Server
         protected State<T> PopOpenList()
         {
             evaluatedNodes++;
+            
             return openList.Dequeue();
         }
 

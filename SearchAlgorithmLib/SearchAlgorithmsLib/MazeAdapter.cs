@@ -51,19 +51,14 @@ namespace Server
             int i = s.GetPosition().Row;
             int j = s.GetPosition().Col;
             Position position;
-            if (i + 1 < maze.Rows && maze[i + 1, j] == CellType.Free)
-            {
-                position = new Position(i + 1, j);
-                AddToNeighbours(s, position, neighbours);
-            }
             if (i > 0 && maze[i - 1, j] == CellType.Free)
             {
                 position = new Position(i - 1, j);
                 AddToNeighbours(s, position, neighbours);
             }
-            if (j + 1 < maze.Cols && maze[i, j + 1] == CellType.Free)
+            if (i + 1 < maze.Rows && maze[i + 1, j] == CellType.Free)
             {
-                position = new Position(i, j + 1);
+                position = new Position(i + 1, j);
                 AddToNeighbours(s, position, neighbours);
             }
             if (j > 0 && maze[i, j - 1] == CellType.Free)
@@ -71,6 +66,12 @@ namespace Server
                 position = new Position(i, j - 1);
                 AddToNeighbours(s, position, neighbours);
             }
+            if (j + 1 < maze.Cols && maze[i, j + 1] == CellType.Free)
+            {
+                position = new Position(i, j + 1);
+                AddToNeighbours(s, position, neighbours);
+            }
+            
             return neighbours;
         }
 

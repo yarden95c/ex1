@@ -27,6 +27,8 @@ namespace Server
 
         void StartAndPlayingMutexWaitOn();
         void StartAndPlayingMutexRealese();
+        void MazesMutexWaitOn();
+        void MazesMutexRealese();
 
 
 

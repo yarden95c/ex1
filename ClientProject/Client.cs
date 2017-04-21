@@ -1,15 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
+using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleApp2
 {
+    /// <summary>
+    /// 
+    /// </summary>
     class Client
     {
         private int port;
@@ -23,11 +24,14 @@ namespace ConsoleApp2
         private string keepOpen = "keep open";
         private string exitGame = "exit";
 
-        Mutex startPlay = new Mutex();
-        
-bool startMultyPlayerGame;
 
-        
+        bool startMultyPlayerGame;
+
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Client"/> class.
+        /// </summary>
+        /// <param name="port">The port.</param>
         public Client(int port)
         {
             this.port = port;
@@ -36,6 +40,9 @@ bool startMultyPlayerGame;
             startMultyPlayerGame = false;
         }
 
+        /// <summary>
+        /// Connects with the server
+        /// </summary>
         public void Connect()
         {
             Action action = new Action(() =>
@@ -56,7 +63,7 @@ bool startMultyPlayerGame;
                         if (result.Contains(this.closeConnection))
                         {
                             this.ChecResult(result, this.closeConnection);
-                            if(!startMultyPlayerGame)
+                            if (!startMultyPlayerGame)
                             {
                                 isOnline = false;
                                 client.Close();
@@ -70,7 +77,7 @@ bool startMultyPlayerGame;
                             this.ChecResult(result, this.keepOpen);
                             continue;
                         }
-                        
+
                         if (result != "")
                         {
                             Console.WriteLine(result);
@@ -90,7 +97,7 @@ bool startMultyPlayerGame;
                 {
                     try
                     {
-                        Console.Write("Please enter a command: \n");
+                        //  Console.Write("Please enter a command: \n");
                         string input = Console.ReadLine();
                         if (!isOnline)
                         {
@@ -112,30 +119,40 @@ bool startMultyPlayerGame;
                         client.Close();
                     }
                 }
-            }).Start(); 
-            
+            }).Start();
+
         }
+        /// <summary>
+        /// Checs the result.
+        /// </summary>
+        /// <param name="result">The result.</param>
+        /// <param name="substring">The substring.</param>
         public void ChecResult(string result, string substring)
         {
             while (result.Contains(substring) && result != substring)
             {
                 int index = result.IndexOf(substring);
-              
-                    if (index >= 0)
-                    {
+
+                if (index >= 0)
+                {
                     result = result.Remove(index, substring.Length);
-                    }
+                }
             }
-            if(!(result.Contains(closeConnection) || result.Contains(exitGame) || result.Contains(keepOpen)))
+            if (!(result.Contains(closeConnection) || result.Contains(exitGame) || result.Contains(keepOpen)))
             {
                 Console.WriteLine(result);
             }
 
         }
 
+        /// <summary>
+        /// Mains the specified arguments.
+        /// </summary>
+        /// <param name="args">The arguments.</param>
         static void Main(string[] args)
         {
-            Client c = new Client(8000);
+            string port = ConfigurationManager.AppSettings["port"].ToString();
+            Client c = new Client(int.Parse(port));
             c.Connect();
         }
 

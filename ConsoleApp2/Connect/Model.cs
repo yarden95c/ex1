@@ -5,8 +5,13 @@ using MazeGeneratorLib;
 using System.Net.Sockets;
 using System.Threading;
 
+
 namespace Server
 {
+    /// <summary>
+    /// model class
+    /// </summary>
+    /// <seealso cref="Server.IModel" />
     internal class Model : IModel
     {
         private Dictionary<string, Maze> mazes;
@@ -22,6 +27,9 @@ namespace Server
 
         private ISearcher<Position> BFS;
         private ISearcher<Position> DFS;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Model"/> class.
+        /// </summary>
         public Model()
         {
             playingGames = new Dictionary<string, Game>();
@@ -42,10 +50,8 @@ namespace Server
         /// <returns></returns>
         Maze IModel.GenerateMaze(string name, int rows, int cols)
         {
-            mazesMutex.WaitOne();
             Maze maze = this.GetMaze(name, rows, cols);
             mazes.Add(name, maze);
-            mazesMutex.ReleaseMutex();
             return maze;
 
         }
@@ -78,9 +84,15 @@ namespace Server
             }
             ISearchable<Position> mazeObjectAdapter = new MazeAdapter(mazes[name]);
             Solution<Position> solution = BFS.Search(mazeObjectAdapter);
+            State<Position>.StatePool.ClearStatePool();
             bfsMutex.ReleaseMutex();
             return solution;
         }
+        /// <summary>
+        /// Gets the DFS solution.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         Solution<Position> IModel.GetDFSSolution(string name)
         {
             dfsMutex.WaitOne();
@@ -91,21 +103,26 @@ namespace Server
             ISearchable<Position> mazeObjectAdapter = new MazeAdapter(mazes[name]);
             Solution<Position> solution = DFS.Search(mazeObjectAdapter);
             Console.WriteLine("DFS solution: ");
+            State<Position>.StatePool.ClearStatePool();
             dfsMutex.ReleaseMutex();
             return solution;
         }
+        /// <summary>
+        /// Determines whether [is contain maze for solution] [the specified name].
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>
+        ///   <c>true</c> if [is contain maze for solution] [the specified name]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsContainMazeForSolution(string name)
         {
-            mazesMutex.WaitOne();
-            if (mazes.ContainsKey(name))
-            {
-                mazesMutex.ReleaseMutex();
-                return true;
-            }
-            mazesMutex.ReleaseMutex();
-            return false;
+            return mazes.ContainsKey(name);
         }
 
+        /// <summary>
+        /// Gets the list of the games.
+        /// </summary>
+        /// <returns></returns>
         public List<string> GetList()
         {
             startMutex.WaitOne();
@@ -117,18 +134,41 @@ namespace Server
             startMutex.ReleaseMutex();
             return namesList;
         }
+        /// <summary>
+        /// Adds the start game.
+        /// </summary>
+        /// <param name="game">The game.</param>
+        /// <param name="name">The name.</param>
         public void AddStartGame(Game game, string name)
         {
             startGames.Add(name, game);
         }
+        /// <summary>
+        /// Determines whether [is game already exist] [the specified name].
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>
+        ///   <c>true</c> if [is game already exist] [the specified name]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsGameAlreadyExist(string name)
         {
             return (this.startGames.ContainsKey(name) || this.playingGames.ContainsKey(name));
         }
+        /// <summary>
+        /// Determines whether [is game in waiting list] [the specified name].
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>
+        ///   <c>true</c> if [is game in waiting list] [the specified name]; otherwise, <c>false</c>.
+        /// </returns>
         bool IsGameInWaitingList(string name)
         {
             return startGames.ContainsKey(name);
         }
+        /// <summary>
+        /// Joins to game.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public void JoinToGame(string name)
         {
             Game game = this.startGames[name];
@@ -136,11 +176,20 @@ namespace Server
             this.startGames.Remove(name);
 
         }
+        /// <summary>
+        /// Gets the game from waiting list.
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns></returns>
         public Game GetGameFromWaitingList(string name)
         {
             return this.startGames[name]; ;
         
         }
+        /// <summary>
+        /// Deletes the game from playing games.
+        /// </summary>
+        /// <param name="name">The name.</param>
         public void DeleteGameFromPlayingGames(string name)
         {
             playingMutex.WaitOne();
@@ -148,6 +197,11 @@ namespace Server
             playingMutex.ReleaseMutex();
         }
 
+        /// <summary>
+        /// Finds the game by client.
+        /// </summary>
+        /// <param name="client">The client.</param>
+        /// <returns></returns>
         public Game FindGameByClient(TcpClient client)
         {
             playingMutex.WaitOne();
@@ -163,21 +217,50 @@ namespace Server
             return null;
         }
 
+        /// <summary>
+        /// Starts the and playing mutex wait on.
+        /// </summary>
         public void StartAndPlayingMutexWaitOn()
         {
             startMutex.WaitOne();
             playingMutex.WaitOne();
         }
 
+        /// <summary>
+        /// Starts the and playing mutex realese.
+        /// </summary>
         public void StartAndPlayingMutexRealese()
         {
             startMutex.ReleaseMutex();
             playingMutex.ReleaseMutex();
         }
 
+        /// <summary>
+        /// Determines whether [is game in waiting list] [the specified name].
+        /// </summary>
+        /// <param name="name">The name.</param>
+        /// <returns>
+        ///   <c>true</c> if [is game in waiting list] [the specified name]; otherwise, <c>false</c>.
+        /// </returns>
         bool IModel.IsGameInWaitingList(string name)
         {
             return startGames.ContainsKey(name);
+        }
+
+        /// <summary>
+        /// Mazeses the mutex wait on.
+        /// </summary>
+        public void MazesMutexWaitOn()
+        {
+            mazesMutex.WaitOne();
+        }
+
+        /// <summary>
+        /// Mazeses the mutex realese.
+        /// </summary>
+        public void MazesMutexRealese()
+        {
+            mazesMutex.ReleaseMutex();
         }
     }
 }

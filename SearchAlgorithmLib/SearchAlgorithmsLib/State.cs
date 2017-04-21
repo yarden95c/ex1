@@ -211,11 +211,11 @@ namespace Server
             public int Compare(State<T> x, State<T> y)
             {
                 float hefresh = x.Cost - y.Cost;
-                if (hefresh > 0)
+                if (hefresh < 0)
                 {
                     return 1;
                 }
-                if (hefresh < 0)
+                if (hefresh > 0)
                 {
                     return -1;
                 }

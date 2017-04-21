@@ -15,7 +15,6 @@ namespace Server
     public class Solution<T>
     {
         private List<State<T>> solutionList;
-        private int numberOfStepst;
         private int numberOfStepsCalculate;
         private string name;
 
@@ -25,7 +24,6 @@ namespace Server
         public Solution()
         {
             this.solutionList = null;
-            this.numberOfStepst = 0;
             this.numberOfStepsCalculate = 0;
         }
 
@@ -38,7 +36,6 @@ namespace Server
         public Solution(List<State<T>> listSolution, int number, string name)
         {
             this.solutionList = listSolution;
-            this.numberOfStepst = this.solutionList.Count();
             this.numberOfStepsCalculate = number;
             this.name = name;
         }
@@ -75,7 +72,6 @@ namespace Server
         /// </summary>
         public void PrintSolution()
         {
-            Console.WriteLine(this.numberOfStepst);
             Console.WriteLine(this.name);
             Console.WriteLine(this.numberOfStepsCalculate);
             //   foreach (State<T> i in this.solutionList)
@@ -89,7 +85,7 @@ namespace Server
          }*/
         public int GetNumberEvaluated()
         {
-            return this.numberOfStepst;
+            return this.numberOfStepsCalculate;
         }
     }
 }
