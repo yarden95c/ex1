@@ -13,16 +13,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfClient
+namespace ClientWpf
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for DetailesComtroller.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class DetailesController : UserControl
     {
-        public MainWindow()
+        public DetailesController()
         {
             InitializeComponent();
+            txtRows.Text = Properties.Settings.Default.MazeRows.ToString();
+            txtCols.Text = Properties.Settings.Default.MazeCols.ToString();
         }
     }
 }

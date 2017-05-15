@@ -52,6 +52,7 @@ namespace Server
         {
             Maze maze = this.GetMaze(name, rows, cols);
             mazes.Add(name, maze);
+      
             return maze;
 
         }

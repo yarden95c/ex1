@@ -1,0 +1,16 @@
+﻿<Window x:Class="ClientWpf.SinglePlayerMazeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ClientWpf"
+        xmlns:controls="clr-namespace:ClientWpf"
+        mc:Ignorable="d"
+        Title="{Binding VM_NameOfMaze}" Height="600" Width="600">
+    <Grid>
+        <Button x:Name="RestartGame" Content="Restart game" HorizontalAlignment="Left" Margin="377,15,0,0" VerticalAlignment="Top" Width="108" Click="RestartGame_Click" Height="40" />
+        <Button x:Name="SolveMaze" Content="Solve maze" HorizontalAlignment="Left" Margin="228,15,0,0" VerticalAlignment="Top" Width="116" Click="SolveMaze_Click" Height="40"/>
+        <Button x:Name="MainMenu" Content="Main menu" HorizontalAlignment="Left" Margin="90,15,0,0" VerticalAlignment="Top" Width="113" Click="MainMenu_Click" RenderTransformOrigin="1.84,0.75" Height="40"/>
+        <local:MazeControl x:Name="mazeControl" Rows="{Binding VM_MazeRows}" Cols="{Binding VM_MazeColums}" MazeString="{Binding VM_MazeString}" EndPoint="{Binding VM_EndPoint}" StartPoint="{Binding VM_StartPoint}" Canvas.Top="113" Margin="49,60,43,10" />
+    </Grid>
+</Window>

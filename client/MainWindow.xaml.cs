@@ -36,7 +36,10 @@ namespace client
         private void settingButton_Click(object sender, RoutedEventArgs e)
         {
 
-            settingWindow = new SettingWindow();            settingWindow.ShowDialog();           // this.Close();
+            settingWindow = new SettingWindow();
+            settingWindow.ShowDialog();
+           // this.Close();
+
 
         }
     }

@@ -1,0 +1,27 @@
+﻿<UserControl x:Name="mazeControl" x:Class="ClientWpf.MazeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+
+        <Viewbox>
+            <Border BorderBrush="Black" BorderThickness="3">
+                <Canvas x:Name="myCanvas" Width="500" Height="500">
+                </Canvas>
+            </Border>
+        </Viewbox>
+        <Rectangle>
+            <Rectangle.Fill>
+                <ImageBrush x:Name="startImage" ImageSource="minyon.jpeg" Stretch="Fill"/>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Rectangle>
+            <Rectangle.Fill>
+                <ImageBrush x:Name="endImage" ImageSource="exit.jpg" Stretch="Fill"/>
+            </Rectangle.Fill>
+        </Rectangle>
+    </Grid>
+</UserControl>

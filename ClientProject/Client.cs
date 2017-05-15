@@ -5,14 +5,17 @@ using System.Net.Sockets;
 using System.Configuration;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Text;
 
-namespace ConsoleApp2
+namespace ClientWpf
 {
     /// <summary>
     /// 
     /// </summary>
     class Client
     {
+       // private StringBuilder solve;
         private int port;
         private bool isOnline;
         private IPEndPoint ep;
@@ -23,21 +26,22 @@ namespace ConsoleApp2
         private string closeConnection = "close connection";
         private string keepOpen = "keep open";
         private string exitGame = "exit";
-
-
+        private Queue<string> commands;
+        private Queue<string> answersFromServer;
         bool startMultyPlayerGame;
-
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
         /// <param name="port">The port.</param>
-        public Client(int port)
+        public Client()
         {
-            this.port = port;
+            this.port = Properties.Settings.Default.ServerPort;
             isOnline = false;
-            ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), this.port);
+            ep = new IPEndPoint(IPAddress.Parse(Properties.Settings.Default.ServerIP), this.port);
             startMultyPlayerGame = false;
+            this.commands = new Queue<string>();
+            this.answersFromServer = new Queue<string>();
         }
 
         /// <summary>
@@ -51,6 +55,7 @@ namespace ConsoleApp2
                 {
                     try
                     {
+                       // Console.WriteLine("read line");
                         string result = reader.ReadLine();
                         if (result.Contains(this.exitGame))
                         {
@@ -78,9 +83,14 @@ namespace ConsoleApp2
                             continue;
                         }
 
-                        if (result != "")
+                        if (result != " ")
                         {
+                            this.answersFromServer.Enqueue(result.ToString());
                             Console.WriteLine(result);
+                        }
+                        else
+                        {
+                           // this.answersFromServer.Enqueue(solve.ToString());
                         }
                     }
 
@@ -97,21 +107,28 @@ namespace ConsoleApp2
                 {
                     try
                     {
-                        //  Console.Write("Please enter a command: \n");
-                        string input = Console.ReadLine();
-                        if (!isOnline)
+                        if (this.commands.Count > 0)
                         {
-                            client = new TcpClient();
-                            client.Connect(ep);
-                            stream = client.GetStream();
-                            reader = new StreamReader(stream);
-                            writer = new StreamWriter(stream);
-                            isOnline = true;
-                            new Task(action).Start();
+                            string input = this.commands.Dequeue();
+                            Console.WriteLine(input);
+                            if (!isOnline)
+                            {
+                                client = new TcpClient();
+                                client.Connect(ep);
+                                stream = client.GetStream();
+                                reader = new StreamReader(stream);
+                                writer = new StreamWriter(stream);
+                                isOnline = true;
+                                new Task(action).Start();
+                            }
+                            writer.WriteLine(input);
+                            writer.Flush();
+                            Thread.Sleep(300);
                         }
-                        writer.WriteLine(input);
-                        writer.Flush();
-                        Thread.Sleep(300);
+                        else
+                        {
+                            Thread.Sleep(300);
+                        }
                     }
                     catch (Exception)
                     {
@@ -144,16 +161,19 @@ namespace ConsoleApp2
             }
 
         }
-
-        /// <summary>
-        /// Mains the specified arguments.
-        /// </summary>
-        /// <param name="args">The arguments.</param>
-        static void Main(string[] args)
+        public void AddCommand(string command)
         {
-            string port = ConfigurationManager.AppSettings["port"].ToString();
-            Client c = new Client(int.Parse(port));
-            c.Connect();
+            this.commands.Enqueue(command);
+        }
+        public string GetAnswer()
+        {
+            while (true)
+            {
+                if (this.answersFromServer.Count == 0)
+                    Thread.Sleep(300);
+                else
+                    return this.answersFromServer.Dequeue();
+            }
         }
 
     }

@@ -42,8 +42,9 @@ namespace Server
             NetworkStream stream = client.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine(maze.ToJSON());
+            writer.WriteLine(maze.ToJSON().Replace("\r\n", ""));
             writer.Flush();
+            Console.WriteLine(maze.ToJSON());
             model.MazesMutexRealese();
             return closeConnection;
         }
