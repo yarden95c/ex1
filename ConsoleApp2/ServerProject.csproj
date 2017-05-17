@@ -39,10 +39,10 @@
       <HintPath>..\packages\Academy.Numerics.2.0.550.0\lib\net45\Academy.Numerics.dll</HintPath>
     </Reference>
     <Reference Include="MazeGeneratorLib">
-      <HintPath>..\..\..\..\..\Desktop\תכנות מתקדם 2\MazeGeneratorLib.dll</HintPath>
+      <HintPath>..\..\..\MazeGeneratorLib.dll</HintPath>
     </Reference>
     <Reference Include="MazeLib">
-      <HintPath>..\..\..\..\..\Desktop\תכנות מתקדם 2\MazeLib.dll</HintPath>
+      <HintPath>..\..\..\MazeLib.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -79,6 +79,16 @@
     <Compile Include="Connect\IModel.cs" />
     <Compile Include="Connect\Model.cs" />
     <Compile Include="Connect\Game.cs" />
+    <Compile Include="SearchAlgorithmsLib\AbstractSearchers.cs" />
+    <Compile Include="SearchAlgorithmsLib\BFS.cs" />
+    <Compile Include="SearchAlgorithmsLib\DFS.cs" />
+    <Compile Include="SearchAlgorithmsLib\ISearchable.cs" />
+    <Compile Include="SearchAlgorithmsLib\ISearcher.cs" />
+    <Compile Include="SearchAlgorithmsLib\MazeAdapter.cs" />
+    <Compile Include="SearchAlgorithmsLib\PrioritySearcher.cs" />
+    <Compile Include="SearchAlgorithmsLib\Solution.cs" />
+    <Compile Include="SearchAlgorithmsLib\StackSearcher.cs" />
+    <Compile Include="SearchAlgorithmsLib\State.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
