@@ -33,7 +33,7 @@
         <TextBlock Grid.Row="1">Server Port:</TextBlock>
         <TextBox x:Name="txtPort" Grid.Row="1" Grid.Column="2" Text="{Binding VM_ServerPort}"></TextBox>
         <TextBlock Grid.Row="2">Maze rows:</TextBlock>
-        <TextBox x:Name="txtRows" Grid.Row="2" Grid.Column="2" Text="{Binding VM_MazeRows}"></TextBox>
+        <TextBox x:Name="txtRows" Grid.Row="2" Grid.Column="2" Text="{Binding VM_MazeRows}" TextChanged="txtRows_TextChanged"></TextBox>
         <TextBlock Grid.Row="3">Maze columns:</TextBlock>
         <TextBox x:Name="txtCols" Grid.Row="3" Grid.Column="2" Text="{Binding VM_MazeCols}"></TextBox>
         <TextBlock Grid.Row="4">Search algorithm:</TextBlock>

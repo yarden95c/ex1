@@ -42,5 +42,9 @@ namespace ClientWpf
             this.Close();
         }
 
+        private void txtRows_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
     }
 }
