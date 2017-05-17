@@ -87,11 +87,13 @@
     <Compile Include="DetailesController.xaml.cs">
       <DependentUpon>DetailesController.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DialogBox.xaml.cs">
+      <DependentUpon>DialogBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ISinglePlayerModel.cs" />
     <Compile Include="MazeControl.xaml.cs">
       <DependentUpon>MazeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Location.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsViewModel.cs" />
     <Compile Include="SettingsWindow.xaml.cs">
@@ -108,7 +110,14 @@
       <DependentUpon>SinglePlayerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
+    <Compile Include="WinWindow.xaml.cs">
+      <DependentUpon>WinWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="DetailesController.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DialogBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -139,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SinglePlayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WinWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,6 +213,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="exit.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Settings\" />
+    <Folder Include="SinglePlayer\" />
+    <Folder Include="Windows\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

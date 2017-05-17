@@ -82,7 +82,7 @@ namespace Server
                 StreamReader reader = new StreamReader(stream);
                 StreamWriter writer = new StreamWriter(stream);
                 writer.WriteLine(JsonConvert.SerializeObject(this));
-                writer.Flush();   
+                writer.Flush();
             }
         }
     }

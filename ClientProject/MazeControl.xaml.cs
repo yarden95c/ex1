@@ -1,6 +1,7 @@
 ﻿using MazeLib;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -18,8 +19,10 @@ namespace ClientWpf
         private Maze mazeInfo;
         private Position startPoint;
         private Position endPoint;
-     //   private Position currPoint;
-        
+        private Position currPoint;
+        private WinWindow winWindow;
+
+
         public MazeControl()
         {
             InitializeComponent();
@@ -28,6 +31,7 @@ namespace ClientWpf
             hight = myCanvas.Height;
             Content = grid; // the content is grid.
             grid.ShowGridLines = true;
+            winWindow = new WinWindow();
         }
         public Position StartPoint
         {
@@ -37,12 +41,13 @@ namespace ClientWpf
             }
             set
             {
+
                 this.startPoint = value;
-                
+               // grid.Children.Add(this.GetRectForGrid(StartPoint.Row, StartPoint.Col, startImage));
             }
         }
-    public Position EndPoint
-    {
+        public Position EndPoint
+        {
             get
             {
                 return this.endPoint;
@@ -50,9 +55,23 @@ namespace ClientWpf
             set
             {
                 this.endPoint = value;
+                grid.Children.Add(this.GetRectForGrid(EndPoint.Row, EndPoint.Col, endImage));
             }
-    }
-    public string PlayerImageFile
+        }
+        public Position CurrPoint
+        {
+            get
+            {
+                return this.currPoint;
+            }
+            set
+            {
+
+                this.currPoint = value;
+                grid.Children.Add(this.GetRectForGrid(CurrPoint.Row, CurrPoint.Col, startImage));
+            }
+        }
+        public string PlayerImageFile
         {
             get;
             set;
@@ -81,16 +100,13 @@ namespace ClientWpf
         {
             get
             {
-
                 return this.mazeString;
             }
             set
             {
                 this.MazeInfo = Maze.FromJSON(value);
-                string[] v = value.Split(',');
-                string[] m = v[1].Split(':');
-                this.mazeString = m[1];
-                this.DrawMaze(this.mazeString);
+                this.mazeString = this.mazeInfo.Name;
+                this.DrawMaze();
             }
         }
         public Maze MazeInfo
@@ -99,10 +115,12 @@ namespace ClientWpf
             {
                 this.mazeInfo = value;
                 this.StartPoint = this.mazeInfo.InitialPos;
-                this.endPoint = this.mazeInfo.GoalPos;
+                this.EndPoint = this.mazeInfo.GoalPos;
+                this.CurrPoint = this.StartPoint;
+
             }
         }
-        
+
         // Using a DependencyProperty as the backing store for StringOfMaze.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MazeStringD =
             DependencyProperty.Register("MazeString", typeof(string), typeof(MazeControl),
@@ -123,14 +141,6 @@ namespace ClientWpf
         public static readonly DependencyProperty EndPointD =
            DependencyProperty.Register("EndPoint", typeof(Position), typeof(MazeControl),
                new PropertyMetadata(EndPointChanges));
-
-        public static readonly DependencyProperty PlayerImageFiles =
-           DependencyProperty.Register("PlayerImageFile", typeof(string), typeof(MazeControl),
-               new PropertyMetadata(PlayerImageFileChanges));
-
-        public static readonly DependencyProperty ExitImageFiled =
-           DependencyProperty.Register("ExitImageFile", typeof(string), typeof(MazeControl),
-               new PropertyMetadata(ExitImageFileChanges));
 
         public static readonly DependencyProperty NameD =
          DependencyProperty.Register("Name", typeof(string), typeof(MazeControl),
@@ -162,49 +172,29 @@ namespace ClientWpf
             MazeControl mc = (MazeControl)d;
             mc.EndPoint = (Position)e.NewValue;
         }
-        private static void PlayerImageFileChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            MazeControl mc = (MazeControl)d;
-            mc.PlayerImageFile = (string)e.NewValue;
-        }
-        private static void ExitImageFileChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            MazeControl mc = (MazeControl)d;
-            mc.ExitImageFile = (string)e.NewValue;
-        }
+
         private static void NameChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeControl mc = (MazeControl)d;
             mc.Name = (string)e.NewValue;
         }
 
-        public void DrawMaze(string mazeStringRepresinatation)
+        public void DrawMaze()
         {
             SetRowsOfGrid();
             SetColsOfGrid();
-            int k = 0;
-            while (mazeStringRepresinatation[k] != '0' && mazeStringRepresinatation[k] != '1')
-            {
-                k++;
-            }
+            Brush black = new SolidColorBrush(Colors.Black);
+
             for (int i = 0; i < Rows; i++)
             {
                 for (int j = 0; j < Cols; j++)
                 {
-                    Brush white = new SolidColorBrush(Colors.White);
-                    Brush black = new SolidColorBrush(Colors.Black);
-                    if (mazeStringRepresinatation[k++] == '0')
-                    {
-                        grid.Children.Add(this.GetRectForGrid(i, j, white)); // its not a wall
-                    }
-                    else
+                    if (this.mazeInfo[i, j] == CellType.Wall)
                     {
                         grid.Children.Add(this.GetRectForGrid(i, j, black)); // its a wall
                     }
-                 }
+                }
             }
-            grid.Children.Add(this.GetRectForGrid(StartPoint.Row, StartPoint.Col, startImage));
-            grid.Children.Add(this.GetRectForGrid(EndPoint.Row, EndPoint.Col, endImage));
         }
 
         private void SetRowsOfGrid()
@@ -226,16 +216,75 @@ namespace ClientWpf
         }
         public Rectangle GetRectForGrid(int i, int j, Brush fill)
         {
-            double hightRect = this.hight / Rows;
-            double widthRect = this.width / Cols;
             Rectangle rect = new Rectangle();
-            rect.Height = hightRect;
-            rect.Width = widthRect;
+            rect.Height = this.hight / Rows;
+            rect.Width = this.width / Cols;
             Grid.SetRow(rect, i);
             Grid.SetColumn(rect, j);
             rect.Fill = fill;
             return rect;
         }
+
+        public void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            int row = CurrPoint.Row, col = CurrPoint.Col;
+            Position newPosition = new Position();
+            
+            switch (e.Key)
+            {
+                case Key.Down:
+                    row = CurrPoint.Row + 1;
+                    break;
+                case Key.Up:
+                    row = CurrPoint.Row - 1;
+                    break;
+                case Key.Left:
+                    col = CurrPoint.Col - 1;
+                    break;
+                case Key.Right:
+                    col = CurrPoint.Col + 1;
+                    break;
+                default:
+                    break;
+            }
+            newPosition.Row = row;
+            newPosition.Col = col;
+            //if (row >= 0 && row < Rows && col >= 0 && col < Cols)
+            //{
+            //    int i = CurrPoint.Row, j = CurrPoint.Col;
+            //    if (this.mazeInfo[row, col] == CellType.Free)
+            //    {
+            //        if(row == this.endPoint.Row && col == this.endPoint.Col)
+            //        {
+            //            winWindow.ShowDialog();
+            //        }
+            //        CurrPoint = newPosition;
+            //        grid.Children.Add(this.GetRectForGrid(i, j, new SolidColorBrush(Colors.White))); // its not a wall
+            //    }
+
+            //}
+            this.InitializeCurrPoint(newPosition);
+            
+        }
+        public void InitializeCurrPoint(Position newPoint)
+        {
+            int row = newPoint.Row;
+            int col = newPoint.Col;
+            if (row >= 0 && row < Rows && col >= 0 && col < Cols)
+            {
+                int i = CurrPoint.Row, j = CurrPoint.Col;
+                if (this.mazeInfo[row, col] == CellType.Free)
+                {
+                    if (row == this.endPoint.Row && col == this.endPoint.Col)
+                    {
+                        winWindow.ShowDialog();
+                    }
+                    CurrPoint = newPoint;
+                    grid.Children.Add(this.GetRectForGrid(i, j, new SolidColorBrush(Colors.White))); // its not a wall
+                }
+
+            }
+        }
     }
-    
+
 }

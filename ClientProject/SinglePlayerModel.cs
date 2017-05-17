@@ -1,5 +1,6 @@
 ﻿
 using MazeLib;
+using Newtonsoft.Json.Linq;
 
 namespace ClientWpf
 {
@@ -46,13 +47,19 @@ namespace ClientWpf
         {
             string command = "generate" + " " + this.NameOfMaze + " "
                 + this.MazeRows + " " + this.MazeColums;
-            this.client.AddCommand(command);
-            this.client.Connect();
-            string maze = this.client.GetAnswer();
-            this.StartPoint =Maze.FromJSON(maze).InitialPos;
-            this.EndPoint = Maze.FromJSON(maze).GoalPos;
+            string maze = this.GetCommand(command);
+            //JObject jObject = JObject.Parse(maze);
+         //   this.StartPoint =Maze.FromJSON(maze).InitialPos;
+           // this.EndPoint = Maze.FromJSON(maze).GoalPos;
             return maze;
         }
+        private string GetCommand(string command)
+        {
+            this.client.AddCommand(command);
+            this.client.Connect();
+            return this.client.GetAnswer();
+        }
+
         
     }
 }
