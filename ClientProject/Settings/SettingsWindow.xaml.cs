@@ -14,6 +14,7 @@ namespace ClientWpf
         public SettingsWindow()
         {
             InitializeComponent();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             vm = new SettingsViewModel(new SettingsModel());
             this.DataContext = vm;
         }
@@ -25,7 +26,9 @@ namespace ClientWpf
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
             vm.VM_SaveSettings();
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            //MainWindow win = (MainWindow)Application.Current.MainWindow;
+            MainWindow win = new MainWindow();
+
             win.Show();
             this.Close();
         }
@@ -37,7 +40,8 @@ namespace ClientWpf
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             vm.VM_Reset();
-            MainWindow win = (MainWindow)Application.Current.MainWindow;
+            //  MainWindow win = (MainWindow)Application.Current.MainWindow;
+            MainWindow win = new MainWindow();
             win.Show();
             this.Close();
         }

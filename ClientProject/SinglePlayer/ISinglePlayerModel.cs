@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ClientWpf
 {
-    interface ISinglePlayerModel
+    public interface ISinglePlayerModel
     {
         string NameOfMaze { get; set; }
         int MazeColums { get; set; }
@@ -16,5 +16,8 @@ namespace ClientWpf
          string GenerateMaze();
         Position EndPoint { get; set; }
         Position StartPoint { get; set; }
+        string SolveMaze();
+        void DeleteSingleGame();
+
     }
 }

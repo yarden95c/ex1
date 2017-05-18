@@ -22,6 +22,7 @@ namespace ClientWpf
         public WinWindow()
         {
             InitializeComponent();
+
         }
     }
 }

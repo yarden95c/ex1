@@ -33,6 +33,7 @@ namespace Server
             commands.Add("join", new JoinMazeCommand(model));
             commands.Add("play", new PlayCommand(model));
             commands.Add("close", new CloseCommand(model));
+            commands.Add("delete", new DeleteGameCommand(model));
             // more commands...
         }
         /// <summary>

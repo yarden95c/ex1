@@ -20,7 +20,6 @@ namespace ClientWpf
         private Position startPoint;
         private Position endPoint;
         private Position currPoint;
-        private WinWindow winWindow;
 
 
         public MazeControl()
@@ -31,7 +30,6 @@ namespace ClientWpf
             hight = myCanvas.Height;
             Content = grid; // the content is grid.
             grid.ShowGridLines = true;
-            winWindow = new WinWindow();
         }
         public Position StartPoint
         {
@@ -41,9 +39,7 @@ namespace ClientWpf
             }
             set
             {
-
                 this.startPoint = value;
-               // grid.Children.Add(this.GetRectForGrid(StartPoint.Row, StartPoint.Col, startImage));
             }
         }
         public Position EndPoint
@@ -55,7 +51,7 @@ namespace ClientWpf
             set
             {
                 this.endPoint = value;
-                grid.Children.Add(this.GetRectForGrid(EndPoint.Row, EndPoint.Col, endImage));
+                this.grid.Children.Add(this.GetRectForGrid(EndPoint.Row, EndPoint.Col, endImage));
             }
         }
         public Position CurrPoint
@@ -66,22 +62,14 @@ namespace ClientWpf
             }
             set
             {
-
                 this.currPoint = value;
-                grid.Children.Add(this.GetRectForGrid(CurrPoint.Row, CurrPoint.Col, startImage));
+                this.Dispatcher.Invoke(() =>
+                {
+                    this.grid.Children.Add(this.GetRectForGrid(CurrPoint.Row, CurrPoint.Col, startImage));
+                });
             }
         }
-        public string PlayerImageFile
-        {
-            get;
-            set;
-        }
         public string Name2
-        {
-            get;
-            set;
-        }
-        public string ExitImageFile
         {
             get;
             set;
@@ -117,7 +105,6 @@ namespace ClientWpf
                 this.StartPoint = this.mazeInfo.InitialPos;
                 this.EndPoint = this.mazeInfo.GoalPos;
                 this.CurrPoint = this.StartPoint;
-
             }
         }
 
@@ -225,65 +212,27 @@ namespace ClientWpf
             return rect;
         }
 
-        public void Grid_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            int row = CurrPoint.Row, col = CurrPoint.Col;
-            Position newPosition = new Position();
-            
-            switch (e.Key)
-            {
-                case Key.Down:
-                    row = CurrPoint.Row + 1;
-                    break;
-                case Key.Up:
-                    row = CurrPoint.Row - 1;
-                    break;
-                case Key.Left:
-                    col = CurrPoint.Col - 1;
-                    break;
-                case Key.Right:
-                    col = CurrPoint.Col + 1;
-                    break;
-                default:
-                    break;
-            }
-            newPosition.Row = row;
-            newPosition.Col = col;
-            //if (row >= 0 && row < Rows && col >= 0 && col < Cols)
-            //{
-            //    int i = CurrPoint.Row, j = CurrPoint.Col;
-            //    if (this.mazeInfo[row, col] == CellType.Free)
-            //    {
-            //        if(row == this.endPoint.Row && col == this.endPoint.Col)
-            //        {
-            //            winWindow.ShowDialog();
-            //        }
-            //        CurrPoint = newPosition;
-            //        grid.Children.Add(this.GetRectForGrid(i, j, new SolidColorBrush(Colors.White))); // its not a wall
-            //    }
-
-            //}
-            this.InitializeCurrPoint(newPosition);
-            
-        }
-        public void InitializeCurrPoint(Position newPoint)
+        public void SetCurrPoint(Position newPoint)
         {
             int row = newPoint.Row;
             int col = newPoint.Col;
+
             if (row >= 0 && row < Rows && col >= 0 && col < Cols)
             {
                 int i = CurrPoint.Row, j = CurrPoint.Col;
                 if (this.mazeInfo[row, col] == CellType.Free)
                 {
-                    if (row == this.endPoint.Row && col == this.endPoint.Col)
+                    this.Dispatcher.Invoke(() =>
                     {
-                        winWindow.ShowDialog();
-                    }
+                        grid.Children.Add(this.GetRectForGrid(i, j, new SolidColorBrush(Colors.White))); // its not a wall
+                    });
                     CurrPoint = newPoint;
-                    grid.Children.Add(this.GetRectForGrid(i, j, new SolidColorBrush(Colors.White))); // its not a wall
                 }
-
             }
+        }
+        public bool AreEqualPositions(Position p1, Position p2)
+        {
+            return (p1.Row == p2.Row) && (p1.Col == p2.Col);
         }
     }
 

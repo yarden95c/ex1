@@ -20,7 +20,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <controls:DetailesController Grid.Column="1" Grid.Row="3">
+        <controls:DetailesController x:Name="detailsControl" Grid.Column="1" Grid.Row="3">
            
         </controls:DetailesController>
         <Button x:Name="button" Content="Ok" Grid.Column="1" HorizontalAlignment="Left" Margin="172,377,0,-72" Grid.Row="3" VerticalAlignment="Top" Width="76" Click="button_Click_1"/>
