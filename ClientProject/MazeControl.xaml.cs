@@ -43,7 +43,7 @@ namespace ClientWpf
             {
 
                 this.startPoint = value;
-               // grid.Children.Add(this.GetRectForGrid(StartPoint.Row, StartPoint.Col, startImage));
+                // grid.Children.Add(this.GetRectForGrid(StartPoint.Row, StartPoint.Col, startImage));
             }
         }
         public Position EndPoint
@@ -229,7 +229,7 @@ namespace ClientWpf
         {
             int row = CurrPoint.Row, col = CurrPoint.Col;
             Position newPosition = new Position();
-            
+
             switch (e.Key)
             {
                 case Key.Down:
@@ -264,7 +264,7 @@ namespace ClientWpf
 
             //}
             this.InitializeCurrPoint(newPosition);
-            
+
         }
         public void InitializeCurrPoint(Position newPoint)
         {

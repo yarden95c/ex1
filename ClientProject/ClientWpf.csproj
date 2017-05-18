@@ -110,7 +110,6 @@
       <DependentUpon>SinglePlayerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
-    <Compile Include="YaradenIDidIt!!!!!.cs" />
     <Page Include="DetailesController.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
