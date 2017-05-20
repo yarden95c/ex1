@@ -15,7 +15,6 @@ namespace ClientWpf
     /// </summary>
     class Client
     {
-       // private StringBuilder solve;
         private int port;
         private bool isOnline;
         private IPEndPoint ep;
@@ -43,7 +42,6 @@ namespace ClientWpf
             this.commands = new Queue<string>();
             this.answersFromServer = new Queue<string>();
         }
-
         /// <summary>
         /// Connects with the server
         /// </summary>
@@ -175,6 +173,5 @@ namespace ClientWpf
                     return this.answersFromServer.Dequeue();
             }
         }
-
     }
 }

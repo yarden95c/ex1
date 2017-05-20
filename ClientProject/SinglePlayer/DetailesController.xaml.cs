@@ -23,8 +23,6 @@ namespace ClientWpf
         public DetailesController()
         {
             InitializeComponent();
-            txtRows.Text = Properties.Settings.Default.MazeRows.ToString();
-            txtCols.Text = Properties.Settings.Default.MazeCols.ToString();
         }
     }
 }

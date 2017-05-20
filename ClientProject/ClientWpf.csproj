@@ -84,41 +84,37 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Client.cs" />
-    <Compile Include="DetailesController.xaml.cs">
+    <Compile Include="SinglePlayer\DetailesController.xaml.cs">
       <DependentUpon>DetailesController.xaml</DependentUpon>
     </Compile>
-    <Compile Include="DialogBox.xaml.cs">
-      <DependentUpon>DialogBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ISinglePlayerModel.cs" />
-    <Compile Include="MazeControl.xaml.cs">
+    <Compile Include="SinglePlayer\ISinglePlayerModel.cs" />
+    <Compile Include="SinglePlayer\MazeControl.xaml.cs">
       <DependentUpon>MazeControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
-    <Compile Include="SettingsViewModel.cs" />
-    <Compile Include="SettingsWindow.xaml.cs">
+    <Compile Include="Settings\Settings.cs" />
+    <Compile Include="Settings\SettingsViewModel.cs" />
+    <Compile Include="Settings\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SinglePlayerMazeWindow.xaml.cs">
+    <Compile Include="SinglePlayer\SinglePlayerMazeWindow.xaml.cs">
       <DependentUpon>SinglePlayerMazeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SinglePlayerModel.cs" />
-    <Compile Include="SinglePlayerViewModel.cs">
+    <Compile Include="SinglePlayer\SinglePlayerModel.cs" />
+    <Compile Include="SinglePlayer\SinglePlayerViewModel.cs">
       <Generator>MSBuild:Compile</Generator>
     </Compile>
-    <Compile Include="SinglePlayerWindow.xaml.cs">
+    <Compile Include="SinglePlayer\SinglePlayerWindow.xaml.cs">
       <DependentUpon>SinglePlayerWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel.cs" />
-    <Page Include="DetailesController.xaml">
+    <Compile Include="Windows\WinWindow.xaml.cs">
+      <DependentUpon>WinWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="SinglePlayer\DetailesController.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="DialogBox.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Windows\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -126,29 +122,29 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SettingsModel.cs" />
-    <Compile Include="ISettingsModel.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Settings\SettingsModel.cs" />
+    <Compile Include="Settings\ISettingsModel.cs" />
+    <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MazeControl.xaml">
+    <Page Include="SinglePlayer\MazeControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SettingsWindow.xaml">
+    <Page Include="Settings\SettingsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SinglePlayerMazeWindow.xaml">
+    <Page Include="SinglePlayer\SinglePlayerMazeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SinglePlayerWindow.xaml">
+    <Page Include="SinglePlayer\SinglePlayerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="WinWindow.xaml">
+    <Page Include="Windows\WinWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,7 +167,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="packages.config" />
+    <None Include="Windows\packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -203,18 +199,14 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo.jpg" />
+    <Resource Include="Windows\logo.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="minyon.jpeg" />
+    <Resource Include="SinglePlayer\minyon.jpeg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="exit.jpg" />
+    <Resource Include="SinglePlayer\exit.jpg" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Settings\" />
-    <Folder Include="SinglePlayer\" />
-    <Folder Include="Windows\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

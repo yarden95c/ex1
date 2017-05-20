@@ -11,7 +11,10 @@ namespace ClientWpf
         public SinglePlayerWindow()
         {
             InitializeComponent();
-            vm = new SinglePlayerViewModel(new SinglePlayerModel());
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            vm = SinglePlayerViewModel.Instance(SinglePlayerModel.Instance);
+            vm.VM_MazeRows = Properties.Settings.Default.MazeRows;
+            vm.VM_MazeColums = Properties.Settings.Default.MazeCols;
             this.DataContext = vm;
         }
 

@@ -14,7 +14,8 @@ namespace ClientWpf
         public MainWindow()
         {
             InitializeComponent();
-           // Properties.Settings.Default.Reset();
+            this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
+            // Properties.Settings.Default.Reset();
         }
 
         private void singlePlayerButton_Click(object sender, RoutedEventArgs e)
@@ -27,8 +28,8 @@ namespace ClientWpf
         private void settingButton_Click(object sender, RoutedEventArgs e)
         {
           settingWindow = new SettingsWindow();
-            settingWindow.ShowDialog();
-            //this.Close();
+          settingWindow.Show();
+          this.Close();
         }
     }
 }

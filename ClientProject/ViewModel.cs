@@ -2,7 +2,7 @@
 
 namespace ClientWpf
 {
-    abstract class ViewModel : INotifyPropertyChanged
+    abstract public class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         /// <summary>

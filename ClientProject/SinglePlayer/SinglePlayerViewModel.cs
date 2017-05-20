@@ -1,15 +1,29 @@
 ﻿using MazeLib;
+using System.Threading;
 
 namespace ClientWpf
 {
     class SinglePlayerViewModel : ViewModel
     {
         private ISinglePlayerModel model;
-
-        public SinglePlayerViewModel(ISinglePlayerModel model)
+        private static SinglePlayerViewModel instance;
+        private static Mutex instanceMutex = new Mutex();
+        private SinglePlayerViewModel(ISinglePlayerModel model)
         {
-
             this.model = model;
+
+        }
+        public static SinglePlayerViewModel Instance(ISinglePlayerModel model)
+        {
+            
+                instanceMutex.WaitOne();
+                if (instance == null)
+                {
+                    instance = new SinglePlayerViewModel(model);
+                }
+                instanceMutex.ReleaseMutex();
+                return instance;
+            
         }
         public string VM_NameOfMaze
         {
@@ -74,6 +88,14 @@ namespace ClientWpf
         public void VM_GenerateMaze()
         {
             this.VM_MazeString = this.model.GenerateMaze();
+        }
+        public string VM_SolveMaze()
+        {
+            return this.model.SolveMaze();
+        }
+        public void VM_Delete()
+        {
+            this.model.DeleteSingleGame();
         }
     }
 }

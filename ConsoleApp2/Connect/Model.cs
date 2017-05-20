@@ -263,5 +263,18 @@ namespace Server
         {
             mazesMutex.ReleaseMutex();
         }
+
+        public void DeleteSingleGame(string name)
+        {
+            mazes.Remove(name);
+            if (solutionsBFS.ContainsKey(name))
+            {
+                solutionsBFS.Remove(name);
+            }
+            if (solutionsDFS.ContainsKey(name))
+            {
+                solutionsDFS.Remove(name);
+            }
+        }
     }
 }

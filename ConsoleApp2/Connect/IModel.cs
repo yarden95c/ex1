@@ -9,6 +9,7 @@ namespace Server
     {
         
         Maze GenerateMaze(string name, int rows, int cols);
+        void DeleteSingleGame(string name);
         Solution<Position> GetBFSSolution(string name);
         Solution<Position> GetDFSSolution(string name);
         //   void AddWaitingGame(string name, int rows, int cols);

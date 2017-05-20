@@ -1,6 +1,6 @@
-﻿
-using MazeLib;
-using Newtonsoft.Json.Linq;
+﻿using MazeLib;
+using System.Threading;
+using System;
 
 namespace ClientWpf
 {
@@ -9,9 +9,24 @@ namespace ClientWpf
         Client client = null;
         private Position endPoint;
         private Position startPoint;
-        public SinglePlayerModel()
+        private static SinglePlayerModel instance;
+        private static Mutex instanceMutex = new Mutex();
+        private SinglePlayerModel()
         {
             this.client = new Client();
+        }
+        public static SinglePlayerModel Instance
+        {
+            get
+            {
+                instanceMutex.WaitOne();
+                if (instance == null)
+                {
+                    instance = new SinglePlayerModel();
+                }
+                instanceMutex.ReleaseMutex();
+                return instance;
+            }
         }
         public string NameOfMaze
         {
@@ -35,7 +50,7 @@ namespace ClientWpf
         }
         public Position EndPoint
         {
-            get { return this.endPoint ; }
+            get { return this.endPoint; }
             set { this.endPoint = value; }
         }
         public Position StartPoint
@@ -49,10 +64,18 @@ namespace ClientWpf
                 + this.MazeRows + " " + this.MazeColums;
             string maze = this.GetCommand(command);
             //JObject jObject = JObject.Parse(maze);
-         //   this.StartPoint =Maze.FromJSON(maze).InitialPos;
-           // this.EndPoint = Maze.FromJSON(maze).GoalPos;
             return maze;
         }
+        public string SolveMaze()
+        {
+            int algo = Properties.Settings.Default.SearchAlgorithm;
+            string command = "solve" + " " + this.NameOfMaze + " "
+                + algo.ToString();
+            string solution = this.GetCommand(command);
+            return solution;
+        }
+
+
         private string GetCommand(string command)
         {
             this.client.AddCommand(command);
@@ -60,6 +83,11 @@ namespace ClientWpf
             return this.client.GetAnswer();
         }
 
-        
+        public void DeleteSingleGame()
+        {
+            string command = "delete" + " " + this.NameOfMaze;
+            string solution = this.GetCommand(command);
+
+        }
     }
 }
