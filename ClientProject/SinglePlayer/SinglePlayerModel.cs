@@ -1,12 +1,17 @@
 ﻿using MazeLib;
 using System.Threading;
 using System;
+using System.Collections.ObjectModel;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace ClientWpf
 {
     class SinglePlayerModel : ISinglePlayerModel
     {
         Client client = null;
+        //        private ObservableCollection<string> games = new ObservableCollection<string>();
         private Position endPoint;
         private Position startPoint;
         private static SinglePlayerModel instance;
@@ -38,7 +43,7 @@ namespace ClientWpf
             get { return Properties.Settings.Default.MazeRowsSinglePlayer; }
             set { Properties.Settings.Default.MazeRowsSinglePlayer = value; }
         }
-        public int MazeColums
+        public int MazeCols
         {
             get { return Properties.Settings.Default.MazeColsSinglePlayer; }
             set { Properties.Settings.Default.MazeColsSinglePlayer = value; }
@@ -61,9 +66,8 @@ namespace ClientWpf
         public string GenerateMaze()
         {
             string command = "generate" + " " + this.NameOfMaze + " "
-                + this.MazeRows + " " + this.MazeColums;
+                + this.MazeRows + " " + this.MazeCols;
             string maze = this.GetCommand(command);
-            //JObject jObject = JObject.Parse(maze);
             return maze;
         }
         public string SolveMaze()
@@ -74,8 +78,28 @@ namespace ClientWpf
             string solution = this.GetCommand(command);
             return solution;
         }
-
-
+        public string StartMaze()
+        {
+            string command = "start" + " " + this.NameOfMaze + " " + this.MazeRows + " " + this.MazeCols;
+            string solution = this.GetCommand(command);
+            return solution;
+        }
+        public List<string> GetList()
+        {
+            string command = "list";
+            string solution = this.GetCommand(command);
+            return JsonConvert.DeserializeObject<List<string>>(solution);
+        }
+        public void Start()
+        {
+            string command = "start" + " " + this.NameOfMaze + " " + this.MazeRows + " " + this.MazeCols;
+            this.GetCommand(command);
+        }
+        public void Join()
+        {
+            string command = "join" + " " + this.NameOfMaze;
+            this.GetCommand(command);
+        }
         private string GetCommand(string command)
         {
             this.client.AddCommand(command);

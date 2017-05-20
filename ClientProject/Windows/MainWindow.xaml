@@ -20,7 +20,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Button x:Name="singlePlayerButton" Content="Single player" Margin="168,176,175,294.8" Click="singlePlayerButton_Click" Width="Auto" Height="52" Background="#FFA8EA36"/>
-        <Button x:Name="multiPlayerButton" Content="Multi player" Margin="168,263,175,205" Width="Auto" Height="51" Background="#FFE29918"/>
+        <Button x:Name="multiPlayerButton" Content="Multi player" Margin="168,263,175,205" Width="Auto" Height="51" Background="#FFE29918" Click="multiPlayerButton_Click"/>
         <Button x:Name="settingButton" Content="Setting" VerticalAlignment="Top" Margin="168,353,175,0" Width="Auto" Click="settingButton_Click" Background="#FFACC4D3" Height="50"/>
         <Image x:Name="image" HorizontalAlignment="Left" Height="97" Margin="29,35,0,0" VerticalAlignment="Top" Width="128" Source="logo.jpg"/>
 

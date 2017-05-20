@@ -12,29 +12,24 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ClientWpf
+namespace ClientWpf.MultiPlayer
 {
     /// <summary>
-    /// Interaction logic for WinWindow.xaml
+    /// Interaction logic for WaitingWindow.xaml
     /// </summary>
-    public partial class WinWindow : Window
+    public partial class WaitingWindow : Window
     {
-        public WinWindow()
+        private MultiPlayerViewModel vm;
+        public WaitingWindow()
         {
             InitializeComponent();
-
+            vm = new MultiPlayerViewModel(SinglePlayerModel.Instance);
+            WaitForAnotherPlayer();
         }
-
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void WaitForAnotherPlayer()
         {
-            SinglePlayerWindow win = new SinglePlayerWindow();
-            win.Show();
-            this.Close();
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow win = new MainWindow();
+            this.vm.VM_start();
+            MultiPlayer.MultiPlayerMazeWindow win = new MultiPlayerMazeWindow();
             win.Show();
             this.Close();
         }

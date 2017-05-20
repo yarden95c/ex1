@@ -3,25 +3,27 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
+             mc:Ignorable="d" Width="191.938" Height="93.482">
+
+    <Grid Margin="0,0,0,-6.667">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="92"/>
-            <RowDefinition Height="Auto" MinHeight="110.667"/>
-            <RowDefinition Height="Auto" MinHeight="98"/>
+            <RowDefinition Height="Auto" MinHeight="30" />
+            <RowDefinition Height="Auto" MinHeight="34" />
+            <RowDefinition Height="Auto" MinHeight="36.667" />
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="94.667"/>
-            <ColumnDefinition Width="373.43"/>
-            <ColumnDefinition Width="32.57"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*"/>
+
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.ColumnSpan="2" Margin="0,0,373.097,0">Maze Name:</TextBlock>
-        <TextBox x:Name="txtName" Grid.Column="1" Grid.ColumnSpan="2" Margin="0.333,0,-0.333,0" Text="{Binding VM_NameOfMaze}"/>
-        <TextBlock Grid.Row="1" Grid.ColumnSpan="2" Margin="0,0,373.097,97.667" Grid.RowSpan="2">Maze rows:</TextBlock>
-        <TextBox x:Name="txtRows" Grid.Row="1" Grid.Column="1" Text="{Binding VM_MazeRows}" HorizontalAlignment="Left" Margin="3.333,3,-0.333,2.667" Width="200" Grid.ColumnSpan="2"/>
-        <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0.333,373.097,-0.333">Maze Columns:</TextBlock>
-        <TextBox x:Name="txtCols" Grid.Row="2" Grid.Column="1" Text="{Binding VM_MazeColums}" HorizontalAlignment="Left" Margin="3.333,3.333,-0.333,2.667" Width="200" Grid.ColumnSpan="2"/>
-        
+        <TextBlock Padding="3" Margin="3,3,2.667,3">Maze Name:</TextBlock>
+        <TextBox x:Name="txtName" Grid.Column="1" Text="{Binding VM_MazeOfName}" Padding="3" Margin="3.333,3,3,3"/>
+        <TextBlock Grid.Row="1" Margin="3,3,2.667,3">Maze rows:</TextBlock>
+        <TextBox x:Name="txtRows" Grid.Row="1" Grid.Column="1" Padding="3" Text="{Binding VM_MazeRows}"  Margin="3.333,3,3,3" />
+
+        <TextBlock Grid.Row="2" Padding="3" Margin="3,3,2.667,2.667" >Maze Columns:</TextBlock>
+        <TextBox x:Name="txtCols" Grid.Row="2" Grid.Column="1" Text="{Binding VM_MazeCols}" Padding="3" Margin="3.333,1,3,9.667" />
+
     </Grid>
 </UserControl>

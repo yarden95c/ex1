@@ -11,7 +11,6 @@ namespace ClientWpf
         private SinglePlayerViewModel(ISinglePlayerModel model)
         {
             this.model = model;
-
         }
         public static SinglePlayerViewModel Instance(ISinglePlayerModel model)
         {
@@ -43,13 +42,13 @@ namespace ClientWpf
                 NotifyPropertyChanged("MazeRows");
             }
         }
-        public int VM_MazeColums
+        public int VM_MazeCols
         {
-            get { return model.MazeColums; }
+            get { return model.MazeCols; }
             set
             {
-                model.MazeColums = value;
-                NotifyPropertyChanged("MazeColums");
+                model.MazeCols = value;
+                NotifyPropertyChanged("MazeCols");
             }
         }
         public string VM_MazeString

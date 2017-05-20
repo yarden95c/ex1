@@ -20,9 +20,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <controls:DetailesController x:Name="detailsControl" Grid.Column="1" Grid.Row="3">
-           
+        <controls:DetailesController x:Name="detailsControl" Grid.Column="1" Grid.Row="3" Loaded="detailsControl_Loaded" Grid.ColumnSpan="2" Margin="154,138,171,0" VerticalAlignment="Top">
+
         </controls:DetailesController>
-        <Button x:Name="button" Content="Ok" Grid.Column="1" HorizontalAlignment="Left" Margin="172,377,0,-72" Grid.Row="3" VerticalAlignment="Top" Width="76" Click="button_Click_1"/>
+        <Button x:Name="button" Content="Ok" Grid.Column="1" HorizontalAlignment="Left" Margin="194,301,0,-25" Grid.Row="3" VerticalAlignment="Top" Width="124" Click="button_Click_1" Grid.ColumnSpan="2" Height="56"/>
     </Grid>
 </Window>

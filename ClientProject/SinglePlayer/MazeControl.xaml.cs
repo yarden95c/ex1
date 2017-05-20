@@ -69,7 +69,7 @@ namespace ClientWpf
                 });
             }
         }
-        public string Name2
+        public string NameOfMaze
         {
             get;
             set;
@@ -130,7 +130,7 @@ namespace ClientWpf
                new PropertyMetadata(EndPointChanges));
 
         public static readonly DependencyProperty NameD =
-         DependencyProperty.Register("Name", typeof(string), typeof(MazeControl),
+         DependencyProperty.Register("NameOfMaze", typeof(string), typeof(MazeControl),
              new PropertyMetadata(NameChanges));
 
         private static void MazeChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -163,7 +163,7 @@ namespace ClientWpf
         private static void NameChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             MazeControl mc = (MazeControl)d;
-            mc.Name = (string)e.NewValue;
+            mc.NameOfMaze = (string)e.NewValue;
         }
 
         public void DrawMaze()
@@ -205,7 +205,7 @@ namespace ClientWpf
         {
             Rectangle rect = new Rectangle();
             rect.Height = this.hight / Rows;
-            rect.Width = this.width / Cols;
+            rect.Width = this.width / Cols; 
             Grid.SetRow(rect, i);
             Grid.SetColumn(rect, j);
             rect.Fill = fill;

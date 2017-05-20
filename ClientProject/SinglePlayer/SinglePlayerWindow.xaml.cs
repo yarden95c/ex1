@@ -14,7 +14,7 @@ namespace ClientWpf
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             vm = SinglePlayerViewModel.Instance(SinglePlayerModel.Instance);
             vm.VM_MazeRows = Properties.Settings.Default.MazeRows;
-            vm.VM_MazeColums = Properties.Settings.Default.MazeCols;
+            vm.VM_MazeCols = Properties.Settings.Default.MazeCols;
             this.DataContext = vm;
         }
 
@@ -24,6 +24,11 @@ namespace ClientWpf
             SinglePlayerMazeWindow win = new SinglePlayerMazeWindow();
             win.Show();
             this.Close();
+        }
+
+        private void detailsControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

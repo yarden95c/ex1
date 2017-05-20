@@ -28,6 +28,7 @@
                 </Style>
             </Label.Style>
         </Label>
-
+        <Button x:Name="button" Content="Main menu" Canvas.Left="165" Canvas.Top="159" Width="94" Height="42" Click="button_Click"/>
+        <Button x:Name="button1" Content="I want again!!" Canvas.Left="45" Canvas.Top="159" Width="86" Height="42" Click="button1_Click"/>
     </Canvas>
 </Window>

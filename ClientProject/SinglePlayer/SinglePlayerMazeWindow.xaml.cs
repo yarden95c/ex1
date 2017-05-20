@@ -60,8 +60,6 @@ namespace ClientWpf
         {
             WinWindow winWindow = new WinWindow();
             winWindow.ShowDialog();
-            MainWindow win = new MainWindow();
-            win.Show();
             this.Close();
             vm.VM_Delete();
         }

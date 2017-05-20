@@ -8,9 +8,10 @@ namespace ClientWpf
     /// </summary>
     public partial class MainWindow : Window
     {
-       // string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
+        // string path = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.PerUserRoamingAndLocal).FilePath;
         private Window settingWindow;
         private Window singlePlayerWindow;
+        private Window multiPlayerWindow;
         public MainWindow()
         {
             InitializeComponent();
@@ -27,9 +28,16 @@ namespace ClientWpf
 
         private void settingButton_Click(object sender, RoutedEventArgs e)
         {
-          settingWindow = new SettingsWindow();
-          settingWindow.Show();
-          this.Close();
+            settingWindow = new SettingsWindow();
+            settingWindow.Show();
+            this.Close();
+        }
+
+        private void multiPlayerButton_Click(object sender, RoutedEventArgs e)
+        {
+            multiPlayerWindow = new MultiPlayer.multiPlayerWindow();
+            multiPlayerWindow.Show();
+            this.Close();
         }
     }
 }

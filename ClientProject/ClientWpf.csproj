@@ -84,6 +84,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Client.cs" />
+    <Compile Include="MultiPlayer\MultiPlayerMazeWindow.xaml.cs">
+      <DependentUpon>MultiPlayerMazeWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPlayer\MultiPlayerViewModel.cs" />
+    <Compile Include="MultiPlayer\MultiPlayerWindow.xaml.cs">
+      <DependentUpon>MultiPlayerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPlayer\WaitingWindow.xaml.cs">
+      <DependentUpon>WaitingWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SinglePlayer\DetailesController.xaml.cs">
       <DependentUpon>DetailesController.xaml</DependentUpon>
     </Compile>
@@ -110,6 +120,18 @@
     <Compile Include="Windows\WinWindow.xaml.cs">
       <DependentUpon>WinWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="MultiPlayer\MultiPlayerMazeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultiPlayer\MultiPlayerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultiPlayer\WaitingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SinglePlayer\DetailesController.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -174,16 +196,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ass2\ClientOld.csproj">
-      <Project>{6e103275-c367-4421-8035-0cac1f7691b6}</Project>
-      <Name>ClientOld</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Server\Server.csproj">
-      <Project>{1f6b64c2-b059-4fe8-9e1c-4ce9ee676e0d}</Project>
-      <Name>Server</Name>
+    <ProjectReference Include="..\ConsoleApp2\ServerProject.csproj">
+      <Project>{3A78203A-A7B1-41FE-AB9C-06567350DDE5}</Project>
+      <Name>ServerProject</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -199,14 +219,13 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Windows\logo.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="SinglePlayer\minyon.jpeg" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="SinglePlayer\exit.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Windows\logo.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

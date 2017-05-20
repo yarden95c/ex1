@@ -11,6 +11,7 @@
         internal string NameOfMaze;
         internal int MazeColsSinglePlayer;
         internal string MazeString;
+        internal string ServerIP;
 
         public Settings() {
             // // To add event handlers for saving and changing settings, uncomment the lines below:
@@ -20,7 +21,12 @@
             // this.SettingsSaving += this.SettingsSavingEventHandler;
             //
         }
-        
+
+        public int SearchAlgorithm { get; internal set; }
+        public int ServerPort { get; internal set; }
+        public int MazeCols { get; internal set; }
+        public int MazeRows { get; internal set; }
+
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {
             // Add code to handle the SettingChangingEvent event here.
         }
