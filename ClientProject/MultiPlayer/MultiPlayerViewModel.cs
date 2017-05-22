@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ClientWpf.MultiPlayer
 {
 
-    public class MultiPlayerViewModel : ViewModel
+     class MultiPlayerViewModel : ViewModel
     {
         private ISinglePlayerModel model;
         public MultiPlayerViewModel(ISinglePlayerModel model)
