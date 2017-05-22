@@ -87,7 +87,6 @@
     <Compile Include="MultiPlayer\MultiPlayerMazeWindow.xaml.cs">
       <DependentUpon>MultiPlayerMazeWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MultiPlayer\MultiPlayerModel.cs" />
     <Compile Include="MultiPlayer\MultiPlayerViewModel.cs" />
     <Compile Include="MultiPlayer\MultiPlayerWindow.xaml.cs">
       <DependentUpon>MultiPlayerWindow.xaml</DependentUpon>

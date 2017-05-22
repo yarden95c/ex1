@@ -13,11 +13,9 @@ namespace ClientWpf
         Client client = null;
         private Position endPoint;
         private Position startPoint;
-        private string direction;
         private Position currentPoint;
         private static SinglePlayerModel instance;
         private static Mutex instanceMutex = new Mutex();
-        private bool keepConnection = false;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
@@ -138,13 +136,13 @@ namespace ClientWpf
         public List<string> GetList()
         {
             string command = "list";
-            string solution = this.GetCommand(command, this.keepConnection);
+            string solution = this.GetCommand(command, false);
             return JsonConvert.DeserializeObject<List<string>>(solution);
         }
         public string Start()
         {
             string command = "start " + this.NameOfMaze + " " + this.MazeRows + " " + this.MazeCols;
-            string solution = this.GetCommand(command, this.keepConnection);
+            string solution = this.GetCommand(command, false);
             Maze maze = Maze.FromJSON(solution);
             this.StartPoint = maze.InitialPos;
             this.EndPoint = maze.GoalPos;
@@ -153,7 +151,7 @@ namespace ClientWpf
         public String Join()
         {
             string command = "join " + this.NameOfMaze;
-            string solution = this.GetCommand(command, this.keepConnection);
+            string solution = this.GetCommand(command, false);
             Maze maze = Maze.FromJSON(solution);
             this.StartPoint = maze.InitialPos;
             this.EndPoint = maze.GoalPos;
@@ -175,12 +173,12 @@ namespace ClientWpf
             if (!flag)
             {
                 this.client.Connect();
-                this.keepConnection = true;
             }
             this.client.AddCommand(command);
-            if (!(command.Contains("play")) || (command.Contains("close")))
+            if (!flag)
                 return this.client.GetAnswer();
-            return null;
+            else
+                return "Aa";
         }
 
         public void DeleteSingleGame()
