@@ -13,8 +13,8 @@ namespace ClientWpf.MultiPlayer
 
      class MultiPlayerViewModel : ViewModel
     {
-        private SinglePlayerModel model;
-        public MultiPlayerViewModel(SinglePlayerModel model)
+        private ISinglePlayerModel model;
+        public MultiPlayerViewModel(ISinglePlayerModel model)
         {
             this.model = model;
             this.model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
@@ -67,7 +67,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 this.model.CurrentPoint = value;
-                NotifyPropertyChanged("CurrentPoint");
+              //  NotifyPropertyChanged("CurrentPoint");
 
             }
         }
@@ -77,7 +77,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.MazeCols = value;
-                NotifyPropertyChanged("MazeCols");
+                //NotifyPropertyChanged("MazeCols");
             }
         }
         public Position VM_StartPoint
@@ -86,7 +86,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.StartPoint = value;
-                NotifyPropertyChanged("StartPoint");
+               // NotifyPropertyChanged("StartPoint");
             }
         }
         public Position VM_EndPoint
@@ -95,7 +95,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.EndPoint = value;
-                NotifyPropertyChanged("EndPoint");
+              //  NotifyPropertyChanged("EndPoint");
             }
         }
         public List<string> VM_listOfGames()

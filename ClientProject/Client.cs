@@ -56,33 +56,37 @@ namespace ClientWpf
                     try
                     {
                         string result = reader.ReadLine();
+                        if (result.Contains("Name"))
+                        {
+                            Console.WriteLine("result: " + result);
+                        }
                         if (result.Contains(this.exitGame))
                         {
                             startMultyPlayerGame = false;
-                            this.ChecResult(result, this.exitGame);
+                            result =this.ChecResult(result, this.exitGame);
                             isOnline = false;
                             client.Close();
                             break;
                         }
                         if (result.Contains(this.closeConnection))
                         {
-                            this.ChecResult(result, this.closeConnection);
+                            result = this.ChecResult(result, this.closeConnection);
                             if (!startMultyPlayerGame)
                             {
                                 isOnline = false;
                                 client.Close();
                                 break;
                             }
-                            continue;
+                           // continue;
                         }
                         if (result.Contains(this.keepOpen))
                         {
                             startMultyPlayerGame = true;
-                            this.ChecResult(result, this.keepOpen);
-                            continue;
+                            result = this.ChecResult(result, this.keepOpen);
+                          //  continue;
                         }
 
-                        if (result != " ")
+                        if (result != "")
                         {
                             if (result.Contains("Direction"))
                             {
@@ -149,7 +153,7 @@ namespace ClientWpf
         /// </summary>
         /// <param name="result">The result.</param>
         /// <param name="substring">The substring.</param>
-        public void ChecResult(string result, string substring)
+        public string ChecResult(string result, string substring)
         {
             while (result.Contains(substring) && result != substring)
             {
@@ -164,6 +168,7 @@ namespace ClientWpf
             {
                 Console.WriteLine(result);
             }
+            return result;
 
         }
         public void AddCommand(string command)
