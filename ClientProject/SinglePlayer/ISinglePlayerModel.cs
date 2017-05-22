@@ -16,15 +16,15 @@ namespace ClientWpf
         int MazeCols { get; set; }
         int MazeRows { get; set; }
         string MazeString { get; set; }
-        string GenerateMaze();
+       // string GenerateMaze();
         Position EndPoint { get; set; }
         Position StartPoint { get; set; }
-        string SolveMaze();
-        void DeleteSingleGame();
-        List<string> GetList();
-        string Start();
-        string Join();
-        void Play(string move);
-        string Close();
+        //string SolveMaze();
+        //void DeleteSingleGame();
+        //List<string> GetList();
+        //string Start();
+        //string Join();
+        //void Play(string move);
+        //string Close();
     }
 }

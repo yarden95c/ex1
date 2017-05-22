@@ -37,7 +37,8 @@ namespace Server
             StreamWriter writer = new StreamWriter(stream);
             writer.WriteLine(JsonConvert.SerializeObject(model.GetList()));
             writer.Flush();
-            return closeConnection;
+            //  return closeConnection;
+            return keepOpen;
         }
         /// <summary>
         /// Returns true if the inputs is valid.
