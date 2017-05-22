@@ -63,8 +63,6 @@ namespace Server
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
             writer.WriteLine(maze.ToJSON().Replace("\r\n", ""));
-            writer.WriteLine(maze.ToJSON().Replace("\r\n", ""));
-
             writer.Flush();
 
             stream = client2.GetStream();

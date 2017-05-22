@@ -182,6 +182,7 @@ namespace ClientWpf
                 else
                 {
                     return answersFromServer.Dequeue();
+                    int x = 5;
                 }
             }
         }
