@@ -16,7 +16,7 @@ namespace ClientWpf
         private Position currentPoint;
         private static SinglePlayerModel instance;
         private static Mutex instanceMutex = new Mutex();
-
+        private bool keepOpenConnection = false;
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
         {
@@ -177,8 +177,6 @@ namespace ClientWpf
             this.client.AddCommand(command);
             if (!flag)
                 return this.client.GetAnswer();
-            else
-                return "Aa";
         }
 
         public void DeleteSingleGame()

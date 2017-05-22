@@ -55,7 +55,6 @@ namespace ClientWpf
                 {
                     try
                     {
-                        // Console.WriteLine("read line");
                         string result = reader.ReadLine();
                         if (result.Contains(this.exitGame))
                         {
