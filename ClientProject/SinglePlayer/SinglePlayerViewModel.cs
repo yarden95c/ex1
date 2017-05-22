@@ -5,14 +5,14 @@ namespace ClientWpf
 {
     class SinglePlayerViewModel : ViewModel
     {
-        private ISinglePlayerModel model;
+        private SinglePlayerModel model;
         private static SinglePlayerViewModel instance;
         private static Mutex instanceMutex = new Mutex();
-        private SinglePlayerViewModel(ISinglePlayerModel model)
+        private SinglePlayerViewModel(SinglePlayerModel model)
         {
             this.model = model;
         }
-        public static SinglePlayerViewModel Instance(ISinglePlayerModel model)
+        public static SinglePlayerViewModel Instance(SinglePlayerModel model)
         {
             
                 instanceMutex.WaitOne();

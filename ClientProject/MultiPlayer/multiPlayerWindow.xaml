@@ -8,9 +8,9 @@
          xmlns:controls="clr-namespace:ClientWpf"
         Title="multiPlayerWindow" Height="300" Width="300">
     <Grid>
-        <controls:DetailesController x:Name="detailsControl" Margin="48,109,53,67"/>
-        <Button x:Name="button" Content="Start Game" HorizontalAlignment="Left" Margin="76,216,0,0" VerticalAlignment="Top" Width="95" Height="24" Click="button_Click"/>
-        <Button x:Name="JoinGameButton" Content="Join Game" HorizontalAlignment="Left" Margin="86,67,0,0" VerticalAlignment="Top" Width="85" Height="27" Click="button1_Click"/>
+        <controls:DetailesController x:Name="detailsControl" Margin="48,109,53,67" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button x:Name="startGameButton" Content="Start Game" HorizontalAlignment="Center" Margin="76,216,0,0" VerticalAlignment="Center" Width="95" Height="24" Click="StartGameButton_Click"/>
+        <Button x:Name="JoinGameButton" Content="Join Game" HorizontalAlignment="Center" Margin="86,67,0,0" VerticalAlignment="Top" Width="85" Height="27" Click="JoinGameButton_Click"/>
         <Label x:Name="label" Content="List Of Games:" HorizontalAlignment="Left" Margin="26,23,0,0" VerticalAlignment="Top"/>
         <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="131,27,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
  

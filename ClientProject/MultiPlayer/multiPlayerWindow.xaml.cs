@@ -19,7 +19,8 @@ namespace ClientWpf.MultiPlayer
         public multiPlayerWindow()
         {
             InitializeComponent();
-            vm = new MultiPlayerViewModel(SinglePlayerModel.Instance);
+                vm = new MultiPlayerViewModel(SinglePlayerModel.Instance);
+           // vm = new MultiPlayerViewModel(new MultiPlayerModel());
             vm.VM_MazeRows = Properties.Settings.Default.MazeRows;
             vm.VM_MazeCols = Properties.Settings.Default.MazeCols;
             this.DataContext = vm;
@@ -39,7 +40,7 @@ namespace ClientWpf.MultiPlayer
         private void comboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
         }
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void JoinGameButton_Click(object sender, RoutedEventArgs e)
         {
             this.vm.VM_NameOfMaze = (string)comboBox.SelectedItem;
             this.vm.VM_join();
@@ -48,7 +49,7 @@ namespace ClientWpf.MultiPlayer
             this.Close();
         }
 
-        private void button_Click(object sender, RoutedEventArgs e)
+        private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
             WaitingWindow win = new WaitingWindow();
             win.Show();

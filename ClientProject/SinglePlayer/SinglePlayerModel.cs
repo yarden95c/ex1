@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 namespace ClientWpf
 {
-    class SinglePlayerModel : ISinglePlayerModel, INotifyPropertyChanged
+    public class SinglePlayerModel : ISinglePlayerModel, INotifyPropertyChanged
     {
         Client client = null;
         private Position endPoint;
@@ -67,6 +67,7 @@ namespace ClientWpf
                 }
                 instanceMutex.ReleaseMutex();
                 return instance;
+                //   return new SinglePlayerModel();
             }
         }
         /*  public string Direction
@@ -145,7 +146,9 @@ namespace ClientWpf
         public string Start()
         {
             string command = "start " + this.NameOfMaze + " " + this.MazeRows + " " + this.MazeCols;
-            string solution = this.GetCommand(command, false);
+//            string solution = this.GetCommand(command, false);
+            string solution = this.GetCommand(command, true);
+
             Maze maze = Maze.FromJSON(solution);
             this.StartPoint = maze.InitialPos;
             this.EndPoint = maze.GoalPos;
@@ -154,7 +157,9 @@ namespace ClientWpf
         public String Join()
         {
             string command = "join " + this.NameOfMaze;
-            string solution = this.GetCommand(command, false);
+          //  string solution = this.GetCommand(command, false);
+            string solution = this.GetCommand(command, true);
+
             Maze maze = Maze.FromJSON(solution);
             this.StartPoint = maze.InitialPos;
             this.EndPoint = maze.GoalPos;
@@ -171,17 +176,22 @@ namespace ClientWpf
             string solution = this.GetCommand(command, true);
             return solution;
         }
+
         private string GetCommand(string command, bool flag)
         {
             if (!flag)
             {
+
                 this.client.Connect();
             }
             this.client.AddCommand(command);
-            if (!flag)
-                return this.client.GetAnswer();
-            else
-                return "Aa";
+
+            //if (!flag)
+            //    return this.client.GetAnswer();
+            //else
+            //    return "Aa";
+            return this.client.GetAnswer();
+
         }
 
         public void DeleteSingleGame()
