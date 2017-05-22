@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ClientWpf.MultiPlayer
 {
 
-    public class MultiPlayerViewModel : ViewModel
+     class MultiPlayerViewModel : ViewModel
     {
         private SinglePlayerModel model;
         public MultiPlayerViewModel(SinglePlayerModel model)
@@ -47,7 +47,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.MazeString = value;
-                 NotifyPropertyChanged("MazeString");
+                NotifyPropertyChanged("MazeString");
             }
         }
         /* public string VM_Direction
@@ -64,7 +64,9 @@ namespace ClientWpf.MultiPlayer
             {
                 return this.model.CurrentPoint;
             }
-            set { this.model.CurrentPoint = value;
+            set
+            {
+                this.model.CurrentPoint = value;
                 NotifyPropertyChanged("CurrentPoint");
 
             }

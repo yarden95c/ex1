@@ -94,6 +94,7 @@ namespace ClientWpf.MultiPlayer
 
             }
             e.Handled = true;
+            GridKeyDown(sender, e);
         }
 
         private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
