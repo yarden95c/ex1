@@ -13,7 +13,6 @@ namespace ClientWpf
         Client client = null;
         private Position endPoint;
         private Position startPoint;
-        private string direction;
         private Position currentPoint;
         private static SinglePlayerModel instance;
         private static Mutex instanceMutex = new Mutex();
@@ -29,8 +28,6 @@ namespace ClientWpf
             this.client.EventOtherPlayerMove += delegate (string direction1)
             {
                 this.UpdateCurrentPoint(direction1);
-                //    Console.WriteLine(direction);
-                // this.Direction = null;
             };
         }
         private void UpdateCurrentPoint(string direction)
