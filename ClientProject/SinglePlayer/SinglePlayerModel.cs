@@ -28,7 +28,6 @@ namespace ClientWpf
             this.client = new Client();
             this.client.EventOtherPlayerMove += delegate (string direction1)
             {
-                // this.Direction = "abra kadabra";
                 this.UpdateCurrentPoint(direction1);
                 //    Console.WriteLine(direction);
                 // this.Direction = null;
