@@ -13,8 +13,8 @@ namespace ClientWpf.MultiPlayer
 
     public class MultiPlayerViewModel : ViewModel
     {
-        private SinglePlayerModel model;
-        public MultiPlayerViewModel(SinglePlayerModel model)
+        private ISinglePlayerModel model;
+        public MultiPlayerViewModel(ISinglePlayerModel model)
         {
             this.model = model;
             this.model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
