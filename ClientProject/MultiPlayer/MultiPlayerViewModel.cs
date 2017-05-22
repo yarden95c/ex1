@@ -67,7 +67,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 this.model.CurrentPoint = value;
-                NotifyPropertyChanged("CurrentPoint");
+              //  NotifyPropertyChanged("CurrentPoint");
 
             }
         }
@@ -77,7 +77,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.MazeCols = value;
-                NotifyPropertyChanged("MazeCols");
+                //NotifyPropertyChanged("MazeCols");
             }
         }
         public Position VM_StartPoint
@@ -86,7 +86,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.StartPoint = value;
-                NotifyPropertyChanged("StartPoint");
+               // NotifyPropertyChanged("StartPoint");
             }
         }
         public Position VM_EndPoint
@@ -95,7 +95,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.EndPoint = value;
-                NotifyPropertyChanged("EndPoint");
+              //  NotifyPropertyChanged("EndPoint");
             }
         }
         public List<string> VM_listOfGames()
