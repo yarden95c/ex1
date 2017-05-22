@@ -106,7 +106,6 @@ namespace ClientWpf
                         client.Close();
                     }
                 }
-                int x = 5;
             });
             new Thread(() =>
             {
