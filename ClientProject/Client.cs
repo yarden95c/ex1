@@ -83,7 +83,7 @@ namespace ClientWpf
                             continue;
                         }
 
-                        if (result != "")
+                        if (result != " ")
                         {
                             if (result.Contains("Direction"))
                             {
@@ -116,7 +116,7 @@ namespace ClientWpf
                         if (this.commands.Count > 0)
                         {
                             string input = this.commands.Dequeue();
-                            Console.WriteLine(input); 
+                            Console.WriteLine(input);
                             if (!isOnline)
                             {
                                 client = new TcpClient();
