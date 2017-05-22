@@ -24,12 +24,12 @@ namespace ClientWpf.MultiPlayer
         {
             InitializeComponent();
             vm = new MultiPlayerViewModel(SinglePlayerModel.Instance);
-            WaitForAnotherPlayer();
+            this.DataContext = vm;
         }
-        private void WaitForAnotherPlayer()
+        public void WaitForAnotherPlayer()
         {
-            this.vm.VM_start();
-            MultiPlayer.MultiPlayerMazeWindow win = new MultiPlayerMazeWindow();
+            this.vm.VM_start(); 
+            MultiPlayerMazeWindow win = new MultiPlayerMazeWindow();
             win.Show();
             this.Close();
         }

@@ -62,12 +62,12 @@ namespace Server
             NetworkStream stream = client1.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine(maze.ToJSON());
+            writer.WriteLine(maze.ToJSON().Replace("\r\n", ""));
             writer.Flush();
             stream = client2.GetStream();
             reader = new StreamReader(stream);
             writer = new StreamWriter(stream);
-            writer.WriteLine(maze.ToJSON());
+            writer.WriteLine(maze.ToJSON().Replace("\r\n", ""));
             writer.Flush();
         }
         /// <summary>
@@ -89,9 +89,7 @@ namespace Server
             {
                 return this.client2;
             }
-
             return this.client1;
-
         }
     }
 }

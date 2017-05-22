@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace ClientWpf
 {
@@ -26,9 +27,10 @@ namespace ClientWpf
         private string keepOpen = "keep open";
         private string exitGame = "exit";
         private Queue<string> commands;
-        private Queue<string> answersFromServer;
+        static private Queue<string> answersFromServer;
         bool startMultyPlayerGame;
-
+        public delegate void otherPlayerMove(string direction);
+        public event otherPlayerMove EventOtherPlayerMove;
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
@@ -36,24 +38,24 @@ namespace ClientWpf
         public Client()
         {
             this.port = Properties.Settings.Default.ServerPort;
-            isOnline = false;
             ep = new IPEndPoint(IPAddress.Parse(Properties.Settings.Default.ServerIP), this.port);
             startMultyPlayerGame = false;
             this.commands = new Queue<string>();
-            this.answersFromServer = new Queue<string>();
+            answersFromServer = new Queue<string>();
         }
         /// <summary>
         /// Connects with the server
         /// </summary>
         public void Connect()
         {
+            isOnline = false;
             Action action = new Action(() =>
             {
                 while (true)
                 {
                     try
                     {
-                       // Console.WriteLine("read line");
+                        // Console.WriteLine("read line");
                         string result = reader.ReadLine();
                         if (result.Contains(this.exitGame))
                         {
@@ -83,12 +85,18 @@ namespace ClientWpf
 
                         if (result != " ")
                         {
-                            this.answersFromServer.Enqueue(result.ToString());
-                            Console.WriteLine(result);
-                        }
-                        else
-                        {
-                           // this.answersFromServer.Enqueue(solve.ToString());
+                            if (result.Contains("Direction"))
+                            {
+                                JObject jObject = JObject.Parse(result);
+                                JToken jSolution = jObject["Direction"];
+                                string move = (string)jSolution;
+                                this.EventOtherPlayerMove?.Invoke(move);
+                            }
+                            else
+                            {
+                                answersFromServer.Enqueue(result.ToString());
+                                Console.WriteLine(result);
+                            }
                         }
                     }
 
@@ -167,10 +175,14 @@ namespace ClientWpf
         {
             while (true)
             {
-                if (this.answersFromServer.Count == 0)
+                if (answersFromServer.Count == 0)
+                {
                     Thread.Sleep(300);
+                }
                 else
-                    return this.answersFromServer.Dequeue();
+                {
+                    return answersFromServer.Dequeue();
+                }
             }
         }
     }

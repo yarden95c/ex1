@@ -44,7 +44,7 @@ namespace Server
             StreamWriter writer = new StreamWriter(stream);
             writer.WriteLine(maze.ToJSON().Replace("\r\n", ""));
             writer.Flush();
-            Console.WriteLine(maze.ToJSON());
+            Console.WriteLine("abra kadabra");
             model.MazesMutexRealese();
             return closeConnection;
         }

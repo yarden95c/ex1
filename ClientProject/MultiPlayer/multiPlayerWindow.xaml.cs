@@ -23,9 +23,9 @@ namespace ClientWpf.MultiPlayer
             vm.VM_MazeRows = Properties.Settings.Default.MazeRows;
             vm.VM_MazeCols = Properties.Settings.Default.MazeCols;
             this.DataContext = vm;
+            comboBox.ItemsSource = games;
             List<string> list = this.vm.VM_listOfGames();
             this.GiveMeTheGames(list);
-            comboBox.ItemsSource = games;
         }
         private void GiveMeTheGames(List<string> list)
         {
@@ -35,11 +35,10 @@ namespace ClientWpf.MultiPlayer
                 this.games.Add(s);
             }
         }
+
         private void comboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-
         }
-
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             this.vm.VM_NameOfMaze = (string)comboBox.SelectedItem;
@@ -53,6 +52,7 @@ namespace ClientWpf.MultiPlayer
         {
             WaitingWindow win = new WaitingWindow();
             win.Show();
+            win.WaitForAnotherPlayer();
             this.Close();
         }
     }

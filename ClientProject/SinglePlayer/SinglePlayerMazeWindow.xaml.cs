@@ -23,7 +23,7 @@ namespace ClientWpf
             this.DataContext = vm;
             this.KeyDown += new KeyEventHandler(this.GridKeyDown);
         }
-
+        
         public void GridKeyDown(object sender, KeyEventArgs e)
         {
             int row = this.mazeControl.CurrPoint.Row, col = this.mazeControl.CurrPoint.Col;

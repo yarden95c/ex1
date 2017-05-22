@@ -7,12 +7,6 @@
     //  The SettingsLoaded event is raised after the setting values are loaded.
     //  The SettingsSaving event is raised before the setting values are saved.
     internal sealed partial class Settings {
-        internal int MazeRowsSinglePlayer;
-        internal string NameOfMaze;
-        internal int MazeColsSinglePlayer;
-        internal string MazeString;
-        internal string ServerIP;
-
         public Settings() {
             // // To add event handlers for saving and changing settings, uncomment the lines below:
             //
@@ -22,10 +16,8 @@
             //
         }
 
-        public int SearchAlgorithm { get; internal set; }
-        public int ServerPort { get; internal set; }
-        public int MazeCols { get; internal set; }
-        public int MazeRows { get; internal set; }
+        public string MazeString { get; internal set; }
+        public string NameOfMaze { get; internal set; }
 
         private void SettingChangingEventHandler(object sender, System.Configuration.SettingChangingEventArgs e) {
             // Add code to handle the SettingChangingEvent event here.

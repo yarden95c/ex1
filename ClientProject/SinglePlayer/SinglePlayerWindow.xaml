@@ -5,13 +5,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="SinglePlayerMenu" Height="550" Width="525">
-    <Grid TextBlock.FontSize="14">
+        Title="SinglePlayerMenu" Height="397" Width="430.5">
+    <Grid TextBlock.FontSize="14" Margin="0,0,43,89">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto" MinHeight="275"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -20,9 +20,9 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <controls:DetailesController x:Name="detailsControl" Grid.Column="1" Grid.Row="3" Loaded="detailsControl_Loaded" Grid.ColumnSpan="2" Margin="154,138,171,0" VerticalAlignment="Top">
+        <controls:DetailesController x:Name="detailsControl" Grid.Column="1" Grid.Row="3" Loaded="detailsControl_Loaded" Grid.ColumnSpan="2" Margin="78,95,47,0" VerticalAlignment="Top" Height="104">
 
         </controls:DetailesController>
-        <Button x:Name="button" Content="Ok" Grid.Column="1" HorizontalAlignment="Left" Margin="194,301,0,-25" Grid.Row="3" VerticalAlignment="Top" Width="124" Click="button_Click_1" Grid.ColumnSpan="2" Height="56"/>
+        <Button x:Name="button" Content="Ok" Grid.Column="1" HorizontalAlignment="Left" Margin="144,241,0,-22" Grid.Row="3" VerticalAlignment="Top" Width="124" Click="button_Click_1" Grid.ColumnSpan="2" Height="56"/>
     </Grid>
 </Window>

@@ -33,6 +33,11 @@ namespace Server
 
             if (game.GetFirstClient() != client)
             {
+                NetworkStream stream = game.GetFirstClient().GetStream();
+                StreamReader reader = new StreamReader(stream);
+                StreamWriter writer = new StreamWriter(stream);
+                writer.WriteLine("without it it doesnt work");
+                writer.Flush();
                 game.Join(client);
                 model.JoinToGame(name);
             }

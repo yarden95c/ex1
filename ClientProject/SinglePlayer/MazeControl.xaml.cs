@@ -21,7 +21,6 @@ namespace ClientWpf
         private Position endPoint;
         private Position currPoint;
 
-
         public MazeControl()
         {
             InitializeComponent();
@@ -31,6 +30,16 @@ namespace ClientWpf
             Content = grid; // the content is grid.
             grid.ShowGridLines = true;
         }
+
+        public static readonly DependencyProperty CurrPointD =
+            DependencyProperty.Register("CurrPoint", typeof(Position), typeof(MazeControl),
+                new PropertyMetadata(CurrPointChanges));
+        private static void CurrPointChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MazeControl mc = (MazeControl)d;
+            mc.CurrPoint = (Position)e.NewValue;
+        }
+
         public Position StartPoint
         {
             get
@@ -62,6 +71,7 @@ namespace ClientWpf
             }
             set
             {
+                grid.Children.Add(this.GetRectForGrid(this.currPoint.Row, this.currPoint.Col, new SolidColorBrush(Colors.White)));
                 this.currPoint = value;
                 this.Dispatcher.Invoke(() =>
                 {
@@ -102,6 +112,8 @@ namespace ClientWpf
             set
             {
                 this.mazeInfo = value;
+                this.Cols = this.mazeInfo.Cols;
+                this.Rows = this.mazeInfo.Rows;
                 this.StartPoint = this.mazeInfo.InitialPos;
                 this.EndPoint = this.mazeInfo.GoalPos;
                 this.CurrPoint = this.StartPoint;
@@ -183,7 +195,32 @@ namespace ClientWpf
                 }
             }
         }
+        private void OpponentMove(string move)
+        {
+            int row = this.CurrPoint.Row, col = this.CurrPoint.Col;
+            Position newPosition = new Position();
 
+            switch (move)
+            {
+                case "down":
+                    row = row + 1;
+                    break;
+                case "up":
+                    row = row - 1;
+                    break;
+                case "left":
+                    col = col - 1;
+                    break;
+                case "right":
+                    col = col + 1;
+                    break;
+                default:
+                    break;
+            }
+            newPosition.Row = row;
+            newPosition.Col = col;
+            this.SetCurrPoint(newPosition);
+        }
         private void SetRowsOfGrid()
         {
             for (int i = 0; i < Rows; i++)
@@ -205,13 +242,12 @@ namespace ClientWpf
         {
             Rectangle rect = new Rectangle();
             rect.Height = this.hight / Rows;
-            rect.Width = this.width / Cols; 
+            rect.Width = this.width / Cols;
             Grid.SetRow(rect, i);
             Grid.SetColumn(rect, j);
             rect.Fill = fill;
             return rect;
         }
-
         public void SetCurrPoint(Position newPoint)
         {
             int row = newPoint.Row;

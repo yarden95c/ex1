@@ -31,7 +31,6 @@ namespace Server
         /// <returns></returns>
         public string Execute(string[] args, TcpClient client , string closeConnection, string keepOpen)
         {
-            
             string name = args[0];
             int rows = int.Parse(args[1]);
             int cols = int.Parse(args[2]);

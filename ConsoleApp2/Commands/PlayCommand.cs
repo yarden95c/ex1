@@ -35,7 +35,7 @@ namespace Server
         /// <param name="args">The arguments.</param>
         /// <param name="client">The client.</param>
         /// <returns></returns>
-        public string Execute(string[] args, TcpClient client , string closeConnection, string keepOpen)
+        public string Execute(string[] args, TcpClient client, string closeConnection, string keepOpen)
         {
             string direction = args[0];
             Game game = model.FindGameByClient(client);
@@ -84,7 +84,6 @@ namespace Server
                 writer.WriteLine(JsonConvert.SerializeObject(this));
                 writer.Flush();
                 Thread.Sleep(200);
-
             }
         }
     }

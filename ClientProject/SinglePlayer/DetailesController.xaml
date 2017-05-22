@@ -18,7 +18,7 @@
 
         </Grid.ColumnDefinitions>
         <TextBlock Padding="3" Margin="3,3,2.667,3">Maze Name:</TextBlock>
-        <TextBox x:Name="txtName" Grid.Column="1" Text="{Binding VM_MazeOfName}" Padding="3" Margin="3.333,3,3,3"/>
+        <TextBox x:Name="txtName" Grid.Column="1" Text="{Binding VM_NameOfMaze}" Padding="3" Margin="3.333,3,3,3"/>
         <TextBlock Grid.Row="1" Margin="3,3,2.667,3">Maze rows:</TextBlock>
         <TextBox x:Name="txtRows" Grid.Row="1" Grid.Column="1" Padding="3" Text="{Binding VM_MazeRows}"  Margin="3.333,3,3,3" />
 
