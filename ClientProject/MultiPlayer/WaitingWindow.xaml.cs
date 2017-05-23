@@ -23,15 +23,28 @@ namespace ClientWpf.MultiPlayer
         public WaitingWindow()
         {
             InitializeComponent();
-            vm = new MultiPlayerViewModel(SinglePlayerModel.Instance);
+            vm = new MultiPlayerViewModel(MultiPlayerModel.Instance);
             this.DataContext = vm;
         }
         public void WaitForAnotherPlayer()
         {
-            this.vm.VM_start(); 
+            //  this.vm.VM_start();
+            //   this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
+            //     {
+            this.vm.VM_start();
             MultiPlayerMazeWindow win = new MultiPlayerMazeWindow();
-            win.Show();
+                win.Show();
+                this.Close();
+           // }));
+        }
+
+        private void MainMenuBottun_Click(object sender, RoutedEventArgs e)
+        {
+            WinWindow winWindow = new WinWindow();
+            winWindow.ShowDialog();
             this.Close();
+            // delete from wait games
+
         }
     }
 }

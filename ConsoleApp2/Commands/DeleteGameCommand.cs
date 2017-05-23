@@ -21,12 +21,11 @@ namespace Server
             NetworkStream stream = client.GetStream();
             StreamReader reader = new StreamReader(stream);
             StreamWriter writer = new StreamWriter(stream);
-            writer.WriteLine();
+            writer.WriteLine("delete: " + name);
             writer.Flush();
-          //  Console.WriteLine(maze.ToJSON());
             model.MazesMutexRealese();
             return closeConnection;
-            
+
         }
 
         public string IsValid(string[] args)

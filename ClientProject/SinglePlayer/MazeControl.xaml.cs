@@ -20,6 +20,7 @@ namespace ClientWpf
         private Position startPoint;
         private Position endPoint;
         private Position currPoint;
+        private Position currPointNew;
 
         public MazeControl()
         {
@@ -29,15 +30,6 @@ namespace ClientWpf
             hight = myCanvas.Height;
             Content = grid; // the content is grid.
             grid.ShowGridLines = true;
-        }
-
-        public static readonly DependencyProperty CurrPointD =
-            DependencyProperty.Register("CurrPoint", typeof(Position), typeof(MazeControl),
-                new PropertyMetadata(CurrPointChanges));
-        private static void CurrPointChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            MazeControl mc = (MazeControl)d;
-            mc.CurrPoint = (Position)e.NewValue;
         }
 
         public Position StartPoint
@@ -61,6 +53,22 @@ namespace ClientWpf
             {
                 this.endPoint = value;
                 this.grid.Children.Add(this.GetRectForGrid(EndPoint.Row, EndPoint.Col, endImage));
+            }
+        }
+        public Position CurrPointNew
+        {
+            get
+            {
+                return this.currPointNew;
+            }
+            set
+            {
+                grid.Children.Add(this.GetRectForGrid(this.currPointNew.Row, this.currPointNew.Col, new SolidColorBrush(Colors.White)));
+                this.currPointNew = value;
+                this.Dispatcher.Invoke(() =>
+                {
+                    this.grid.Children.Add(this.GetRectForGrid(CurrPointNew.Row, CurrPointNew.Col, startImage));
+                });
             }
         }
         public Position CurrPoint
@@ -119,7 +127,14 @@ namespace ClientWpf
                 this.CurrPoint = this.StartPoint;
             }
         }
-
+        public static readonly DependencyProperty CurrPointNewD =
+          DependencyProperty.Register("CurrPointNew", typeof(Position), typeof(MazeControl),
+              new PropertyMetadata(CurrPointChanges));
+        private static void CurrPointChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MazeControl mc = (MazeControl)d;
+            mc.CurrPointNew = (Position)e.NewValue;
+        }
         // Using a DependencyProperty as the backing store for StringOfMaze.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MazeStringD =
             DependencyProperty.Register("MazeString", typeof(string), typeof(MazeControl),
@@ -194,32 +209,6 @@ namespace ClientWpf
                     }
                 }
             }
-        }
-        private void OpponentMove(string move)
-        {
-            int row = this.CurrPoint.Row, col = this.CurrPoint.Col;
-            Position newPosition = new Position();
-
-            switch (move)
-            {
-                case "down":
-                    row = row + 1;
-                    break;
-                case "up":
-                    row = row - 1;
-                    break;
-                case "left":
-                    col = col - 1;
-                    break;
-                case "right":
-                    col = col + 1;
-                    break;
-                default:
-                    break;
-            }
-            newPosition.Row = row;
-            newPosition.Col = col;
-            this.SetCurrPoint(newPosition);
         }
         private void SetRowsOfGrid()
         {

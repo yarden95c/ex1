@@ -58,7 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connect\DeleteGameCommand.cs" />
+    <Compile Include="Commands\DeleteGameCommand.cs" />
     <Compile Include="Connect\Program.cs" />
     <Compile Include="Connect\ClientHandler.cs" />
     <Compile Include="Commands\CloseCommand.cs" />

@@ -12,7 +12,7 @@
         <Button x:Name="startGameButton" Content="Start Game" HorizontalAlignment="Center" Margin="76,216,0,0" VerticalAlignment="Center" Width="95" Height="24" Click="StartGameButton_Click"/>
         <Button x:Name="JoinGameButton" Content="Join Game" HorizontalAlignment="Center" Margin="86,67,0,0" VerticalAlignment="Top" Width="85" Height="27" Click="JoinGameButton_Click"/>
         <Label x:Name="label" Content="List Of Games:" HorizontalAlignment="Left" Margin="26,23,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="131,27,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="comboBox_SelectionChanged"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="131,27,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="comboBox_DropDownOpened"/>
  
     </Grid>
 </Window>

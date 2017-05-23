@@ -13,8 +13,8 @@ namespace ClientWpf.MultiPlayer
 
      class MultiPlayerViewModel : ViewModel
     {
-        private ISinglePlayerModel model;
-        public MultiPlayerViewModel(ISinglePlayerModel model)
+        private MultiPlayerModel model;
+        public MultiPlayerViewModel(MultiPlayerModel model)
         {
             this.model = model;
             this.model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
@@ -50,24 +50,17 @@ namespace ClientWpf.MultiPlayer
                 NotifyPropertyChanged("MazeString");
             }
         }
-        /* public string VM_Direction
-         {
-             get
-             {
-                 return this.model.Direction;
-             }
-             set { this.model.Direction = value; }
-         }*/
-        public Position VM_CurrentPoint
+       
+        public Position VM_CurrentPointNew
         {
             get
             {
-                return this.model.CurrentPoint;
+                return this.model.CurrentPointNew;
             }
             set
             {
-                this.model.CurrentPoint = value;
-              //  NotifyPropertyChanged("CurrentPoint");
+                this.model.CurrentPointNew = value;
+                NotifyPropertyChanged("CurrentPointNew");
 
             }
         }
@@ -77,7 +70,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.MazeCols = value;
-                //NotifyPropertyChanged("MazeCols");
+                NotifyPropertyChanged("MazeCols");
             }
         }
         public Position VM_StartPoint
@@ -86,7 +79,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.StartPoint = value;
-               // NotifyPropertyChanged("StartPoint");
+                NotifyPropertyChanged("StartPoint");
             }
         }
         public Position VM_EndPoint
@@ -95,7 +88,7 @@ namespace ClientWpf.MultiPlayer
             set
             {
                 model.EndPoint = value;
-              //  NotifyPropertyChanged("EndPoint");
+                NotifyPropertyChanged("EndPoint");
             }
         }
         public List<string> VM_listOfGames()
@@ -111,17 +104,9 @@ namespace ClientWpf.MultiPlayer
         {
             this.VM_MazeString = this.model.Join();
         }
-        public void VM_Delete()
-        {
-            this.model.DeleteSingleGame();
-        }
         public void VM_Play(string move)
         {
             this.model.Play(move);
-            /*JObject jObject = JObject.Parse(opponentMove);
-            JToken jSolution = jObject["Direction"];
-            string solution = (string)jSolution;
-            this.VM_Direction = solution;*/
         }
         public void VM_Close()
         {

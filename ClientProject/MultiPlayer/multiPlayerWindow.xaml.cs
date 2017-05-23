@@ -19,14 +19,12 @@ namespace ClientWpf.MultiPlayer
         public multiPlayerWindow()
         {
             InitializeComponent();
-                vm = new MultiPlayerViewModel(SinglePlayerModel.Instance);
-           // vm = new MultiPlayerViewModel(new MultiPlayerModel());
+            vm = new MultiPlayerViewModel(MultiPlayerModel.Instance);
             vm.VM_MazeRows = Properties.Settings.Default.MazeRows;
             vm.VM_MazeCols = Properties.Settings.Default.MazeCols;
             this.DataContext = vm;
             comboBox.ItemsSource = games;
-            List<string> list = this.vm.VM_listOfGames();
-            this.GiveMeTheGames(list);
+            this.MouseLeftButtonDown += new System.Windows.Input.MouseButtonEventHandler(this.comboBox_DropDownOpened);
         }
         private void GiveMeTheGames(List<string> list)
         {
@@ -35,10 +33,6 @@ namespace ClientWpf.MultiPlayer
             {
                 this.games.Add(s);
             }
-        }
-
-        private void comboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
         }
         private void JoinGameButton_Click(object sender, RoutedEventArgs e)
         {
@@ -55,6 +49,11 @@ namespace ClientWpf.MultiPlayer
             win.Show();
             win.WaitForAnotherPlayer();
             this.Close();
+        }
+        private void comboBox_DropDownOpened(object sender, EventArgs e)
+        {
+            List<string> list = this.vm.VM_listOfGames();
+            this.GiveMeTheGames(list);
         }
     }
 }

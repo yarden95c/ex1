@@ -14,7 +14,7 @@ namespace ClientWpf.MultiPlayer
         public MultiPlayerMazeWindow()
         {
             InitializeComponent();
-            vm = new MultiPlayerViewModel(SinglePlayerModel.Instance);
+            vm = new MultiPlayerViewModel(MultiPlayerModel.Instance);
             this.DataContext = vm;
             this.KeyDown += new KeyEventHandler(this.GridKeyDown);
             this.PreviewKeyDown += new KeyEventHandler(this.Grid_PreviewKeyDown);
@@ -59,7 +59,7 @@ namespace ClientWpf.MultiPlayer
 
             if (this.mazeControlMy.AreEqualPositions(newPosition, this.mazeControlMy.EndPoint))
             {
-                this.EndGame();
+          //      this.EndGame();
                 return;
             }
             this.mazeControlMy.SetCurrPoint(newPosition);
@@ -75,28 +75,8 @@ namespace ClientWpf.MultiPlayer
             WinWindow winWindow = new WinWindow();
             winWindow.ShowDialog();
             this.Close();
-            vm.VM_Delete();
+           // vm.VM_Delete();
         }
-
-        public void mazeControlMy_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.IsRepeat)
-            {
-                count++;
-                if (count >= 5)
-                {
-                    count = 0;
-                }
-            }
-            else
-            {
-                count = 0;
-
-            }
-            e.Handled = true;
-            GridKeyDown(sender, e);
-        }
-
         private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.IsRepeat)

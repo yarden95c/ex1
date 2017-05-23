@@ -83,10 +83,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AbstractClassModelClientServer.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="MultiPlayer\MultiPlayerMazeWindow.xaml.cs">
       <DependentUpon>MultiPlayerMazeWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MultiPlayer\MultiPlayerModel.cs" />
     <Compile Include="MultiPlayer\MultiPlayerViewModel.cs" />
     <Compile Include="MultiPlayer\MultiPlayerWindow.xaml.cs">
       <DependentUpon>MultiPlayerWindow.xaml</DependentUpon>
@@ -97,7 +99,6 @@
     <Compile Include="SinglePlayer\DetailesController.xaml.cs">
       <DependentUpon>DetailesController.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SinglePlayer\ISinglePlayerModel.cs" />
     <Compile Include="SinglePlayer\MazeControl.xaml.cs">
       <DependentUpon>MazeControl.xaml</DependentUpon>
     </Compile>
