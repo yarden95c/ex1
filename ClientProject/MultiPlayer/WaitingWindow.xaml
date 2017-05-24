@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:ClientWpf.MultiPlayer"
         mc:Ignorable="d"
         Title="WaitingWindow" Height="300" Width="300">
-    <Grid>
-        <Label x:Name="label" Content="Wait for other player!!" HorizontalAlignment="Left" Margin="81,58,0,0" VerticalAlignment="Top" RenderTransformOrigin="-3.5,-0.154" Height="38" Width="128"/>
-        <Label x:Name="label1" Content="Do U want go to Main Menu?" HorizontalAlignment="Left" Margin="33,132,0,0" VerticalAlignment="Top" RenderTransformOrigin="-2.816,0.885" Height="31" Width="167"/>
-        <Button x:Name="MainMenuBottun" Content="Yes" HorizontalAlignment="Left" Margin="207,135,0,0" VerticalAlignment="Top" Width="75" Click="MainMenuBottun_Click"/>
+    <Grid Background="Azure">
+        <Label x:Name="label" Content="Wait for other player" HorizontalAlignment="Center" Margin="28,117,25.2,117.8" VerticalAlignment="Center" RenderTransformOrigin="-3.5,-0.154" Height="38" Width="242" FontSize="20" 
+               FontFamily="Cooper" FontStretch="SemiCondensed"/>
+        <Label x:Name="dots" Content=". . ." Margin="249,118,10.2,110.8" VerticalAlignment="Center" RenderTransformOrigin="-3.5,-0.154" Height="44" FontSize="20" 
+               FontFamily="Cooper" FontStretch="SemiCondensed"/>
+
+
     </Grid>
 </Window>

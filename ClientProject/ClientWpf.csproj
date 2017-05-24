@@ -85,6 +85,7 @@
     </ApplicationDefinition>
     <Compile Include="AbstractClassModelClientServer.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="Message.cs" />
     <Compile Include="MultiPlayer\MultiPlayerMazeWindow.xaml.cs">
       <DependentUpon>MultiPlayerMazeWindow.xaml</DependentUpon>
     </Compile>

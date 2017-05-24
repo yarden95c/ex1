@@ -21,7 +21,7 @@ namespace ClientWpf
         private Position endPoint;
         private Position currPoint;
         private Position currPointNew;
-
+        private string notConnect;
         public MazeControl()
         {
             InitializeComponent();
@@ -29,7 +29,9 @@ namespace ClientWpf
             width = myCanvas.Width;
             hight = myCanvas.Height;
             Content = grid; // the content is grid.
-            grid.ShowGridLines = true;
+                            //grid.ShowGridLines = true;
+                            //width = this.ActualWidth;
+                            // hight = this.ActualHeight;
         }
 
         public Position StartPoint
@@ -79,10 +81,10 @@ namespace ClientWpf
             }
             set
             {
-                grid.Children.Add(this.GetRectForGrid(this.currPoint.Row, this.currPoint.Col, new SolidColorBrush(Colors.White)));
                 this.currPoint = value;
                 this.Dispatcher.Invoke(() =>
                 {
+                    
                     this.grid.Children.Add(this.GetRectForGrid(CurrPoint.Row, CurrPoint.Col, startImage));
                 });
             }
@@ -127,6 +129,26 @@ namespace ClientWpf
                 this.CurrPoint = this.StartPoint;
             }
         }
+        public string NotConnect
+        {
+            get
+            {
+                return this.notConnect;
+            }
+            set
+            {
+                this.notConnect = value;
+                Message.ShowOKMessage("we are sorry, there is a problem with the connection", "ERROE");
+            }
+        }
+        public static readonly DependencyProperty NotConnectD =
+          DependencyProperty.Register("NotConnect", typeof(string), typeof(MazeControl),
+              new PropertyMetadata(ConnectChanges));
+        private static void ConnectChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MazeControl m = (MazeControl)d;
+            m.NotConnect = "error";
+        }
         public static readonly DependencyProperty CurrPointNewD =
           DependencyProperty.Register("CurrPointNew", typeof(Position), typeof(MazeControl),
               new PropertyMetadata(CurrPointChanges));
@@ -135,6 +157,7 @@ namespace ClientWpf
             MazeControl mc = (MazeControl)d;
             mc.CurrPointNew = (Position)e.NewValue;
         }
+
         // Using a DependencyProperty as the backing store for StringOfMaze.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MazeStringD =
             DependencyProperty.Register("MazeString", typeof(string), typeof(MazeControl),
@@ -229,6 +252,9 @@ namespace ClientWpf
         }
         public Rectangle GetRectForGrid(int i, int j, Brush fill)
         {
+            //width = grid.ActualWidth;
+            //hight = grid.ActualHeight; ;
+
             Rectangle rect = new Rectangle();
             rect.Height = this.hight / Rows;
             rect.Width = this.width / Cols;
@@ -259,6 +285,7 @@ namespace ClientWpf
         {
             return (p1.Row == p2.Row) && (p1.Col == p2.Col);
         }
+
     }
 
 }

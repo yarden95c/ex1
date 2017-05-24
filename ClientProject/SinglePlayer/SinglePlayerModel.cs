@@ -20,7 +20,6 @@ namespace ClientWpf
         {
             this.client = new Client();
         }
-
         public static SinglePlayerModel Instance
         {
             get
@@ -50,35 +49,64 @@ namespace ClientWpf
         }
         public string GenerateMaze()
         {
-            string command = "generate " + this.NameOfMaze + " "
-                + this.MazeRows + " " + this.MazeCols;
-            string maze = this.GetCommand(command, false);
-            return maze;
+            try
+            {
+                string command = "generate " + this.NameOfMaze + " "
+                    + this.MazeRows + " " + this.MazeCols;
+                string maze = this.GetCommand(command, false);
+                return maze;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         public string SolveMaze()
         {
-            int algo = Properties.Settings.Default.SearchAlgorithm;
-            string command = "solve " + this.NameOfMaze + " "
-                + algo.ToString();
-            string solution = this.GetCommand(command, false);
-            return solution;
+            try
+            {
+                int algo = Properties.Settings.Default.SearchAlgorithm;
+                string command = "solve " + this.NameOfMaze + " "
+                    + algo.ToString();
+                string solution = this.GetCommand(command, false);
+                return solution;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         private string GetCommand(string command, bool flag)
         {
-            if (!flag)
+            try
             {
-                this.client.Connect();
+                this.client.AddCommand(command);
+                if (!flag)
+                {
+                    this.client.Connect();
+                }
+                if (!flag)
+                    return this.client.GetAnswer();
+                return null;
             }
-            this.client.AddCommand(command);
-            if (!flag)
-                return this.client.GetAnswer();
-            return null;
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public void DeleteSingleGame()
         {
-            string command = "delete " + this.NameOfMaze;
-            string solution = this.GetCommand(command, false);
+            try
+            {
+                string command = "delete " + this.NameOfMaze;
+                string solution = this.GetCommand(command, false);
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }

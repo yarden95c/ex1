@@ -19,20 +19,14 @@ namespace ClientWpf
     /// </summary>
     public partial class WinWindow : Window
     {
+        
         public WinWindow()
         {
             InitializeComponent();
-
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
-        {
-            SinglePlayerWindow win = new SinglePlayerWindow();
-            win.Show();
-            this.Close();
-        }
-
-        private void button_Click(object sender, RoutedEventArgs e)
+        
+        private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow win = new MainWindow();
             win.Show();

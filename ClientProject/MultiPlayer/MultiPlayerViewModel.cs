@@ -21,7 +21,21 @@ namespace ClientWpf.MultiPlayer
             {
                 NotifyPropertyChanged("VM_" + e.PropertyName);
             };
+           
 
+        }
+        public string VM_NotConnect
+        {
+            get
+            {
+                return this.model.NotConnect;
+            }
+            set
+            {
+                this.model.NotConnect = value;
+               // NotifyPropertyChanged("NotConnect");
+
+            }
         }
         public string VM_NameOfMaze
         {
@@ -111,6 +125,10 @@ namespace ClientWpf.MultiPlayer
         public void VM_Close()
         {
             this.model.Close();
+        }
+        public void VM_CheckIfClose()
+        {
+            this.model.CheckIfClose();
         }
     }
 }

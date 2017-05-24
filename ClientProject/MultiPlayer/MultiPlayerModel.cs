@@ -14,6 +14,7 @@ namespace ClientWpf
         private Position endPoint;
         private Position startPoint;
         private Position currentPointNew;
+        private string notConnect;
         private static MultiPlayerModel instance;
         private static Mutex instanceMutex = new Mutex();
         public event PropertyChangedEventHandler PropertyChanged;
@@ -28,6 +29,24 @@ namespace ClientWpf
             {
                 this.UpdateCurrentPoint(direction1);
             };
+            this.client.NotConnectWithServer += delegate ()
+            {
+               this.NotConnect = "NotConnect";
+               // throw new Exception();
+            };
+    }
+        public string NotConnect
+        {
+            get
+            {
+                return this.notConnect;
+            }
+            set
+            {
+                this.notConnect = value;
+                NotifyPropertyChanged("NotConnect");
+                
+            }
         }
         private void UpdateCurrentPoint(string direction)
         {
@@ -95,32 +114,65 @@ namespace ClientWpf
         }
         public List<string> GetList()
         {
-            string command = "list";
-            string solution = this.GetCommand(command, false);
-            return JsonConvert.DeserializeObject<List<string>>(solution);
+            try
+            {
+                string command = "list";
+                string solution = this.GetCommand(command, false);
+                return JsonConvert.DeserializeObject<List<string>>(solution);
+
+            }
+            catch (Exception)
+            {
+                return null;
+              //  throw;
+            }
         }
         public string Start()
         {
-            string command = "start " + this.NameOfMaze + " " + this.MazeRows + " " + this.MazeCols;
-            string solution = this.GetCommand(command, false);
-            Maze maze = Maze.FromJSON(solution);
-            this.StartPoint = maze.InitialPos;
-            this.EndPoint = maze.GoalPos;
-            return solution;
+            try
+            {
+                string command = "start " + this.NameOfMaze + " " + this.MazeRows + " " + this.MazeCols;
+                string solution = this.GetCommand(command, false);
+                Maze maze = Maze.FromJSON(solution);
+                this.StartPoint = maze.InitialPos;
+                this.EndPoint = maze.GoalPos;
+                return solution;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
-        public String Join()
+        public String Join() 
         {
-            string command = "join " + this.NameOfMaze;
-            string solution = this.GetCommand(command, false);
-            Maze maze = Maze.FromJSON(solution);
-            this.StartPoint = maze.InitialPos;
-            this.EndPoint = maze.GoalPos;
-            return solution;
+            try
+            {
+                string command = "join " + this.NameOfMaze;
+                string solution = this.GetCommand(command, false);
+                Maze maze = Maze.FromJSON(solution);
+                this.StartPoint = maze.InitialPos;
+                this.EndPoint = maze.GoalPos;
+                return solution;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         public void Play(string move)
         {
-            string command = "play " + move;
-            this.GetCommand(command, true);
+            try
+            {
+                string command = "play " + move;
+                this.GetCommand(command, true);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         public string Close()
         {
@@ -130,14 +182,33 @@ namespace ClientWpf
         }
         private string GetCommand(string command, bool flag)
         {
-            if (!flag)
+            try
             {
-                this.client.Connect();
+                this.client.AddCommand(command);
+                if (!flag)
+                {
+                    this.client.Connect();
+                }
+                if (!flag)
+                    return this.client.GetAnswer();
+                return null;
             }
-            this.client.AddCommand(command);
-            if (!flag)
-                return this.client.GetAnswer();
-            return null;
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public void CheckIfClose()
+        {
+            while (!this.client.StartMultyPlayerGame)
+            {
+                Thread.Sleep(100);
+            }
+            while (this.client.StartMultyPlayerGame)
+            {
+                Thread.Sleep(100);
+            }
         }
     }
 }

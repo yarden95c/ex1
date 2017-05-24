@@ -36,24 +36,41 @@ namespace ClientWpf.MultiPlayer
         }
         private void JoinGameButton_Click(object sender, RoutedEventArgs e)
         {
-            this.vm.VM_NameOfMaze = (string)comboBox.SelectedItem;
-            this.vm.VM_join();
-            MultiPlayerMazeWindow win = new MultiPlayerMazeWindow();
-            win.Show();
-            this.Close();
+            try
+            {
+
+                this.vm.VM_NameOfMaze = (string)comboBox.SelectedItem;
+                this.vm.VM_join();
+                MultiPlayerMazeWindow win = new MultiPlayerMazeWindow(" Join");
+                win.Show();
+                this.Close();
+            }
+            catch (Exception)
+            {
+                Message.ShowOKMessage("we are sorry, there is a problem with the connection, please try again later..", "ERROE");
+            }
         }
 
         private void StartGameButton_Click(object sender, RoutedEventArgs e)
         {
-            WaitingWindow win = new WaitingWindow();
-            win.Show();
-            win.WaitForAnotherPlayer();
-            this.Close();
+            try
+            {
+                WaitingWindow win = new WaitingWindow();
+                win.Show();
+                win.WaitForAnotherPlayer();
+                this.Close();
+            }
+            catch (Exception)
+            {
+                Message.ShowOKMessage("we are sorry, there is a problem with the connection, please try again later..", "ERROE");
+    }
         }
         private void comboBox_DropDownOpened(object sender, EventArgs e)
         {
             List<string> list = this.vm.VM_listOfGames();
             this.GiveMeTheGames(list);
         }
+        
+
     }
 }

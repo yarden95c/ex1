@@ -1,4 +1,5 @@
 ﻿using MazeLib;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,7 +12,7 @@ namespace ClientWpf.MultiPlayer
     {
         private MultiPlayerViewModel vm;
         private int count;
-        public MultiPlayerMazeWindow()
+        public MultiPlayerMazeWindow(string s)
         {
             InitializeComponent();
             vm = new MultiPlayerViewModel(MultiPlayerModel.Instance);
@@ -19,10 +20,23 @@ namespace ClientWpf.MultiPlayer
             this.KeyDown += new KeyEventHandler(this.GridKeyDown);
             this.PreviewKeyDown += new KeyEventHandler(this.Grid_PreviewKeyDown);
             count = 0;
+            Task task = new Task(() =>
+            {
+                this.vm.VM_CheckIfClose();
+                Message.ShowOKMessage("The other player left", "Multy Player Game" + s);
+                this.Dispatcher.Invoke(() =>
+                {
+                    MainWindow win = new MainWindow();
+                    win.Show();
+                    this.Close();
+                });
+            });
+            task.Start();
         }
 
         private void mainMenuButton_Click(object sender, RoutedEventArgs e)
         {
+            this.vm.VM_Close();
             MainWindow win = new MainWindow();
             win.Show();
             this.Close();
@@ -59,7 +73,7 @@ namespace ClientWpf.MultiPlayer
 
             if (this.mazeControlMy.AreEqualPositions(newPosition, this.mazeControlMy.EndPoint))
             {
-          //      this.EndGame();
+                this.EndGame();
                 return;
             }
             this.mazeControlMy.SetCurrPoint(newPosition);
@@ -69,13 +83,13 @@ namespace ClientWpf.MultiPlayer
                     vm.VM_Play(move);
             }
         }
+        
         public void EndGame()
         {
-            //    this.vm.VM_Close();
+            this.vm.VM_Close();
             WinWindow winWindow = new WinWindow();
             winWindow.ShowDialog();
             this.Close();
-           // vm.VM_Delete();
         }
         private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -95,5 +109,11 @@ namespace ClientWpf.MultiPlayer
             e.Handled = true;
             GridKeyDown(sender, e);
         }
+        //private MessageBoxResult ShowMessage(string message, string title)
+        //{
+        //    MessageBoxButton button = MessageBoxButton.OK;
+        //    MessageBoxImage icon = MessageBoxImage.Warning;
+        //    return MessageBox.Show(message, title, button, icon);
+        //}
     }
 }

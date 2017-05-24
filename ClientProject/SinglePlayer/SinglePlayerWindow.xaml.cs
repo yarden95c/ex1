@@ -21,11 +21,20 @@ namespace ClientWpf
 
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
-            SinglePlayerMazeWindow win = new SinglePlayerMazeWindow();
-            win.Show();
-            this.Close();
-        }
+            try
+            {
+                vm.VM_GenerateMaze();
+                SinglePlayerMazeWindow win = new SinglePlayerMazeWindow();
+                win.Show();
+                this.Close();
 
+            }
+            catch (System.Exception)
+            {
+                Message.ShowOKMessage("we are sorry, there is a problem with the connection, please try again later..", "ERROE");
+            }
+        }
+        
         private void detailsControl_Loaded(object sender, RoutedEventArgs e)
         {
 

@@ -31,6 +31,9 @@ namespace ClientWpf
         bool startMultyPlayerGame;
         public delegate void otherPlayerMove(string direction);
         public event otherPlayerMove EventOtherPlayerMove;
+        public delegate void NotConnect();
+        public event NotConnect NotConnectWithServer;
+        int exception;
         /// <summary>
         /// Initializes a new instance of the <see cref="Client"/> class.
         /// </summary>
@@ -63,7 +66,7 @@ namespace ClientWpf
                         if (result.Contains(this.exitGame))
                         {
                             startMultyPlayerGame = false;
-                            result =this.ChecResult(result, this.exitGame);
+                            result = this.ChecResult(result, this.exitGame);
                             isOnline = false;
                             client.Close();
                             break;
@@ -77,13 +80,13 @@ namespace ClientWpf
                                 client.Close();
                                 break;
                             }
-                           // continue;
+                            // continue;
                         }
                         if (result.Contains(this.keepOpen))
                         {
                             startMultyPlayerGame = true;
                             result = this.ChecResult(result, this.keepOpen);
-                          //  continue;
+                            //  continue;
                         }
 
                         if (result != "")
@@ -105,12 +108,13 @@ namespace ClientWpf
 
                     catch (Exception)
                     {
+
                         isOnline = false;
                         client.Close();
                     }
                 }
             });
-            new Thread(() =>
+            Thread thread = new Thread(()=>
             {
                 while (true)
                 {
@@ -118,10 +122,12 @@ namespace ClientWpf
                     {
                         if (this.commands.Count > 0)
                         {
+                            exception = 0;
                             string input = this.commands.Dequeue();
                             Console.WriteLine(input);
                             if (!isOnline)
                             {
+                            
                                 client = new TcpClient();
                                 client.Connect(ep);
                                 stream = client.GetStream();
@@ -130,6 +136,7 @@ namespace ClientWpf
                                 isOnline = true;
                                 new Task(action).Start();
                             }
+                            exception = 1;
                             writer.WriteLine(input);
                             writer.Flush();
                             Thread.Sleep(300);
@@ -141,13 +148,37 @@ namespace ClientWpf
                     }
                     catch (Exception)
                     {
-                        isOnline = false;
-                        client.Close();
+                        if (client != null)
+                        {
+                            if (client.Client == null && exception == 0)
+                            {
+                                exception = -1;
+                            }else if ((exception == 0 && !client.Connected))
+                            {
+                                exception = -1;
+                            }
+                            isOnline = false;
+                            client.Close();
+                        }
+
+                        this.NotConnectWithServer();
                     }
                 }
-            }).Start();
-
+            });
+                exception = 0;
+                thread.Start();
+                while(exception == 0)
+                {
+                    Thread.Sleep(50);
+                }
+                if(exception == -1)
+                {
+                    throw new Exception();
+                }
+           
         }
+        
+
         /// <summary>
         /// Checs the result.
         /// </summary>
@@ -186,7 +217,14 @@ namespace ClientWpf
                 else
                 {
                     return answersFromServer.Dequeue();
-                      }
+                }
+            }
+        }
+        public bool StartMultyPlayerGame
+        {
+            get
+            {
+                return this.startMultyPlayerGame;
             }
         }
     }
