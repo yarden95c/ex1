@@ -6,7 +6,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-
         <Viewbox>
             <Border BorderBrush="Black" BorderThickness="3">
                 <Canvas x:Name="myCanvas" Width="500" Height="500">
@@ -15,7 +14,7 @@
         </Viewbox>
         <Rectangle>
             <Rectangle.Fill>
-                <ImageBrush x:Name="startImage" ImageSource="minyon.jpeg" Stretch="Fill"/>
+                <ImageBrush x:Name="startImage" ImageSource="minyon.jpeg" Stretch="UniformToFill"/>
             </Rectangle.Fill>
         </Rectangle>
         <Rectangle>

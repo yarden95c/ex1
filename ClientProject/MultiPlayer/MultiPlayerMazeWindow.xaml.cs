@@ -73,7 +73,7 @@ namespace ClientWpf.MultiPlayer
 
             if (this.mazeControlMy.AreEqualPositions(newPosition, this.mazeControlMy.EndPoint))
             {
-                //      this.EndGame();
+                this.EndGame();
                 return;
             }
             this.mazeControlMy.SetCurrPoint(newPosition);
@@ -83,13 +83,13 @@ namespace ClientWpf.MultiPlayer
                     vm.VM_Play(move);
             }
         }
+        
         public void EndGame()
         {
-            //    this.vm.VM_Close();
+            this.vm.VM_Close();
             WinWindow winWindow = new WinWindow();
             winWindow.ShowDialog();
             this.Close();
-            // vm.VM_Delete();
         }
         private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
         {

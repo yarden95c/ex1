@@ -122,10 +122,12 @@ namespace ClientWpf
                     {
                         if (this.commands.Count > 0)
                         {
+                            exception = 0;
                             string input = this.commands.Dequeue();
                             Console.WriteLine(input);
                             if (!isOnline)
                             {
+                            
                                 client = new TcpClient();
                                 client.Connect(ep);
                                 stream = client.GetStream();
@@ -148,13 +150,18 @@ namespace ClientWpf
                     {
                         if (client != null)
                         {
-                            if ((!client.Connected && exception == 0))
+                            if (client.Client == null && exception == 0)
+                            {
+                                exception = -1;
+                            }else if ((exception == 0 && !client.Connected))
                             {
                                 exception = -1;
                             }
                             isOnline = false;
                             client.Close();
                         }
+
+                        this.NotConnectWithServer();
                     }
                 }
             });

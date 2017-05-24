@@ -34,13 +34,7 @@ namespace ClientWpf
                 Message.ShowOKMessage("we are sorry, there is a problem with the connection, please try again later..", "ERROE");
             }
         }
-        //public static MessageBoxResult ShowMessage(string message, string title)
-        //{
-        //    MessageBoxButton button = MessageBoxButton.OK;
-        //    MessageBoxImage icon = MessageBoxImage.Warning;
-        //    return MessageBox.Show(message, title, button, icon);
-        //}
-
+        
         private void detailsControl_Loaded(object sender, RoutedEventArgs e)
         {
 

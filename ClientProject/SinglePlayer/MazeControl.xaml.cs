@@ -29,7 +29,9 @@ namespace ClientWpf
             width = myCanvas.Width;
             hight = myCanvas.Height;
             Content = grid; // the content is grid.
-            grid.ShowGridLines = true;
+                            //grid.ShowGridLines = true;
+                            //width = this.ActualWidth;
+                            // hight = this.ActualHeight;
         }
 
         public Position StartPoint
@@ -82,6 +84,7 @@ namespace ClientWpf
                 this.currPoint = value;
                 this.Dispatcher.Invoke(() =>
                 {
+                    
                     this.grid.Children.Add(this.GetRectForGrid(CurrPoint.Row, CurrPoint.Col, startImage));
                 });
             }
@@ -134,8 +137,8 @@ namespace ClientWpf
             }
             set
             {
-                this.notConnect = value; 
-                this.ShowMessage("we are sorry, there is a problem with the connection", "ERROE");
+                this.notConnect = value;
+                Message.ShowOKMessage("we are sorry, there is a problem with the connection", "ERROE");
             }
         }
         public static readonly DependencyProperty NotConnectD =
@@ -154,7 +157,7 @@ namespace ClientWpf
             MazeControl mc = (MazeControl)d;
             mc.CurrPointNew = (Position)e.NewValue;
         }
-        
+
         // Using a DependencyProperty as the backing store for StringOfMaze.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MazeStringD =
             DependencyProperty.Register("MazeString", typeof(string), typeof(MazeControl),
@@ -249,6 +252,9 @@ namespace ClientWpf
         }
         public Rectangle GetRectForGrid(int i, int j, Brush fill)
         {
+            //width = grid.ActualWidth;
+            //hight = grid.ActualHeight; ;
+
             Rectangle rect = new Rectangle();
             rect.Height = this.hight / Rows;
             rect.Width = this.width / Cols;
@@ -279,13 +285,7 @@ namespace ClientWpf
         {
             return (p1.Row == p2.Row) && (p1.Col == p2.Col);
         }
-        public MessageBoxResult ShowMessage(string message, string title)
-        {
-            MessageBoxButton button = MessageBoxButton.OKCancel;
-            MessageBoxImage icon = MessageBoxImage.Warning;
-            return MessageBox.Show(message, title, button, icon);
 
-        }
     }
 
 }

@@ -31,8 +31,8 @@ namespace ClientWpf
             };
             this.client.NotConnectWithServer += delegate ()
             {
-               // this.NotConnect = "NotConnect";
-                throw new Exception();
+               this.NotConnect = "NotConnect";
+               // throw new Exception();
             };
     }
         public string NotConnect
@@ -114,15 +114,23 @@ namespace ClientWpf
         }
         public List<string> GetList()
         {
-            string command = "list";
-            string solution = this.GetCommand(command, false);
-            return JsonConvert.DeserializeObject<List<string>>(solution);
+            try
+            {
+                string command = "list";
+                string solution = this.GetCommand(command, false);
+                return JsonConvert.DeserializeObject<List<string>>(solution);
+
+            }
+            catch (Exception)
+            {
+                return null;
+              //  throw;
+            }
         }
         public string Start()
         {
             try
             {
-
                 string command = "start " + this.NameOfMaze + " " + this.MazeRows + " " + this.MazeCols;
                 string solution = this.GetCommand(command, false);
                 Maze maze = Maze.FromJSON(solution);

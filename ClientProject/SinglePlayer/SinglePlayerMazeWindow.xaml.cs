@@ -30,8 +30,6 @@ namespace ClientWpf
             {
 
                 Message.ShowOKMessage("we are sorry, there is a problem with the connection, please try again later..", "ERROE");
-
-//                this.ShowMessage("we are sorry, there is a problem with the connection, please try again later..", "ERROE", MessageBoxButton.OK);
             }
         }
 
@@ -71,14 +69,14 @@ namespace ClientWpf
         {
             WinWindow winWindow = new WinWindow();
             winWindow.ShowDialog();
-            MainWindow win = new MainWindow();
-            win.Show();
-            this.Close();
-            vm.VM_Delete();
+                //MainWindow win = new MainWindow();
+                //win.Show();
+                this.Close();
+                vm.VM_Delete();
+            
         }
         private void RestartGame_Click(object sender, RoutedEventArgs e)
         {
-            //if (this.ShowMessage("Are you sure?!", "Restart Game", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             if (Message.ShowOkCancelMessage("Are you sure?!?", "Restart Game") == MessageBoxResult.OK)
 
             {
@@ -88,10 +86,8 @@ namespace ClientWpf
 
         private void MainMenu_Click(object sender, RoutedEventArgs e)
         {
-            //if (this.ShowMessage("Are you sure?!?", "Exit to Main menu", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             if(Message.ShowOkCancelMessage("Are you sure?!?", "Exit to Main menu") == MessageBoxResult.OK)
             {
-                //  MainWindow win = (MainWindow)Application.Current.MainWindow;
                 MainWindow win = new MainWindow();
                 win.Show();
                 this.Close();
@@ -143,7 +139,6 @@ namespace ClientWpf
                 }
                 Thread.Sleep(500);
                 this.mazeControl.SetCurrPoint(newPosition);
-
             }
         }
 
