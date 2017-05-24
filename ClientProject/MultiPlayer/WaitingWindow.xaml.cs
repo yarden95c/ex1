@@ -32,10 +32,10 @@ namespace ClientWpf.MultiPlayer
             //   this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, new Action(() =>
             //     {
             this.vm.VM_start();
-            MultiPlayerMazeWindow win = new MultiPlayerMazeWindow();
-                win.Show();
-                this.Close();
-           // }));
+            MultiPlayerMazeWindow win = new MultiPlayerMazeWindow(" start");
+            win.Show();
+            this.Close();
+            // }));
         }
 
         private void MainMenuBottun_Click(object sender, RoutedEventArgs e)

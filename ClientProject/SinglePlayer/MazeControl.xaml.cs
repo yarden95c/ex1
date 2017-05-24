@@ -21,7 +21,7 @@ namespace ClientWpf
         private Position endPoint;
         private Position currPoint;
         private Position currPointNew;
-
+        private string notConnect;
         public MazeControl()
         {
             InitializeComponent();
@@ -79,7 +79,6 @@ namespace ClientWpf
             }
             set
             {
-                grid.Children.Add(this.GetRectForGrid(this.currPoint.Row, this.currPoint.Col, new SolidColorBrush(Colors.White)));
                 this.currPoint = value;
                 this.Dispatcher.Invoke(() =>
                 {
@@ -127,6 +126,26 @@ namespace ClientWpf
                 this.CurrPoint = this.StartPoint;
             }
         }
+        public string NotConnect
+        {
+            get
+            {
+                return this.notConnect;
+            }
+            set
+            {
+                this.notConnect = value; 
+                this.ShowMessage("we are sorry, there is a problem with the connection", "ERROE");
+            }
+        }
+        public static readonly DependencyProperty NotConnectD =
+          DependencyProperty.Register("NotConnect", typeof(string), typeof(MazeControl),
+              new PropertyMetadata(ConnectChanges));
+        private static void ConnectChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MazeControl m = (MazeControl)d;
+            m.NotConnect = "error";
+        }
         public static readonly DependencyProperty CurrPointNewD =
           DependencyProperty.Register("CurrPointNew", typeof(Position), typeof(MazeControl),
               new PropertyMetadata(CurrPointChanges));
@@ -135,6 +154,7 @@ namespace ClientWpf
             MazeControl mc = (MazeControl)d;
             mc.CurrPointNew = (Position)e.NewValue;
         }
+        
         // Using a DependencyProperty as the backing store for StringOfMaze.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty MazeStringD =
             DependencyProperty.Register("MazeString", typeof(string), typeof(MazeControl),
@@ -258,6 +278,13 @@ namespace ClientWpf
         public bool AreEqualPositions(Position p1, Position p2)
         {
             return (p1.Row == p2.Row) && (p1.Col == p2.Col);
+        }
+        public MessageBoxResult ShowMessage(string message, string title)
+        {
+            MessageBoxButton button = MessageBoxButton.OKCancel;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            return MessageBox.Show(message, title, button, icon);
+
         }
     }
 

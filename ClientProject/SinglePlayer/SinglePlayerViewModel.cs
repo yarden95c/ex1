@@ -8,21 +8,22 @@ namespace ClientWpf
         private SinglePlayerModel model;
         private static SinglePlayerViewModel instance;
         private static Mutex instanceMutex = new Mutex();
+        private string generateMaze;
         private SinglePlayerViewModel(SinglePlayerModel model)
         {
             this.model = model;
         }
         public static SinglePlayerViewModel Instance(SinglePlayerModel model)
         {
-            
-                instanceMutex.WaitOne();
-                if (instance == null)
-                {
-                    instance = new SinglePlayerViewModel(model);
-                }
-                instanceMutex.ReleaseMutex();
-                return instance;
-            
+
+            instanceMutex.WaitOne();
+            if (instance == null)
+            {
+                instance = new SinglePlayerViewModel(model);
+            }
+            instanceMutex.ReleaseMutex();
+            return instance;
+
         }
         public string VM_NameOfMaze
         {
@@ -53,7 +54,13 @@ namespace ClientWpf
         }
         public string VM_MazeString
         {
-            get { return this.model.GenerateMaze(); }
+            get
+            {
+                //                return this.model.GenerateMaze();
+
+                return this.generateMaze;
+
+            }
             set
             {
                 model.MazeString = value;
@@ -86,7 +93,16 @@ namespace ClientWpf
         }
         public void VM_GenerateMaze()
         {
-            this.VM_MazeString = this.model.GenerateMaze();
+            try
+            {
+                this.generateMaze = this.model.GenerateMaze();
+
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
         }
         public string VM_SolveMaze()
         {

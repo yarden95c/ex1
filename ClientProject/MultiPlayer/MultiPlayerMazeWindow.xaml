@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ClientWpf.MultiPlayer"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:ClientWpf"
-        Title="MultiPlayerMazeWindow" Height="397.45" Width="628.95">
+        Title="{Binding VM_NameOfMaze}" Height="397.45" Width="628.95">
 
     <Grid PreviewKeyDown="Grid_PreviewKeyDown">
         <Grid.ColumnDefinitions>

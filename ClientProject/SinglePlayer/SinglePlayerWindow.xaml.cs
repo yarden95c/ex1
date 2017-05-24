@@ -21,10 +21,25 @@ namespace ClientWpf
 
         private void button_Click_1(object sender, RoutedEventArgs e)
         {
-            SinglePlayerMazeWindow win = new SinglePlayerMazeWindow();
-            win.Show();
-            this.Close();
+            try
+            {
+                vm.VM_GenerateMaze();
+                SinglePlayerMazeWindow win = new SinglePlayerMazeWindow();
+                win.Show();
+                this.Close();
+
+            }
+            catch (System.Exception)
+            {
+                Message.ShowOKMessage("we are sorry, there is a problem with the connection, please try again later..", "ERROE");
+            }
         }
+        //public static MessageBoxResult ShowMessage(string message, string title)
+        //{
+        //    MessageBoxButton button = MessageBoxButton.OK;
+        //    MessageBoxImage icon = MessageBoxImage.Warning;
+        //    return MessageBox.Show(message, title, button, icon);
+        //}
 
         private void detailsControl_Loaded(object sender, RoutedEventArgs e)
         {

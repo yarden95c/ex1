@@ -22,8 +22,16 @@ namespace ClientWpf
         private void singlePlayerButton_Click(object sender, RoutedEventArgs e)
         {
             this.singlePlayerWindow = new SinglePlayerWindow();
-            this.singlePlayerWindow.Show();
-            this.Close();
+            try
+            {
+                this.singlePlayerWindow.Show();
+                this.Close();
+
+            }
+            catch (Exception)
+            {
+                this.ShowMessage("we are sorry, there is a problem with the connection", "ERROE");
+            }
         }
 
         private void settingButton_Click(object sender, RoutedEventArgs e)
@@ -36,8 +44,31 @@ namespace ClientWpf
         private void multiPlayerButton_Click(object sender, RoutedEventArgs e)
         {
             multiPlayerWindow = new MultiPlayer.multiPlayerWindow();
-            multiPlayerWindow.Show();
-            this.Close();
+            try
+            {
+                multiPlayerWindow.Show();
+                this.Close();
+
+            }
+            catch (Exception)
+            {
+                this.ShowMessage("we are sorry, there is a problem with the connection", "ERROE");
+            }
+        }
+        public MessageBoxResult ShowMessage(string message, string title)
+        {
+            MessageBoxButton button = MessageBoxButton.OKCancel;
+            MessageBoxImage icon = MessageBoxImage.Warning;
+            return MessageBox.Show(message, title, button, icon);
+
+        }
+        public static readonly DependencyProperty NotConnectD =
+          DependencyProperty.Register("NotConnect", typeof(string), typeof(MainWindow),
+              new PropertyMetadata(ConnectChanges));
+        private static void ConnectChanges(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            MainWindow m = (MainWindow)d;
+            m.ShowMessage("we are sorry, there is a problem with the connection", "ERROE");
         }
     }
 }
