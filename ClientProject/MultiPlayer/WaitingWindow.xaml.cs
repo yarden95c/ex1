@@ -23,7 +23,7 @@ namespace ClientWpf.MultiPlayer
         public WaitingWindow()
         {
             InitializeComponent();
-            vm = new MultiPlayerViewModel(MultiPlayerModel.Instance);
+            vm = new MultiPlayerViewModel(new MultiPlayerModel());
             this.DataContext = vm;
         }
         public void WaitForAnotherPlayer()

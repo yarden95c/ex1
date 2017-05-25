@@ -20,7 +20,7 @@ namespace ClientWpf.MultiPlayer
         public MultiPlayerMazeWindow(string s)
         {
             InitializeComponent();
-            vm = new MultiPlayerViewModel(MultiPlayerModel.Instance);
+            vm = new MultiPlayerViewModel(new MultiPlayerModel());
             this.DataContext = vm;
             this.KeyDown += new KeyEventHandler(this.GridKeyDown);
             this.PreviewKeyDown += new KeyEventHandler(this.Grid_PreviewKeyDown);
@@ -49,7 +49,7 @@ namespace ClientWpf.MultiPlayer
             MainWindow win = new MainWindow();
             win.Show();
         }
-        private void mainMenuButton_Click(object sender, RoutedEventArgs e)
+        private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
             //this.vm.VM_Close();
             //MainWindow win = new MainWindow();
@@ -82,7 +82,6 @@ namespace ClientWpf.MultiPlayer
                 default:
                     break;
             }
-
             newPosition.Row = row;
             newPosition.Col = col;
 

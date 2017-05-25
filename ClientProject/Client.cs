@@ -101,8 +101,10 @@ namespace ClientWpf
                             }
                             else
                             {
-                                answersFromServer.Enqueue(result.ToString());
-                                Console.WriteLine(result);
+                                if (!result.ToString().Contains("is not in the playing list"))
+                                {
+                                  answersFromServer.Enqueue(result.ToString());
+                                }
                             }
                         }
                     }

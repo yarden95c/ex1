@@ -21,8 +21,6 @@ namespace ClientWpf.MultiPlayer
             {
                 NotifyPropertyChanged("VM_" + e.PropertyName);
             };
-           
-
         }
         public string VM_NotConnect
         {
