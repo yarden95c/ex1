@@ -17,11 +17,14 @@ namespace ClientWpf
         private string notConnect;
         private static MultiPlayerModel instance;
         private static Mutex instanceMutex = new Mutex();
+        Mutex answers = new Mutex();
         public event PropertyChangedEventHandler PropertyChanged;
+
         public void NotifyPropertyChanged(string propName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
+
         private MultiPlayerModel()
         {
             this.client = new Client();
@@ -178,6 +181,12 @@ namespace ClientWpf
         {
             string command = "close " + this.NameOfMaze;
             string solution = this.GetCommand(command, true);
+            //answers.WaitOne();
+           // if (client.CommandCount() > 0)
+            //{
+              // solution = this.client.GetAnswer();
+            //}
+            //answers.ReleaseMutex();
             return solution;
         }
         private string GetCommand(string command, bool flag)
@@ -190,8 +199,14 @@ namespace ClientWpf
                     this.client.Connect();
                 }
                 if (!flag)
-                    return this.client.GetAnswer();
+                {
+                    answers.WaitOne();
+                    string solution = this.client.GetAnswer();
+                    answers.ReleaseMutex();
+                    return solution;
+                }
                 return null;
+
             }
             catch (Exception)
             {

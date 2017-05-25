@@ -15,6 +15,7 @@ namespace ClientWpf.MultiPlayer
     public partial class MultiPlayerMazeWindow : Window
     {
         private MultiPlayerViewModel vm;
+        private bool isClosed;
         private int count;
         public MultiPlayerMazeWindow(string s)
         {
@@ -24,27 +25,35 @@ namespace ClientWpf.MultiPlayer
             this.KeyDown += new KeyEventHandler(this.GridKeyDown);
             this.PreviewKeyDown += new KeyEventHandler(this.Grid_PreviewKeyDown);
             count = 0;
+            isClosed = false;
             Task task = new Task(() =>
             {
                 this.vm.VM_CheckIfClose();
-                Message.ShowOKMessage("The other player left", "Multy Player Game" + s);
-                this.Dispatcher.Invoke(() =>
+                if (!this.isClosed)
                 {
-                    MainWindow win = new MainWindow();
-                    win.Show();
+                    Message.ShowOKMessage("The other player left", "Multy Player Game" + s);
+                    this.Dispatcher.Invoke(() =>
+                    {
+                    //MainWindow win = new MainWindow();
+                    //win.Show();
                     this.Close();
-                });
+                    });
+                }
             });
             task.Start();
         }
         protected override void OnClosing(CancelEventArgs e)
         {
+            this.isClosed = true;
             this.vm.VM_Close();
             MainWindow win = new MainWindow();
             win.Show();
         }
         private void mainMenuButton_Click(object sender, RoutedEventArgs e)
         {
+            //this.vm.VM_Close();
+            //MainWindow win = new MainWindow();
+            //win.Show();
             this.Close();
         }
         public void GridKeyDown(object sender, KeyEventArgs e)

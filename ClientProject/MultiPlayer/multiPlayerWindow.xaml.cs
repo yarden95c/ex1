@@ -29,16 +29,18 @@ namespace ClientWpf.MultiPlayer
         private void GiveMeTheGames(List<string> list)
         {
             this.games.Clear();
-            foreach (string s in list)
+            if (list != null)
             {
-                this.games.Add(s);
+                foreach (string s in list)
+                {
+                    this.games.Add(s);
+                }
             }
         }
         private void JoinGameButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-
                 this.vm.VM_NameOfMaze = (string)comboBox.SelectedItem;
                 this.vm.VM_join();
                 MultiPlayerMazeWindow win = new MultiPlayerMazeWindow(" Join");

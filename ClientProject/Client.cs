@@ -51,6 +51,7 @@ namespace ClientWpf
         /// </summary>
         public void Connect()
         {
+            startMultyPlayerGame = false;
             isOnline = false;
             Action action = new Action(() =>
             {
@@ -160,7 +161,6 @@ namespace ClientWpf
                             isOnline = false;
                             client.Close();
                         }
-
                         this.NotConnectWithServer();
                     }
                 }
@@ -210,15 +210,27 @@ namespace ClientWpf
         {
             while (true)
             {
+                string answer;
                 if (answersFromServer.Count == 0)
                 {
                     Thread.Sleep(300);
                 }
                 else
                 {
-                    return answersFromServer.Dequeue();
+                    answer = answersFromServer.Dequeue();
+                    if(answer.Contains("Error") && answersFromServer.Count > 0) {
+                        continue;
+                    }
+                    else
+                    {
+                        return answer;
+                    }
                 }
             }
+        }
+        public int CommandCount()
+        {
+            return answersFromServer.Count;
         }
         public bool StartMultyPlayerGame
         {
