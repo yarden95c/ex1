@@ -11,7 +11,5 @@
                FontFamily="Cooper" FontStretch="SemiCondensed"/>
         <Label x:Name="dots" Content=". . ." Margin="249,118,10.2,110.8" VerticalAlignment="Center" RenderTransformOrigin="-3.5,-0.154" Height="44" FontSize="20" 
                FontFamily="Cooper" FontStretch="SemiCondensed"/>
-
-
     </Grid>
 </Window>

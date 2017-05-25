@@ -63,14 +63,14 @@ namespace ClientWpf.MultiPlayer
             catch (Exception)
             {
                 Message.ShowOKMessage("we are sorry, there is a problem with the connection, please try again later..", "ERROE");
-    }
+            }
         }
         private void comboBox_DropDownOpened(object sender, EventArgs e)
         {
             List<string> list = this.vm.VM_listOfGames();
             this.GiveMeTheGames(list);
         }
-        
+
 
     }
 }

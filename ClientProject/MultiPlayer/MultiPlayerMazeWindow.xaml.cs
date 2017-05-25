@@ -1,7 +1,11 @@
 ﻿using MazeLib;
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace ClientWpf.MultiPlayer
 {
@@ -33,12 +37,14 @@ namespace ClientWpf.MultiPlayer
             });
             task.Start();
         }
-
-        private void mainMenuButton_Click(object sender, RoutedEventArgs e)
+        protected override void OnClosing(CancelEventArgs e)
         {
             this.vm.VM_Close();
             MainWindow win = new MainWindow();
             win.Show();
+        }
+        private void mainMenuButton_Click(object sender, RoutedEventArgs e)
+        {
             this.Close();
         }
         public void GridKeyDown(object sender, KeyEventArgs e)
@@ -83,7 +89,7 @@ namespace ClientWpf.MultiPlayer
                     vm.VM_Play(move);
             }
         }
-        
+
         public void EndGame()
         {
             this.vm.VM_Close();
