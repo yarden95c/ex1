@@ -16,7 +16,7 @@
         </Grid.ColumnDefinitions>
         <controls:MazeControl x:Name="mazeControlOpponent" Grid.Column="2" NotConnect="{Binding VM_NotConnect}" Rows="{Binding VM_MazeRows}" NameOfMaze="{Binding VM_NameOfMaze}" Cols="{Binding VM_MazeCols}"  MazeString="{Binding VM_MazeString}" EndPoint="{Binding VM_EndPoint}" CurrPointNew="{Binding VM_CurrentPointNew}" StartPoint="{Binding VM_StartPoint}" Margin="10,54,28,10" />
         <controls:MazeControl x:Name="mazeControlMy" NotConnect="{Binding VM_NotConnect}" Rows="{Binding VM_MazeRows}" NameOfMaze="{Binding VM_NameOfMaze}" Cols="{Binding VM_MazeCols}"  MazeString="{Binding VM_MazeString}" EndPoint="{Binding VM_EndPoint}" StartPoint="{Binding VM_StartPoint}" Margin="19,54,19,10" Grid.ColumnSpan="2" />
-        <Button x:Name="mainMenuButton" Grid.ColumnSpan="3" Content="Back to main menu" HorizontalAlignment="Left" Margin="272,9,0,0" VerticalAlignment="Top" Width="75" Click="mainMenuButton_Click"/>
+        <Button x:Name="MainMenuButton" Grid.ColumnSpan="3" Content="Back to main menu" HorizontalAlignment="Left" Margin="272,9,0,0" VerticalAlignment="Top" Width="75" Click="MainMenuButton_Click"/>
         <Label x:Name="label" Content="Other player's board" Grid.Column="2" HorizontalAlignment="Left" Margin="86,20,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label1" Content="My board" HorizontalAlignment="Left" Margin="100,20,0,0" VerticalAlignment="Top"/>
     </Grid>

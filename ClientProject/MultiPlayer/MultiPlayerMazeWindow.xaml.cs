@@ -16,6 +16,10 @@ namespace ClientWpf.MultiPlayer
     {
         private MultiPlayerViewModel vm;
         private int count;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MultiPlayerMazeWindow"/> class.
+        /// </summary>
+        /// <param name="s">The s.</param>
         public MultiPlayerMazeWindow(string s)
         {
             InitializeComponent();
@@ -37,16 +41,23 @@ namespace ClientWpf.MultiPlayer
             });
             task.Start();
         }
-        protected override void OnClosing(CancelEventArgs e)
+        /// <summary>
+        /// Handles the Click event of the mainMenuButton control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void MainMenuButton_Click(object sender, RoutedEventArgs e)
         {
             this.vm.VM_Close();
             MainWindow win = new MainWindow();
             win.Show();
-        }
-        private void mainMenuButton_Click(object sender, RoutedEventArgs e)
-        {
             this.Close();
         }
+        /// <summary>
+        /// Grids the key down.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
         public void GridKeyDown(object sender, KeyEventArgs e)
         {
             int row = this.mazeControlMy.CurrPoint.Row, col = this.mazeControlMy.CurrPoint.Col;
@@ -90,6 +101,9 @@ namespace ClientWpf.MultiPlayer
             }
         }
 
+        /// <summary>
+        /// Ends the game.
+        /// </summary>
         public void EndGame()
         {
             this.vm.VM_Close();
@@ -97,6 +111,11 @@ namespace ClientWpf.MultiPlayer
             winWindow.ShowDialog();
             this.Close();
         }
+        /// <summary>
+        /// Handles the PreviewKeyDown event of the Grid control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="KeyEventArgs"/> instance containing the event data.</param>
         private void Grid_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.IsRepeat)
@@ -115,11 +134,5 @@ namespace ClientWpf.MultiPlayer
             e.Handled = true;
             GridKeyDown(sender, e);
         }
-        //private MessageBoxResult ShowMessage(string message, string title)
-        //{
-        //    MessageBoxButton button = MessageBoxButton.OK;
-        //    MessageBoxImage icon = MessageBoxImage.Warning;
-        //    return MessageBox.Show(message, title, button, icon);
-        //}
     }
 }
