@@ -20,7 +20,7 @@ namespace ClientWpf.MultiPlayer
         public MultiPlayerMazeWindow(string s)
         {
             InitializeComponent();
-            vm = new MultiPlayerViewModel(new MultiPlayerModel());
+            vm = new MultiPlayerViewModel(MultiPlayerModel.Instance);
             this.DataContext = vm;
             this.KeyDown += new KeyEventHandler(this.GridKeyDown);
             this.PreviewKeyDown += new KeyEventHandler(this.Grid_PreviewKeyDown);
@@ -34,9 +34,9 @@ namespace ClientWpf.MultiPlayer
                     Message.ShowOKMessage("The other player left", "Multy Player Game" + s);
                     this.Dispatcher.Invoke(() =>
                     {
-                    //MainWindow win = new MainWindow();
-                    //win.Show();
-                    this.Close();
+                        //MainWindow win = new MainWindow();
+                        //win.Show();
+                        this.Close();
                     });
                 }
             });

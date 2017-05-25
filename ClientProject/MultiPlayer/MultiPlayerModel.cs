@@ -25,8 +25,9 @@ namespace ClientWpf
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public MultiPlayerModel()
+        private MultiPlayerModel()
         {
+            instance = null;
             this.client = new Client();
             this.client.EventOtherPlayerMove += delegate (string direction1)
             {
@@ -74,7 +75,7 @@ namespace ClientWpf
                     break;
             }
         }
-       /* public static MultiPlayerModel Instance
+        public static MultiPlayerModel Instance
         {
             get
             {
@@ -86,7 +87,11 @@ namespace ClientWpf
                 instanceMutex.ReleaseMutex();
                 return instance;
             }
-        }*/
+           /* set
+            {
+                instance = null;
+            }*/
+        }
         public Position CurrentPointNew
         {
             get { return this.currentPointNew; }
@@ -224,6 +229,10 @@ namespace ClientWpf
             {
                 Thread.Sleep(100);
             }
+        }
+        public void Clear()
+        {
+            this.client.Clear();
         }
     }
 }

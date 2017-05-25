@@ -19,7 +19,7 @@ namespace ClientWpf.MultiPlayer
         public multiPlayerWindow()
         {
             InitializeComponent();
-            vm = new MultiPlayerViewModel(new MultiPlayerModel());
+            vm = new MultiPlayerViewModel(MultiPlayerModel.Instance);
             vm.VM_MazeRows = Properties.Settings.Default.MazeRows;
             vm.VM_MazeCols = Properties.Settings.Default.MazeCols;
             this.DataContext = vm;

@@ -99,13 +99,9 @@ namespace ClientWpf
                                 string move = (string)jSolution;
                                 this.EventOtherPlayerMove?.Invoke(move);
                             }
-                            else
-                            {
-                                if (!result.ToString().Contains("is not in the playing list"))
-                                {
-                                  answersFromServer.Enqueue(result.ToString());
-                                }
-                            }
+                            answersFromServer.Enqueue(result.ToString());
+                            Console.WriteLine("Client: " + result);
+
                         }
                     }
 
@@ -117,7 +113,7 @@ namespace ClientWpf
                     }
                 }
             });
-            Thread thread = new Thread(()=>
+            Thread thread = new Thread(() =>
             {
                 while (true)
                 {
@@ -130,7 +126,7 @@ namespace ClientWpf
                             Console.WriteLine(input);
                             if (!isOnline)
                             {
-                            
+
                                 client = new TcpClient();
                                 client.Connect(ep);
                                 stream = client.GetStream();
@@ -156,7 +152,8 @@ namespace ClientWpf
                             if (client.Client == null && exception == 0)
                             {
                                 exception = -1;
-                            }else if ((exception == 0 && !client.Connected))
+                            }
+                            else if ((exception == 0 && !client.Connected))
                             {
                                 exception = -1;
                             }
@@ -167,19 +164,19 @@ namespace ClientWpf
                     }
                 }
             });
-                exception = 0;
-                thread.Start();
-                while(exception == 0)
-                {
-                    Thread.Sleep(50);
-                }
-                if(exception == -1)
-                {
-                    throw new Exception();
-                }
-           
+            exception = 0;
+            thread.Start();
+            while (exception == 0)
+            {
+                Thread.Sleep(50);
+            }
+            if (exception == -1)
+            {
+                throw new Exception();
+            }
+
         }
-        
+
 
         /// <summary>
         /// Checs the result.
@@ -220,7 +217,8 @@ namespace ClientWpf
                 else
                 {
                     answer = answersFromServer.Dequeue();
-                    if(answer.Contains("Error") && answersFromServer.Count > 0) {
+                    if (answer.Contains("Error") && answersFromServer.Count > 0)
+                    {
                         continue;
                     }
                     else
@@ -240,6 +238,10 @@ namespace ClientWpf
             {
                 return this.startMultyPlayerGame;
             }
+        }
+        public void Clear()
+        {
+            answersFromServer.Clear();
         }
     }
 }
