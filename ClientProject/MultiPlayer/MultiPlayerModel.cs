@@ -87,10 +87,6 @@ namespace ClientWpf
                 instanceMutex.ReleaseMutex();
                 return instance;
             }
-           /* set
-            {
-                instance = null;
-            }*/
         }
         public Position CurrentPointNew
         {
@@ -230,9 +226,9 @@ namespace ClientWpf
                 Thread.Sleep(100);
             }
         }
-        public void Clear()
+       /* public void Clear()
         {
             this.client.Clear();
-        }
+        }*/
     }
 }

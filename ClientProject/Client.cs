@@ -101,7 +101,6 @@ namespace ClientWpf
                             }
                             answersFromServer.Enqueue(result.ToString());
                             Console.WriteLine("Client: " + result);
-
                         }
                     }
 
@@ -228,6 +227,10 @@ namespace ClientWpf
                 }
             }
         }
+        /// <summary>
+        /// Commands the count.
+        /// </summary>
+        /// <returns></returns>
         public int CommandCount()
         {
             return answersFromServer.Count;
@@ -239,9 +242,9 @@ namespace ClientWpf
                 return this.startMultyPlayerGame;
             }
         }
-        public void Clear()
+        /*public void Clear()
         {
             answersFromServer.Clear();
-        }
+        }*/
     }
 }

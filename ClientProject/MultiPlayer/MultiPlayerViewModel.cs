@@ -128,9 +128,9 @@ namespace ClientWpf.MultiPlayer
         {
             this.model.CheckIfClose();
         }
-        public void VM_Clear()
+     /*   public void VM_Clear()
         {
             this.model.Clear();
-        }
+        }*/
     }
 }

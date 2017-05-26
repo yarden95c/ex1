@@ -34,9 +34,9 @@ namespace ClientWpf.MultiPlayer
                     Message.ShowOKMessage("The other player left", "Multy Player Game" + s);
                     this.Dispatcher.Invoke(() =>
                     {
-                        //MainWindow win = new MainWindow();
-                        //win.Show();
-                        this.Close();
+                    //MainWindow win = new MainWindow();
+                    //win.Show();
+                    this.Close();
                     });
                 }
             });
